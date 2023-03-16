@@ -1,0 +1,18 @@
+.player {
+  &__navBar {
+    background-color: red;
+  }
+  &__pageView {
+    // @include flexRow(center, center);
+    .player__header {
+      width: 100%;
+      background-color: orange;
+    }
+    .player__body {
+      background-color: yellow;
+    }
+  }
+  &__nowPlayingBar {
+    background-color: green;
+  }
+}
