@@ -1,7 +1,24 @@
-export default function Search(): JSX.Element {
+import { useState } from "react";
+
+// styles
+import "./styles.scss";
+
+// components
+import SearchMain from "../../components/Player/PlayerBody/Search/SearchMain";
+import SearchResult from "../../components/Player/PlayerBody/Search/SearchResult";
+
+// atoms
+import { useAtomValue } from "jotai";
+import { searchKeywordAtom } from "../../logics/atoms/atom";
+
+export default function Search() {
+  const searchKeyword = useAtomValue(searchKeywordAtom);
+
+  // getCategories();
+
   return (
-    <div>
-      <h2>검색 페이지!</h2>
+    <div className={"wrap"}>
+      {searchKeyword ? <SearchResult /> : <SearchMain />}
     </div>
   );
 }
