@@ -1,7 +1,7 @@
 import axios from "../utils/axios";
 import { AxiosResponse } from "axios";
 import { SearchReq } from "../types/request";
-import { CategoriesRes } from "../types/response";
+import { CategoriesRes, SearchTracksRes } from "../types/response";
 
 export const getCategories = async (): Promise<
   AxiosResponse<CategoriesRes>
@@ -10,7 +10,9 @@ export const getCategories = async (): Promise<
   return res;
 };
 
-export const getSearchResult = async (params: SearchReq) => {
+export const getSearchResult = async (
+  params: SearchReq
+): Promise<AxiosResponse<SearchTracksRes | any>> => {
   const res = await axios.get("/search", {
     params,
   });

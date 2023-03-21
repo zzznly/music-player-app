@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // styles
 import "./styles.scss";
 
@@ -11,10 +9,8 @@ import SearchResult from "../../components/Player/PlayerBody/Search/SearchResult
 import { useAtomValue } from "jotai";
 import { searchKeywordAtom } from "../../logics/atoms/atom";
 
-export default function Search() {
+export default function Search(): JSX.Element {
   const searchKeyword = useAtomValue(searchKeywordAtom);
-
-  // getCategories();
 
   return (
     <div className={"wrap"}>

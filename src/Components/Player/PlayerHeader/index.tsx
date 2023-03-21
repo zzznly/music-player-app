@@ -7,7 +7,7 @@ import { searchKeywordAtom } from "../../../logics/atoms/atom";
 // styles
 import "./style.scss";
 
-export default function PlayerHeader() {
+export default function PlayerHeader(): JSX.Element {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
 
   return (
