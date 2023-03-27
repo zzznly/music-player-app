@@ -6,33 +6,3 @@
   .section {
   }
 }
-
-.section {
-}
-
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.section-head {
-  &__title {
-    margin-bottom: 16px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #ffffff;
-  }
-  &__link--all {
-    font-size: 14px;
-    color: #b3b3b3;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -12px;
-}

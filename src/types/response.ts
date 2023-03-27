@@ -38,6 +38,7 @@ export interface Icon {
   url: string;
 }
 
+// categories
 export interface CategoriesItem {
   href: string;
   icons: Icon[];
@@ -57,6 +58,7 @@ export interface CategoriesRes {
   };
 }
 
+// search
 export interface SearchTracksItem {
   album: Album;
   artists: Artist[];

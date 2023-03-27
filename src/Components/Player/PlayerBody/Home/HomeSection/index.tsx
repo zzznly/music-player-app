@@ -1,12 +1,31 @@
+import { useState } from "react";
+
+// react-query
+import { useCategoryPlaylists } from "../../../../../logics/queries/useQueries";
+
+// components
 import ListItem from "../../../../ListItem";
+
+// styles
+import "./style.scss";
 
 interface Props {
   title: string;
-  data: {
-    items: any[];
-  };
+  id: string;
 }
-export default function HomeSection({ title, data }: Props) {
+
+export default function HomeSection({ title, id }: Props): JSX.Element {
+  const [categoryPlaylists, setCategoryPlaylists] = useState<any[]>([]);
+
+  useCategoryPlaylists(
+    { category_id: id },
+    {
+      onSuccess: ({ data }) => {
+        setCategoryPlaylists(data?.playlists.items);
+      },
+    }
+  );
+
   return (
     <div className={"section"}>
       <div className={"section-head"}>
@@ -16,12 +35,8 @@ export default function HomeSection({ title, data }: Props) {
         </a>
       </div>
       <ul className={"list"}>
-        {data.items.map(item => (
-          <ListItem
-            title={item.name}
-            description={item.description}
-            imageUrl={item.images[0].url}
-          />
+        {categoryPlaylists.map(item => (
+          <ListItem item={item} key={item.id} />
         ))}
       </ul>
     </div>
