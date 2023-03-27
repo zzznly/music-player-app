@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 // components
 import Home from "../../../pages/Home";
+import PlaylistDetail from "../../../pages/PlaylistDetail";
 import Search from "../../../pages/Search";
 
 // styles
@@ -13,7 +14,8 @@ export default function PlayerBody() {
     <div className={"player-body"}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search/*" element={<Search />} />
+        <Route path="/playlist/detail" element={<PlaylistDetail />} />
       </Routes>
     </div>
   );

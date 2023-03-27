@@ -13,11 +13,11 @@ interface CategoriesItemColored extends CategoriesItem {
   bgColor: string;
 }
 
-export default function SearchMain() {
+export default function SearchMain(): JSX.Element {
   const [categoriesList, setCategoriesList] = useState<CategoriesItemColored[]>(
     []
   );
-  const bgColors = [
+  const bgColors: string[] = [
     "rgb(225, 51, 0)",
     "rgb(115, 88, 255)",
     "rgb(30, 50, 100)",
@@ -59,8 +59,6 @@ export default function SearchMain() {
     },
   });
 
-  console.log(categoriesList);
-
   return (
     <div className={"main"}>
       <h2 className={"main-title"}>모두 둘러보기</h2>
@@ -69,7 +67,7 @@ export default function SearchMain() {
           <a
             className={"main-content__item"}
             key={item.id}
-            href="/search"
+            href={`/search?id=${item.id}`}
             style={{ background: `${item.bgColor}` }}
           >
             <div className={"main-content__item-wrap"}>

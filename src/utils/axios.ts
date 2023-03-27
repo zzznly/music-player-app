@@ -1,10 +1,11 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const accessToken: string =
-  "BQCredCXsALU6F1WuI0snYJNsM3dl8beePkrX6jLDoD7gVPnSkZTbVdq5k-tGlnGNxb7EjnnOeBTJgTTrfowJ0kXq_yGJ48IvbaqFsW9RvbbbX7PPZDzviioflgRzHIyEhpxiAfqOLU7fzh2mPosznarR2pmb-TLIyERLromQ-SUy_CcQxHQhP8DHXz9CDRFd4DDRWFHbFzwWmTiNNFF78DD9DiNuIG15pwddA0J_6P1PJ1RJpiuAsdb0HeDfHXt_AUF";
+  "BQAl4l3j1i5q_zMZdJWNragYzeep0b5Nh6_0NBypj0MlhEP_fJp3j7dkt_YsweFq37dnR1EYrfZcGE8kG-3o9udCr2Q_I6p6cZd4J2X03BxdpdzRZUjNVQoz8XwKVOoJ5BwxE-Q9l9CLwMUTcZD9aNAOMGcdlt7O-YPkBxhPRu_kswcIePNMVIh3LuMl_v3X-z0lXh-oG-Tjb1X4AFsnp1A9IWTCT_9JGn1A0qiLJTTjzc7SKaJkWKMqDlQx0wtPUfe-";
+
 const instance: AxiosRequestConfig = {
   baseURL: "https://api.spotify.com/v1/",
-  timeout: 3000,
+  timeout: 1000,
   headers: {
     Authorization: "Bearer " + accessToken,
   },

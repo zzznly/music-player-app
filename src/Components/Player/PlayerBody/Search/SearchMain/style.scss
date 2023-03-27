@@ -18,10 +18,18 @@
   &__item {
     position: relative;
     overflow: hidden;
-    width: 16.6%;
+    width: calc(16.6% - 24px);
     margin: 12px;
     border-radius: 8px;
-    background-color: rgb(225, 51, 0);
+    @media (max-width: 1400px) {
+      width: calc(20% - 24px);
+    }
+    @media (max-width: 1280px) {
+      width: calc(25% - 24px);
+    }
+    @media (max-width: 960px) {
+      width: calc(33.3% - 24px);
+    }
   }
 
   &__label {
