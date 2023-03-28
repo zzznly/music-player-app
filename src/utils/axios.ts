@@ -1,7 +1,7 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const accessToken: string =
-  "BQCQIkd-Q9msPF9nK9qyXFZVs1FsDgHROauiO7DhrLQkNPIA0OEtdyWNWFmsDNTLT14zthEZmFrFQl9USLAFBVv1kIF_UoWHp-F6BEDn33NdQr7tTwxJoAQ_ECMc4yswrxjQJwJJnOx8dK1SlKQdHDdCBN-HDJuoH6g3MoYlwRb3qOTTywMM3kFwP5n1_5-5i0_o3ko4Fg4we_DSBiMFXy8PunTO2BuvdEmQF9nbhMrbLuCj9AVLkmorn-XCqzhsY-pW";
+  "BQB3G1A-pIxWpm4hmqdnstHbOs-7Il4TGOX1SdjnZeBy3-KC0fAPDsoTzcwinEhyC4xCpHjYEhKb6tc4JBfWSnqU5giyhqqlzR6OwuDHmtsLEkG0aEJpmboclLNULsRb2ReO_2v4OrwJWzL4AvrjryMdJI3kZCRcEJEagzp3AiZt7UGvnpOk3e2jmigXKJNHsjEdKnt_EFO1ay2yCYWX_CLo-tBGVcxUTblkzSz4ErF0iSOMezavUs13t3pMyJWTl22T";
 
 const instance: AxiosRequestConfig = {
   baseURL: "https://api.spotify.com/v1/",

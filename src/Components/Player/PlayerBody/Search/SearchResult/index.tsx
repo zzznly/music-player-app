@@ -12,6 +12,11 @@ import { useSearchResult } from "../../../../../logics/queries/useQueries";
 
 // types
 import { SearchReq } from "../../../../../types/request";
+import {
+  SearchAlbumsItem,
+  SearchArtistsItem,
+  SearchTracksItem,
+} from "../../../../../types/search";
 
 // styles
 import "./style.scss";
@@ -20,11 +25,6 @@ import "./style.scss";
 import SearchResultSongList from "../SearchResultSongList";
 import SearchResultArtist from "../SearchResultArtist";
 import SearchResultAlbum from "../SearchResultAlbum";
-import {
-  SearchAlbumsItem,
-  SearchArtistsItem,
-  SearchTracksItem,
-} from "../../../../../types/response";
 
 interface SearchFilter {
   id: number;
@@ -52,7 +52,7 @@ export default function SearchResult(): JSX.Element {
 
   const searchKeyword = useAtomValue(searchKeywordAtom);
   const [searchType, setSearchType] = useState<string>(filterMenu[0].type);
-  const [searchResult, setSearchResult] = useState<
+  const [, setSearchResult] = useState<
     SearchTracksItem[] | SearchArtistsItem[] | SearchAlbumsItem[]
   >([]);
 

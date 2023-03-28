@@ -1,31 +1,41 @@
-import axios from "../../utils/axios";
+import { useState } from "react";
 
 // components
 import SearchResultSongList from "../../components/Player/PlayerBody/Search/SearchResultSongList";
 
 // styles
 import "./style.scss";
-import Color, { Palette } from "color-thief-react";
-import { getPlaylistTracks } from "../../api/api";
-import { usePlaylistTracks } from "../../logics/queries/useQueries";
-import { useState } from "react";
+import { Color } from "color-thief-react";
 
-export default function PlaylistDetail() {
-  const list: any[] = [];
+// react-query
+import {
+  usePlaylistDetail,
+  usePlaylistTracks,
+} from "../../logics/queries/useQueries";
 
-  const setTextColor = (hexColor: any) => {
-    const c = hexColor?.substring(1); // 색상 앞의 # 제거
-    const rgb = parseInt(c, 16); // rrggbb를 10진수로 변환
-    const r = (rgb >> 16) & 0xff; // red 추출
-    const g = (rgb >> 8) & 0xff; // green 추출
-    const b = (rgb >> 0) & 0xff; // blue 추출
-    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+// types
+import { PlaylistDetailRes } from "../../types/playlist";
+import { TrackItem } from "../../types/tracks";
 
-    return luma < 127.5 ? "#fff" : "#000";
+export default function PlaylistDetail(): JSX.Element {
+  // 배경 색상 밝기에 따른 텍스트 색상 설정
+  const setTextColor = (hexColor: string): string => {
+    const color = hexColor?.slice(1); // 색상 앞의 # 제거
+    const rgb = parseInt(color, 16); // rrggbb를 10진수로 변환
+    const red = (rgb >> 16) & 0xff; // red 추출
+    const green = (rgb >> 8) & 0xff; // green 추출
+    const blue = (rgb >> 0) & 0xff; // blue 추출
+
+    const luma: number = 0.222 * red + 0.707 * green + 0.071 * blue;
+
+    return luma > 128 ? "#000" : "#fff";
   };
 
-  const [playlistTracks, setPlaylistTracks] = useState<any[]>([]);
-  usePlaylistTracks({
+  const playlistParams = {
+    playlist_id: window.location.search.slice(4),
+  };
+  const [playlistTracks, setPlaylistTracks] = useState<TrackItem[]>([]);
+  usePlaylistTracks(playlistParams, {
     onSuccess: ({ data }) => {
       console.log(data?.items);
 
@@ -35,54 +45,137 @@ export default function PlaylistDetail() {
     },
   });
 
+  const [playlistDetail, setPlaylistDetail] = useState<PlaylistDetailRes>({
+    collaborative: false,
+    description: "",
+    external_urls: {
+      spotify: "",
+    },
+    followers: {
+      href: null,
+      total: 0,
+    },
+    href: "",
+    id: "",
+    images: [],
+    name: "",
+    owner: {
+      display_name: "",
+      external_urls: {
+        spotify: "",
+      },
+      href: "",
+      id: "",
+      type: "",
+      uri: "",
+    },
+    primary_color: null,
+    public: null,
+    snapshot_id: "",
+    tracks: {
+      href: "",
+      items: [],
+      limit: 0,
+      next: null,
+      offset: 0,
+      previous: null,
+      total: 0,
+    },
+    type: "",
+    uri: "",
+  });
+  usePlaylistDetail(playlistParams, {
+    onSuccess: ({ data }) => {
+      console.log(data);
+      setPlaylistDetail(data);
+    },
+  });
+
+  const getTotalDurationTime = (tracks: TrackItem[]): string => {
+    const totalSeconds = tracks.reduce(
+      (acc, item) => Math.floor(acc + item.duration_ms / 1000),
+      0
+    );
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const hh = Math.floor(totalMinutes / 60);
+    const mm = totalMinutes % 60;
+
+    return `약 ${hh}시간 ${mm}분`;
+  };
+
+  const setComma = (value: number): string => {
+    return Number(value).toLocaleString();
+  };
+
   return (
     <div className={"playlist-detail"}>
-      <Color
-        src={"https://i.scdn.co/image/ab67706f000000023c53e0635c196de9aa0be704"}
-        crossOrigin="anonymous"
-        format="hex"
-      >
-        {({ data }) => {
-          return (
-            <div
-              className={"playlist-detail__head"}
-              style={{ background: `${data}`, color: setTextColor(data) }}
-            >
-              <div className={"playlist-detail__album"}>
-                <img
-                  className={"playlist-detail__album-image"}
-                  src="https://i.scdn.co/image/ab67706f000000023c53e0635c196de9aa0be704"
-                  alt="playlist album"
-                />
-              </div>
-              <div className="playlist-detail__info">
-                <p className={"playlist-detail__type"}>플레이리스트</p>
-                <h1 className={"playlist-detail__title"}>
-                  TrenChill K-Hip Hop
-                </h1>
-                <p className={"playlist-detail__description"}>
-                  Trendy x Chill K-Hip Hop. (Cover: CODE KUNST) (트렌디 x 칠!
-                  세련되고 듣기 편한 힙합음악들을 즐겨보세요.)
-                </p>
-                <div className={"playlist-detail__about"}>
-                  <p className={"playlist-detail__about-data"}>
-                    좋아요 <strong>183,139</strong> 개 • <strong>100</strong>
-                    곡, 약 5시간 30분
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </Color>
-      <div className="playlist-detail__controller-bar">
-        <button>play</button>
-        <button>like</button>
-        <button>more</button>
-      </div>
-      <div className={"playlist-detail__content"}>
-        <SearchResultSongList searchResult={playlistTracks} />
-      </div>
+      {playlistDetail && playlistTracks.length ? (
+        <>
+          <Color
+            src={playlistDetail?.images[0]?.url}
+            crossOrigin="anonymous"
+            format="hex"
+          >
+            {({ data }) => {
+              return data ? (
+                <>
+                  <div
+                    className={"playlist-detail__head"}
+                    style={{
+                      background: `${data}`,
+                      color: setTextColor(data),
+                    }}
+                  >
+                    <div className={"playlist-detail__album"}>
+                      <img
+                        className={"playlist-detail__album-image"}
+                        src={playlistDetail?.images[0].url}
+                        alt="playlist album"
+                      />
+                    </div>
+                    <div className="playlist-detail__info">
+                      <p className={"playlist-detail__type"}>
+                        {playlistDetail?.type}
+                      </p>
+                      <h1 className={"playlist-detail__title"}>
+                        {playlistDetail?.name}
+                      </h1>
+                      <p className={"playlist-detail__description"}>
+                        {playlistDetail?.description}
+                      </p>
+                      <div className={"playlist-detail__about"}>
+                        <p className={"playlist-detail__about-data"}>
+                          좋아요{" "}
+                          <strong>
+                            {setComma(playlistDetail?.followers?.total) ?? "-"}
+                          </strong>{" "}
+                          개 •{" "}
+                          <strong>
+                            {playlistDetail?.tracks?.total ?? "-"}
+                          </strong>
+                          곡, {getTotalDurationTime(playlistTracks)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <h2>No Color Data</h2>
+              );
+            }}
+          </Color>
+          <div className="playlist-detail__controller-bar">
+            <button>play</button>
+            <button>like</button>
+            <button>more</button>
+          </div>
+          <div className={"playlist-detail__content"}>
+            <SearchResultSongList searchResult={playlistTracks} />
+          </div>
+        </>
+      ) : (
+        <h2>No Data</h2>
+      )}
     </div>
   );
 }

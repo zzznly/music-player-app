@@ -1,4 +1,4 @@
-import { SearchArtistsItem } from "../../../../../types/response";
+import { SearchArtistsItem } from "../../../../../types/search";
 import ListItem from "../../../../ListItem";
 import "./style.scss";
 

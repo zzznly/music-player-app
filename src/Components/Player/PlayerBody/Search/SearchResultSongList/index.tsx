@@ -1,5 +1,4 @@
-import { SearchTracksItem } from "../../../../../types/response";
-
+import { SearchTracksItem } from "../../../../../types/search";
 interface SearchResultProps {
   searchResult: SearchTracksItem | any;
 }
@@ -9,7 +8,7 @@ export default function SearchResultSongList({
   return (
     <ul className={"search-result__songlist"}>
       {searchResult?.map((item: SearchTracksItem, idx: number) => (
-        <li className={"search-result__song"}>
+        <li className={"search-result__song"} key={item.id}>
           <button className={"search-result__song-rank"}>{idx + 1}</button>
           <div className={"search-result__song-albumimage"}>
             <img src={item.album.images[0].url} alt="album" />

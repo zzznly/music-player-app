@@ -1,12 +1,13 @@
 import axios from "../utils/axios";
 import { AxiosResponse } from "axios";
-import { CategoryPlaylistReq, SearchReq } from "../types/request";
+import { CategoryPlaylistReq, PlaylistReq, SearchReq } from "../types/request";
+import { CategoriesRes } from "../types/categories";
+import { PlaylistDetailRes } from "../types/playlist";
 import {
-  CategoriesRes,
   SearchAlbumsRes,
   SearchArtistsRes,
   SearchTracksRes,
-} from "../types/response";
+} from "../types/search";
 
 // ## Search
 // GET - Search Result
@@ -55,7 +56,16 @@ export const getArtist = async () => {
   return res;
 };
 
-export const getPlaylistTracks = async () => {
-  const res = await axios.get(`playlists/${"37i9dQZF1DXcBWIGoYBM5M"}/tracks`);
+// ## Playlist
+// GET - Playlist Detail
+export const getPlaylistDetail = async (
+  params: PlaylistReq
+): Promise<AxiosResponse<PlaylistDetailRes>> => {
+  const res = await axios.get(`playlists/${params.playlist_id}`);
+  return res;
+};
+// GET - Playlist Tracks
+export const getPlaylistTracks = async (params: PlaylistReq) => {
+  const res = await axios.get(`playlists/${params.playlist_id}/tracks`);
   return res;
 };

@@ -1,7 +1,4 @@
-import {
-  SearchAlbumsItem,
-  SearchTracksItem,
-} from "../../../../../types/response";
+import { SearchAlbumsItem } from "../../../../../types/search";
 import ListItem from "../../../../ListItem";
 
 import "./style.scss";

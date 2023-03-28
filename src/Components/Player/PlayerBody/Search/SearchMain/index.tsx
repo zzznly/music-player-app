@@ -7,7 +7,7 @@ import "./style.scss";
 import { useCategories } from "../../../../../logics/queries/useQueries";
 
 // types
-import { CategoriesItem } from "../../../../../types/response";
+import { CategoriesItem } from "../../../../../types/categories";
 
 // router
 import { Link } from "react-router-dom";

@@ -3,10 +3,15 @@ import {
   getCategories,
   getCategoryPlaylist,
   getFeaturedPlaylists,
+  getPlaylistDetail,
   getPlaylistTracks,
   getSearchResult,
 } from "../../api/api";
-import { CategoryPlaylistReq, SearchReq } from "../../types/request";
+import {
+  CategoryPlaylistReq,
+  PlaylistReq,
+  SearchReq,
+} from "../../types/request";
 
 interface UseQueryProps {
   onSuccess: ({ data }: any) => void;
@@ -57,11 +62,25 @@ export const useCategoryPlaylists = (
   });
 };
 
+// GET - Playlist Detail
+export const usePlaylistDetail = (
+  params: PlaylistReq,
+  { onSuccess }: UseQueryProps
+) => {
+  return useQuery({
+    queryKey: ["playlist.detail"],
+    queryFn: () => getPlaylistDetail(params),
+    onSuccess,
+  });
+};
 // GET - Playlist Tracks
-export const usePlaylistTracks = ({ onSuccess }: UseQueryProps) => {
+export const usePlaylistTracks = (
+  params: PlaylistReq,
+  { onSuccess }: UseQueryProps
+) => {
   return useQuery({
     queryKey: ["playlist.tracks"],
-    queryFn: () => getPlaylistTracks(),
+    queryFn: () => getPlaylistTracks(params),
     onSuccess,
   });
 };
