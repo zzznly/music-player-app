@@ -5,10 +5,18 @@
   margin: 0 12px;
   border-radius: 8px;
   background-color: #181818;
+}
+.list-item {
+  $root: &;
 
+  &:hover {
+    background-color: #272727;
+    transition: background-color 0.3s ease;
+  }
   &:nth-child(n + 10) {
     display: block;
   }
+
   @media (max-width: 2100px) {
     width: calc(12.5% - 24px);
     &:nth-child(n + 9) {
@@ -45,14 +53,13 @@
       display: block;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     width: calc(50% - 24px);
     &:nth-child(n + 3) {
       display: block;
     }
   }
-}
-.list-item {
+
   &__link {
     width: 100%;
     padding: 16px;
@@ -73,24 +80,6 @@
   }
 
   &__button--play {
-    position: absolute;
-    right: 8px;
-    bottom: 0;
-    z-index: 2;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #1cd760;
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
-
-    opacity: 0;
-    transform: translateY(0);
-
-    & > svg {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-    }
   }
 
   &__title {
@@ -115,15 +104,30 @@
     @include ellipsis(2);
   }
 }
-.list-item:hover {
-  background-color: #272727;
-  transition: background-color 0.3s ease;
 
-  .list-item__album {
-    .list-item__button--play {
-      transition: transform 0.3s ease;
-      opacity: 1;
-      transform: translateY(-12px);
-    }
+.list-item__button--play {
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #1cd760;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transform: translateY(0);
+
+  & > svg {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+
+  .list-item:hover & {
+    transition: transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(-12px);
   }
 }
