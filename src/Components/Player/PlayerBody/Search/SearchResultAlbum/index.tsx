@@ -16,11 +16,7 @@ export default function SearchResultAlbum({
     <div className={"albums"}>
       <div className={"albums-content"}>
         {searchResult?.map(item => (
-          <ListItem
-            title={item.name}
-            description={item.name}
-            imageUrl={item.images[0].url}
-          />
+          <ListItem item={item} />
         ))}
       </div>
     </div>

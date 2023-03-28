@@ -9,6 +9,9 @@ import { useCategories } from "../../../../../logics/queries/useQueries";
 // types
 import { CategoriesItem } from "../../../../../types/response";
 
+// router
+import { Link } from "react-router-dom";
+
 interface CategoriesItemColored extends CategoriesItem {
   bgColor: string;
 }
@@ -64,10 +67,10 @@ export default function SearchMain(): JSX.Element {
       <h2 className={"main-title"}>모두 둘러보기</h2>
       <div className={"main-content"}>
         {categoriesList?.map(item => (
-          <a
+          <Link
             className={"main-content__item"}
             key={item.id}
-            href={`/search?id=${item.id}`}
+            to={`/playlist/detail?id=${item.id}`}
             style={{ background: `${item.bgColor}` }}
           >
             <div className={"main-content__item-wrap"}>
@@ -78,7 +81,7 @@ export default function SearchMain(): JSX.Element {
                 alt={item.name}
               />
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
