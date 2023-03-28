@@ -13,7 +13,7 @@ import { useState } from "react";
 export default function PlaylistDetail() {
   const list: any[] = [];
 
-  const getBackgroundColor = (hexColor: any) => {
+  const setTextColor = (hexColor: any) => {
     const c = hexColor?.substring(1); // 색상 앞의 # 제거
     const rgb = parseInt(c, 16); // rrggbb를 10진수로 변환
     const r = (rgb >> 16) & 0xff; // red 추출
@@ -46,7 +46,7 @@ export default function PlaylistDetail() {
           return (
             <div
               className={"playlist-detail__head"}
-              style={{ background: `${data}`, color: getBackgroundColor(data) }}
+              style={{ background: `${data}`, color: setTextColor(data) }}
             >
               <div className={"playlist-detail__album"}>
                 <img
