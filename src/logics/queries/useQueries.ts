@@ -3,6 +3,7 @@ import {
   getCategories,
   getCategoryPlaylist,
   getFeaturedPlaylists,
+  getPlaylistTracks,
   getSearchResult,
 } from "../../api/api";
 import { CategoryPlaylistReq, SearchReq } from "../../types/request";
@@ -52,6 +53,15 @@ export const useCategoryPlaylists = (
   return useQuery({
     queryKey: ["playlist.categoryPlaylists"],
     queryFn: () => getCategoryPlaylist(params),
+    onSuccess,
+  });
+};
+
+// GET - Playlist Tracks
+export const usePlaylistTracks = ({ onSuccess }: UseQueryProps) => {
+  return useQuery({
+    queryKey: ["playlist.tracks"],
+    queryFn: () => getPlaylistTracks(),
     onSuccess,
   });
 };

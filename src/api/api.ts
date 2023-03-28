@@ -46,11 +46,16 @@ export const getCategoryPlaylist = async (
 
 // ## Artists
 // GET - Artist albums
-const getArtist = async () => {
+export const getArtist = async () => {
   const res = await axios.get(`artists/${"0Y2AcMPMpeuPXtPQGVvRBq"}/albums`, {
     params: {
       country: "KR",
     },
   });
+  return res;
+};
+
+export const getPlaylistTracks = async () => {
+  const res = await axios.get(`playlists/${"37i9dQZF1DXcBWIGoYBM5M"}/tracks`);
   return res;
 };
