@@ -10,3 +10,12 @@
   justify-content: $justifyContent;
   align-items: $alignItems;
 }
+
+@mixin ellipsis($lines, $width: inherit) {
+  width: $width;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+}
