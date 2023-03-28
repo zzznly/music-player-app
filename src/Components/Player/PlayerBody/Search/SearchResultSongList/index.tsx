@@ -1,7 +1,7 @@
 import { SearchTracksItem } from "../../../../../types/response";
 
 interface SearchResultProps {
-  searchResult: SearchTracksItem[];
+  searchResult: SearchTracksItem | any;
 }
 export default function SearchResultSongList({
   searchResult,
