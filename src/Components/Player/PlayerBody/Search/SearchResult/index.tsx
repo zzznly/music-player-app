@@ -22,7 +22,7 @@ import {
 import "./style.scss";
 
 // components
-import SearchResultSongList from "../SearchResultSongList";
+import SongList from "../SongList";
 import SearchResultArtist from "../SearchResultArtist";
 import SearchResultAlbum from "../SearchResultAlbum";
 
@@ -102,7 +102,7 @@ export default function SearchResult(): JSX.Element {
           <Route path="/*" />
           <Route
             path="/track"
-            element={<SearchResultSongList searchResult={searchResultTracks} />}
+            element={<SongList searchResult={searchResultTracks} />}
           />
           <Route
             path="/artist"

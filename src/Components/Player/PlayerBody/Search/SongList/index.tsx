@@ -2,9 +2,7 @@ import { SearchTracksItem } from "../../../../../types/search";
 interface SearchResultProps {
   searchResult: SearchTracksItem | any;
 }
-export default function SearchResultSongList({
-  searchResult,
-}: SearchResultProps) {
+export default function SongList({ searchResult }: SearchResultProps) {
   return (
     <ul className={"search-result__songlist"}>
       {searchResult?.map((item: SearchTracksItem, idx: number) => (
