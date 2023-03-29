@@ -13,7 +13,7 @@ export default function SearchResultAlbum({
     <div className={"albums"}>
       <div className={"albums-content"}>
         {searchResult?.map(item => (
-          <ListItem item={item} />
+          <ListItem item={item} key={item.id} />
         ))}
       </div>
     </div>

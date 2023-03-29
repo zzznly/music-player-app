@@ -10,7 +10,7 @@ export default function SearchResultArtist({ searchResult }: Props) {
     <div className={"artists"}>
       <div className={"artists-content"}>
         {searchResult?.map(item => (
-          <ListItem item={item} />
+          <ListItem item={item} key={item.id} />
         ))}
       </div>
     </div>
