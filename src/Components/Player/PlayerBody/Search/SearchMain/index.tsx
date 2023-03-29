@@ -70,7 +70,7 @@ export default function SearchMain(): JSX.Element {
           <Link
             className={"main-content__item"}
             key={item.id}
-            to={`/playlist/detail?id=${item.id}`}
+            to={`/playlist/detail?category_id=${item.id}`}
             style={{ background: `${item.bgColor}` }}
           >
             <div className={"main-content__item-wrap"}>
