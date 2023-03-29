@@ -65,22 +65,24 @@ export const useCategoryPlaylists = (
 // GET - Playlist Detail
 export const usePlaylistDetail = (
   params: PlaylistReq,
-  { onSuccess }: UseQueryProps
+  { onSuccess, enabled }: UseQueryProps
 ) => {
   return useQuery({
     queryKey: ["playlist.detail"],
     queryFn: () => getPlaylistDetail(params),
     onSuccess,
+    enabled,
   });
 };
 // GET - Playlist Tracks
 export const usePlaylistTracks = (
   params: PlaylistReq,
-  { onSuccess }: UseQueryProps
+  { onSuccess, enabled }: UseQueryProps
 ) => {
   return useQuery({
     queryKey: ["playlist.tracks"],
     queryFn: () => getPlaylistTracks(params),
     onSuccess,
+    enabled,
   });
 };
