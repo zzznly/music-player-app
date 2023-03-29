@@ -2,7 +2,8 @@
 
 // atoms
 import { useAtom } from "jotai";
-import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { searchKeywordAtom } from "../../../logics/atoms/atom";
 
 // styles
@@ -12,12 +13,20 @@ export default function PlayerHeader(): JSX.Element {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setSearchKeyword("");
+  }, [location]);
 
   return (
     <div className={"player-header"}>
       <div className={"player-header__wrap"}>
         <div className={"player-header__paging"}>
-          <button className={"player-header__prev is-active"}>
+          <button
+            className={"player-header__prev is-active"}
+            onClick={() => navigate(-1)}
+          >
             <svg
               role="img"
               height="16"
@@ -30,7 +39,7 @@ export default function PlayerHeader(): JSX.Element {
               <path d="M11.03.47a.75.75 0 0 1 0 1.06L4.56 8l6.47 6.47a.75.75 0 1 1-1.06 1.06L2.44 8 9.97.47a.75.75 0 0 1 1.06 0z"></path>
             </svg>
           </button>
-          <button className={"player-header__next"}>
+          <button className={"player-header__next"} onClick={() => navigate(1)}>
             <svg
               role="img"
               height="16"
