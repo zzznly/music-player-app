@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    position: relative;
     height: 30vh;
     max-height: 500px;
     min-height: 340px;
@@ -13,18 +14,33 @@
     padding: 0 32px 32px;
   }
 
-  &__controller {
+  &__controller-bar {
+    display: flex;
+    justify-content: flex-start;
+    padding: 24px 32px;
+    gap: 32px;
   }
 
   &__content {
+    padding: 0 32px;
   }
 }
 
 .playlist-detail__head {
+  &-filter {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  }
   .playlist-detail__album {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    z-index: 3;
     max-width: 232px;
     margin-right: 24px;
     box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
@@ -34,6 +50,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    z-index: 3;
     height: 100%;
   }
 }
@@ -65,16 +82,43 @@
     font-weight: 400;
   }
   .playlist-detail__about {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
     strong {
       font-weight: 400;
     }
+    &-data {
+    }
   }
 }
 
 .playlist-detail__controller-bar {
+  .button--play {
+  }
 }
 .playlist-detail__content {
+}
+
+.button--play {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #1ed760;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background-color: #1fdf64;
+    transform: scale(1.05);
+  }
+}
+
+.button--like {
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
 }
