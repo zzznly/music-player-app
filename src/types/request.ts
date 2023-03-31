@@ -1,6 +1,6 @@
 export interface SearchReq {
   q: string;
-  type: string;
+  type: string | string[];
 }
 
 export interface CategoryPlaylistReq {

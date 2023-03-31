@@ -1,9 +1,8 @@
-// import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // atoms
 import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { searchKeywordAtom } from "../../../logics/atoms/atom";
 
 // styles
@@ -14,10 +13,6 @@ export default function PlayerHeader(): JSX.Element {
 
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setSearchKeyword("");
-  }, [location]);
 
   return (
     <div className={"player-header"}>
