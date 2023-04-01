@@ -20,11 +20,12 @@ interface UseQueryProps {
 }
 
 // GET - Categories Playlist
-export const useCategories = ({ onSuccess }: UseQueryProps) => {
+export const useCategories = ({ onSuccess, enabled }: UseQueryProps) => {
   return useQuery({
     queryKey: ["playlist.categories"],
     queryFn: () => getCategories(),
     onSuccess,
+    enabled,
   });
 };
 

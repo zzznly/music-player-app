@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const searchKeywordAtom = atom<string>("");
+export const searchKeywordAtom = atom<string | any>("");

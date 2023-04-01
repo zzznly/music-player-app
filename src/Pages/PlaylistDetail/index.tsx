@@ -88,6 +88,7 @@ export default function PlaylistDetail(): JSX.Element {
       onSuccess: ({ data }) => {
         console.log(data);
       },
+      enabled: !!location.search.includes("?category_id"),
     }
   );
 
