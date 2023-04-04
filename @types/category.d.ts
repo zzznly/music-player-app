@@ -1,4 +1,4 @@
-interface CategoriesRes2 {
+interface CategoriesRes {
   categories: {
     href: string;
     items: CategoriesItem[];

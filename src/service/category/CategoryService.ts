@@ -2,7 +2,7 @@ import Service from "../Service";
 
 class CategoryService extends Service {
   getCategories() {
-    return this.service.get<CategoriesRes2>("browse/categories");
+    return this.service.get<CategoriesRes>("browse/categories");
   }
 }
 
