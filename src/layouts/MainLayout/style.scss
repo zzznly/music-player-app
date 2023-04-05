@@ -1,0 +1,30 @@
+.layout {
+  width: 100%;
+  background-color: #121212;
+
+  &__nav-bar {
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 100vh;
+
+    .layout__header {
+    }
+    &-main {
+    }
+  }
+  &__footer {
+  }
+}
+
+.layout {
+  &--row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+}

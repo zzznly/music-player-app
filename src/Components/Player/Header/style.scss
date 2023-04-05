@@ -1,0 +1,114 @@
+.layout__header {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 64px;
+  padding: 16px 32px;
+  &-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.layout__header__paging {
+  display: flex;
+  gap: 16px;
+
+  &-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    &--prev,
+    &--next {
+      svg {
+        opacity: 0.6;
+      }
+      &.is-active {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+    &--next {
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.layout__header__search {
+  display: none;
+  &.layout__header__search--show {
+    flex-grow: 1;
+    display: flex;
+  }
+
+  &-content {
+    flex: 0 1 364px;
+    position: relative;
+  }
+
+  .layout__header__input {
+    padding: 6px 48px;
+    width: 100%;
+    height: 40px;
+    border-radius: 500px;
+    font-size: 14px;
+    color: #000;
+    background-color: #fff;
+  }
+
+  .layout__header__button--search {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    background-color: transparent;
+  }
+}
+
+// 유저정보 - 보류
+// .layout__header__user {
+//   flex: 1;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+
+//   .layout-header__user-button {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 8px;
+//     height: 32px;
+//     padding: 2px;
+//     border: none;
+//     border-radius: 23px;
+//     background-color: #000;
+
+//     .layout__header__user-icon {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       width: 28px;
+//       height: 28px;
+//       border-radius: 50%;
+//       background-color: #535353;
+//     }
+
+//     .layout__header__user-name {
+//       font-size: 14px;
+//       font-weight: 600;
+//       color: #fff;
+
+//       @media (max-width: 767px) {
+//         display: none;
+//       }
+//     }
+//   }
+// }

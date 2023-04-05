@@ -68,16 +68,19 @@ export default function NavBar() {
   ];
 
   return (
-    <div className={"nav"}>
-      <a href="/" className={"nav__logo"}>
-        <img className={"image"} src={logo} alt="logo" />
+    <div className="layout__nav-bar">
+      <a href="/" className="layout__nav-bar__logo">
+        <img className="layout__nav-bar__logo-image" src={logo} alt="logo" />
       </a>
-      <div className={"nav__menu"}>
+      <div className="layout__nav-bar__menu">
         {navMenu.map(item => (
-          <div className={"nav__item is-active"} key={navMenu.indexOf(item)}>
-            <NavLink className={"nav__link"} to={item.link}>
+          <div
+            className="layout__nav-bar__item layout__nav-bar__item--active"
+            key={navMenu.indexOf(item)}
+          >
+            <NavLink className="layout__nav-bar__link" to={item.link}>
               {item.icon}
-              <p>{item.menu}</p>
+              <p className="layout__nav-bar__text">{item.menu}</p>
             </NavLink>
           </div>
         ))}
