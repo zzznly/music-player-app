@@ -1,10 +1,12 @@
-interface Props {
-  children: React.ReactNode;
-}
-export default function AuthLayout({ children }: Props): JSX.Element {
+// router
+import { Outlet } from "react-router-dom";
+
+export default function AuthLayout(): JSX.Element {
   return (
     <div className="layout">
-      <div className="main">{children}</div>
+      <div className="main">
+        <Outlet />
+      </div>
     </div>
   );
 }
