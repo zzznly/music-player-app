@@ -1,13 +1,22 @@
-// components
-import Player from "./components/Player";
-
 // styles
 import "./app.scss";
 
-export default function App() {
+// router
+import { Route, Routes } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import Home from "./pages/Home";
+// import PlaylistDetail from "./pages/PlaylistDetail";
+import Search from "./pages/Search";
+
+export default function App(): React.ReactElement {
   return (
-    <div className={"app"}>
-      <Player />
-    </div>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+        <Route path="/search/:keyword" element={<Search />}>
+          <Route path="/tracks" />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
