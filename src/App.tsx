@@ -13,8 +13,8 @@ export default function App(): React.ReactElement {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
-        <Route path="/search/:keyword" element={<Search />}>
-          <Route path="/tracks" />
+        <Route path="/search" element={<Search />}>
+          <Route path="/search/:keyword" />
         </Route>
       </Route>
     </Routes>
