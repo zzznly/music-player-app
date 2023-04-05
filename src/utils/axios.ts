@@ -1,7 +1,7 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const accessToken: string =
-  "BQB3G1A-pIxWpm4hmqdnstHbOs-7Il4TGOX1SdjnZeBy3-KC0fAPDsoTzcwinEhyC4xCpHjYEhKb6tc4JBfWSnqU5giyhqqlzR6OwuDHmtsLEkG0aEJpmboclLNULsRb2ReO_2v4OrwJWzL4AvrjryMdJI3kZCRcEJEagzp3AiZt7UGvnpOk3e2jmigXKJNHsjEdKnt_EFO1ay2yCYWX_CLo-tBGVcxUTblkzSz4ErF0iSOMezavUs13t3pMyJWTl22T";
+  "BQDOO22x4VFb4Q2NyPS72D-XJSuOI2YeDui6A9fjTsugnGRM8XtKPhJbykKbkcOikBfIolttm-cnnauCG4dqFr-IMNZ4GzPNTGGyEwtLxjJJm8Vxe-BiFQ6mhNIumfB8HTtJ-R9bAzDo-WJNcLiiS_IDjDsDELmKvzleUZQNNNV_vWEBrJwd4_zkaQnzDmW_DtT3UGzOwNZU4GlwTDH5_4GpI9GMa0G__8HOkd3KOLxvRc8UuaVKkHRkfbIaHH4";
 
 const instance: AxiosRequestConfig = {
   baseURL: "https://api.spotify.com/v1/",
@@ -12,5 +12,5 @@ const instance: AxiosRequestConfig = {
 };
 
 const axios: AxiosInstance = Axios.create(instance);
-
+// axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 export default axios;
