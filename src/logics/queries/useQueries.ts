@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  getCategories,
   getCategoryPlaylist,
   getFeaturedPlaylists,
   getPlaylistDetail,
@@ -18,16 +17,6 @@ interface UseQueryProps {
   enabled?: boolean;
   queryKey?: string[];
 }
-
-// GET - Categories Playlist
-export const useCategories = ({ onSuccess, enabled }: UseQueryProps) => {
-  return useQuery({
-    queryKey: ["playlist.categories"],
-    queryFn: () => getCategories(),
-    onSuccess,
-    enabled,
-  });
-};
 
 // GET - Search Result
 export const useSearchResult = (
