@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./style.scss";
 
 // react-query
-import { useCategories } from "../../../../../logics/queries/useQueries";
+import { useCategories } from "../../../../../service/Category/useCategory";
 
 // types
 import { CategoriesItem } from "../../../../../types/categories";
@@ -43,7 +43,7 @@ export default function SearchMain(): JSX.Element {
     "rgb(220, 20, 140)",
   ];
 
-  useCategories({
+  const { data } = useCategories({
     onSuccess: ({
       data: {
         categories: { items },
@@ -61,22 +61,24 @@ export default function SearchMain(): JSX.Element {
       setCategoriesList(arr);
     },
   });
+  console.log(11, data?.data.categories.items);
+  console.log(22, categoriesList);
 
   return (
-    <div className={"main"}>
-      <h2 className={"main-title"}>모두 둘러보기</h2>
-      <div className={"main-content"}>
-        {categoriesList?.map(item => (
+    <div className="search-main">
+      <h2 className="search-main__title">모두 둘러보기</h2>
+      <div className="search-main__content">
+        {categoriesList.map((item: CategoriesItemColored) => (
           <Link
-            className={"main-content__item"}
+            className="search-main__item"
             key={item.id}
             to={`/playlist/detail?category_id=${item.id}`}
             style={{ background: `${item.bgColor}` }}
           >
-            <div className={"main-content__item-wrap"}>
-              <p className={"main-content__label"}>{item.name}</p>
+            <div className="search-main__item-wrap">
+              <p className="search-main__item-label">{item.name}</p>
               <img
-                className={"main-content__image"}
+                className="search-main__item-image"
                 src={item.icons[0].url}
                 alt={item.name}
               />

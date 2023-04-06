@@ -19,7 +19,7 @@ import { PlaylistDetailRes } from "../../types/playlist";
 import { TrackItem } from "../../types/tracks";
 import { useLocation } from "react-router-dom";
 
-export default function PlaylistDetail(): JSX.Element {
+export default function DetailPage(): JSX.Element {
   const location = useLocation();
   const playlistParams = {
     playlist_id: location.search.slice(4),
