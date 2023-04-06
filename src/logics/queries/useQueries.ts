@@ -4,7 +4,6 @@ import {
   getFeaturedPlaylists,
   getPlaylistDetail,
   getPlaylistTracks,
-  getSearchResult,
 } from "../../api/api";
 import {
   CategoryPlaylistReq,
@@ -12,24 +11,18 @@ import {
   SearchReq,
 } from "../../types/request";
 
-interface UseQueryProps {
-  onSuccess: ({ data }: any) => void;
-  enabled?: boolean;
-  queryKey?: string[];
-}
-
-// GET - Search Result
-export const useSearchResult = (
-  params: SearchReq,
-  { onSuccess, enabled }: UseQueryProps
-) => {
-  return useQuery({
-    queryKey: ["search.searchResult", params],
-    queryFn: () => getSearchResult(params),
-    onSuccess,
-    enabled,
-  });
-};
+// // GET - Search Result
+// export const useSearchResult = (
+//   params: SearchReq,
+//   { onSuccess, enabled }: UseQueryProps
+// ) => {
+//   return useQuery({
+//     queryKey: ["search.searchResult", params],
+//     queryFn: () => getSearchResult(params),
+//     onSuccess,
+//     enabled,
+//   });
+// };
 
 // GET - Featured Playlists
 export const useFeaturedPlaylists = ({ onSuccess }: UseQueryProps) => {
