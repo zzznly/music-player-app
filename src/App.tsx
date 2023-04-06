@@ -3,12 +3,18 @@ import "./app.scss";
 
 // router
 import { Route, Routes } from "react-router-dom";
+
+// layouts
 import MainLayout from "./layouts/MainLayout";
-import Home from "./pages/Home";
-// import PlaylistDetail from "./pages/PlaylistDetail";
-import Search from "./pages/Search";
 import AuthLayout from "./layouts/AuthLayout";
+
+// components
+import Home from "./pages/Home";
+import Search from "./pages/Search";
 import Login from "./pages/Login";
+import SearchMain from "./components/Player/PlayerBody/Search/SearchMain";
+import SearchResult from "./components/Player/PlayerBody/Search/SearchResult";
+import SongList from "./components/Player/PlayerBody/Search/SongList";
 
 export default function App(): React.ReactElement {
   return (
@@ -16,7 +22,13 @@ export default function App(): React.ReactElement {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="/search" element={<Search />}>
-          <Route path="/search/:keyword" />
+          <Route index element={<SearchMain />} />
+          <Route path="/search/:keyword" element={<SearchResult />}>
+            <Route
+              path="/search/:keyword/:searchType"
+              element={<SongList searchResult={[]} />}
+            />
+          </Route>
         </Route>
       </Route>
       <Route path="/login" element={<AuthLayout />}>

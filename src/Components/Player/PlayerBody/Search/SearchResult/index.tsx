@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // routes
-import { Link, Route, Routes } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 // atoms
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { searchKeywordAtom } from "../../../../../logics/atoms/atom";
 
 // react-query
@@ -12,11 +19,6 @@ import { useSearchResult } from "../../../../../logics/queries/useQueries";
 
 // types
 import { SearchReq } from "../../../../../types/request";
-import {
-  SearchAlbumsItem,
-  SearchArtistsItem,
-  SearchTracksItem,
-} from "../../../../../types/search";
 
 // styles
 import "./style.scss";
@@ -24,15 +26,22 @@ import "./style.scss";
 // components
 import SongList from "../SongList";
 import SearchResultArtist from "../SearchResultArtist";
-import SearchResultAlbum from "../SearchResultAlbum";
+import { useDebounce } from "../../../../../logics/customHook/useDebounce";
 
-interface SearchFilter {
-  id: number;
-  label: string;
-  type: string;
-}
 export default function SearchResult(): JSX.Element {
+  interface SearchFilter {
+    id: number;
+    label: string;
+    type: string;
+  }
+
+  // 검색 필터 데이터
   const filterMenu: SearchFilter[] = [
+    // {
+    //   id: 0,
+    //   label: "모두",
+    //   type: "track,playlist,artist,album",
+    // },
     {
       id: 0,
       label: "곡",
@@ -40,79 +49,64 @@ export default function SearchResult(): JSX.Element {
     },
     {
       id: 1,
+      label: "플레이리스트",
+      type: "playlist",
+    },
+    {
+      id: 2,
       label: "아티스트",
       type: "artist",
     },
     {
-      id: 2,
+      id: 3,
       label: "앨범",
       type: "album",
     },
   ];
 
-  const searchKeyword = useAtomValue(searchKeywordAtom);
-  const [searchType, setSearchType] = useState<string>(filterMenu[0].type);
-  const [, setSearchResult] = useState<
-    SearchTracksItem[] | SearchArtistsItem[] | SearchAlbumsItem[]
-  >([]);
+  // 검색 조건 - 검색어, 검색 타입
+  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500);
+  const [searchType, setSearchType] = useState<string | string[]>("");
 
-  const [searchResultTracks, setSearchResultTracks] = useState<
-    SearchTracksItem[]
-  >([]);
-  const [searchResultArtists, setSearchResultArtists] = useState<
-    SearchArtistsItem[]
-  >([]);
-  const [searchResultAlbums, setSearchResultAlbums] = useState<
-    SearchAlbumsItem[]
-  >([]);
-
+  // 검색 파라미터
   const searchParams: SearchReq = {
-    q: searchKeyword,
-    type: searchType,
+    q: debouncedSearchKeyword,
+    type: searchType ? searchType : filterMenu.map(v => v.type).join(","),
   };
+
+  // 검색 결과 데이터
+  const [searchResult, setSearchResult] = useState<any[]>([]);
+
+  const navigate = useNavigate();
 
   useSearchResult(searchParams, {
     onSuccess: ({ data }) => {
       setSearchResult(data[`${searchType}s`]?.items);
-      setSearchResultTracks(data?.tracks?.items);
-      setSearchResultArtists(data?.artists?.items);
-      setSearchResultAlbums(data?.albums?.items);
+      navigate(`/search/${debouncedSearchKeyword}/${searchType}`, {
+        replace: true,
+      });
     },
-    enabled: !!searchKeyword,
+    enabled: !!debouncedSearchKeyword,
   });
 
   return (
     <div className={"search-result"}>
-      <ul className={"search-result__filter"}>
+      <div className={"search-result__filter"}>
         {filterMenu.map(item => (
-          <Link
-            to={`/search/${item.type}`}
-            className={`search-result__filter-link ${
+          <button
+            className={`search-result__filter-button ${
               searchType === item.type && `is-active`
             }`}
             key={item.id}
             onClick={() => setSearchType(item.type)}
           >
             {item.label}
-          </Link>
+          </button>
         ))}
-      </ul>
+      </div>
       <div className={"search-result__content"}>
-        <Routes>
-          <Route path="/*" />
-          <Route
-            path="/track"
-            element={<SongList searchResult={searchResultTracks} />}
-          />
-          <Route
-            path="/artist"
-            element={<SearchResultArtist searchResult={searchResultArtists} />}
-          />
-          <Route
-            path="/album"
-            element={<SearchResultAlbum searchResult={searchResultAlbums} />}
-          />
-        </Routes>
+        <Outlet />
       </div>
     </div>
   );
