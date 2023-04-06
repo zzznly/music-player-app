@@ -11,19 +11,6 @@ import {
   SearchReq,
 } from "../../types/request";
 
-// // GET - Search Result
-// export const useSearchResult = (
-//   params: SearchReq,
-//   { onSuccess, enabled }: UseQueryProps
-// ) => {
-//   return useQuery({
-//     queryKey: ["search.searchResult", params],
-//     queryFn: () => getSearchResult(params),
-//     onSuccess,
-//     enabled,
-//   });
-// };
-
 // GET - Featured Playlists
 export const useFeaturedPlaylists = ({ onSuccess }: UseQueryProps) => {
   return useQuery({

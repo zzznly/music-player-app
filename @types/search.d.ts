@@ -3,7 +3,6 @@ interface SearchReq {
   type: string | string[];
 }
 interface SearchFilterItem {
-  id: number;
   label: string;
   type: string;
 }

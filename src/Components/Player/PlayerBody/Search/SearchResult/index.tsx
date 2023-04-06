@@ -2,12 +2,12 @@
 import "./style.scss";
 
 // routes
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
 // atoms
 import { useAtom, useAtomValue } from "jotai";
 import {
-  searchFilterMenu,
+  searchFilterMenuAtom,
   searchKeywordAtom,
   searchTypeAtom,
 } from "../../../../../logics/atoms/atom";
@@ -24,7 +24,7 @@ export default function SearchResult(): JSX.Element {
   const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 300);
 
   // 검색 필터 데이터
-  const filterMenu = useAtomValue(searchFilterMenu);
+  const filterMenu = useAtomValue(searchFilterMenuAtom);
 
   // 검색 파라미터
   const searchParams: SearchReq = {
@@ -44,8 +44,17 @@ export default function SearchResult(): JSX.Element {
   useEffect(() => {
     if (params.keyword) {
       setSearchKeyword(params.keyword);
+      console.log(params);
     }
   }, [params.keyword]);
+
+  useEffect(() => {
+    if (params.searchType) {
+      setSearchType(params.searchType.slice(0, -1));
+    } else {
+      setSearchType(filterMenu[0].type);
+    }
+  }, [params.searchType]);
 
   useEffect(() => {
     if (debouncedSearchKeyword) {
@@ -58,16 +67,18 @@ export default function SearchResult(): JSX.Element {
   return (
     <div className={"search-result"}>
       <div className={"search-result__filter"}>
-        {filterMenu.map(item => (
-          <button
-            className={`search-result__filter-button ${
+        {filterMenu.map((item, idx) => (
+          <Link
+            to={`/search/${debouncedSearchKeyword}${
+              idx ? `/${item.type}s` : ""
+            }`}
+            className={`search-result__filter-link ${
               searchType === item.type && `is-active`
             }`}
-            key={item.id}
-            onClick={() => setSearchType(item.type)}
+            key={idx}
           >
             {item.label}
-          </button>
+          </Link>
         ))}
       </div>
       <div className={"search-result__content"}>
