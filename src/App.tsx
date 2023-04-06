@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import SearchMain from "./components/Player/PlayerBody/Search/SearchMain";
 import SearchResult from "./components/Player/PlayerBody/Search/SearchResult";
 import SongList from "./components/Player/PlayerBody/Search/SongList";
+import PlaylistDetail from "./pages/DetailPage";
 
 export default function App(): React.ReactElement {
   return (
@@ -30,6 +31,7 @@ export default function App(): React.ReactElement {
             />
           </Route>
         </Route>
+        <Route path="/detail" element={<PlaylistDetail />} />
       </Route>
       <Route path="/login" element={<AuthLayout />}>
         <Route index element={<Login />} />
