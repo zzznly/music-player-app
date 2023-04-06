@@ -1,73 +1,30 @@
-import { useEffect, useState } from "react";
-
-// routes
-import {
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-
-// atoms
-import { useAtom } from "jotai";
-import { searchKeywordAtom } from "../../../../../logics/atoms/atom";
-
-// react-query
-import { useSearchResult } from "../../../../../logics/queries/useQueries";
-
-// types
-import { SearchReq } from "../../../../../types/request";
-
 // styles
 import "./style.scss";
 
-// components
-import SongList from "../SongList";
-import SearchResultArtist from "../SearchResultArtist";
+// routes
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+
+// atoms
+import { useAtom, useAtomValue } from "jotai";
+import {
+  searchFilterMenu,
+  searchKeywordAtom,
+  searchTypeAtom,
+} from "../../../../../logics/atoms/atom";
+
+// hooks
+import { useEffect } from "react";
 import { useDebounce } from "../../../../../logics/customHook/useDebounce";
+import { useSearchResult } from "../../../../../service/Search/useSearchResult";
 
 export default function SearchResult(): JSX.Element {
-  interface SearchFilter {
-    id: number;
-    label: string;
-    type: string;
-  }
-
-  // 검색 필터 데이터
-  const filterMenu: SearchFilter[] = [
-    // {
-    //   id: 0,
-    //   label: "모두",
-    //   type: "track,playlist,artist,album",
-    // },
-    {
-      id: 0,
-      label: "곡",
-      type: "track",
-    },
-    {
-      id: 1,
-      label: "플레이리스트",
-      type: "playlist",
-    },
-    {
-      id: 2,
-      label: "아티스트",
-      type: "artist",
-    },
-    {
-      id: 3,
-      label: "앨범",
-      type: "album",
-    },
-  ];
-
   // 검색 조건 - 검색어, 검색 타입
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
-  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 500);
-  const [searchType, setSearchType] = useState<string | string[]>("");
+  const [searchType, setSearchType] = useAtom(searchTypeAtom);
+  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 300);
+
+  // 검색 필터 데이터
+  const filterMenu = useAtomValue(searchFilterMenu);
 
   // 검색 파라미터
   const searchParams: SearchReq = {
@@ -75,20 +32,28 @@ export default function SearchResult(): JSX.Element {
     type: searchType ? searchType : filterMenu.map(v => v.type).join(","),
   };
 
-  // 검색 결과 데이터
-  const [searchResult, setSearchResult] = useState<any[]>([]);
-
+  const params = useParams();
   const navigate = useNavigate();
 
-  useSearchResult(searchParams, {
-    onSuccess: ({ data }) => {
-      setSearchResult(data[`${searchType}s`]?.items);
-      navigate(`/search/${debouncedSearchKeyword}/${searchType}`, {
-        replace: true,
-      });
-    },
+  // 검색결과 fetch
+  const { data } = useSearchResult(searchParams, {
     enabled: !!debouncedSearchKeyword,
   });
+  console.log(33, data?.data);
+
+  useEffect(() => {
+    if (params.keyword) {
+      setSearchKeyword(params.keyword);
+    }
+  }, [params.keyword]);
+
+  useEffect(() => {
+    if (debouncedSearchKeyword) {
+      navigate(`/search/${debouncedSearchKeyword}`, {
+        replace: true,
+      });
+    }
+  }, [debouncedSearchKeyword]);
 
   return (
     <div className={"search-result"}>

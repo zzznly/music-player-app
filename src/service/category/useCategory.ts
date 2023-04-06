@@ -11,10 +11,10 @@ interface Props {
 }
 
 // GET - Categories
-export const useCategories = ({ enabled }: Props) => {
+export const useCategories = ({ onSuccess }: Props) => {
   return useQuery({
     queryKey: ["playlist.categories"],
     queryFn: () => CategoryService.getCategories(),
-    enabled,
+    onSuccess,
   });
 };
