@@ -14,7 +14,7 @@ interface Props {
   id: string;
 }
 
-export default function HomeSection({ title, id }: Props): JSX.Element {
+export default function ListSection({ title, id }: Props): JSX.Element {
   const [categoryPlaylists, setCategoryPlaylists] = useState<any[]>([]);
 
   useCategoryPlaylists(

@@ -1,27 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // react-query
-import { useCategories } from "../../logics/queries/useQueries";
+import { useCategories } from "../../service/Category/useCategory";
 
 // components
-import HomeSection from "../../components/Player/PlayerBody/Home/HomeSection";
+import ListSection from "../../components/Player/PlayerBody/Home/ListSection";
 
 // styles
 import "./style.scss";
 
 export default function Home(): JSX.Element {
-  const [categories, setCategories] = useState<any[]>([]);
-
-  useCategories({
-    onSuccess: ({ data }) => {
-      setCategories(data?.categories.items);
-    },
-  });
-
+  const { data } = useCategories();
   return (
     <div className={"wrap"}>
-      {categories.map(item => (
-        <HomeSection title={item.name} id={item.id} key={item.id} />
+      {data?.data.categories.items.map((item: CategoriesItem, idx: number) => (
+        <ListSection title={item.name} id={item.id} key={idx} />
       ))}
     </div>
   );
