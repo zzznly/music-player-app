@@ -1,33 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  getCategoryPlaylist,
   getFeaturedPlaylists,
   getPlaylistDetail,
   getPlaylistTracks,
 } from "../../api/api";
-import {
-  CategoryPlaylistReq,
-  PlaylistReq,
-  SearchReq,
-} from "../../types/request";
+import { PlaylistReq } from "../../types/request";
 
 // GET - Featured Playlists
 export const useFeaturedPlaylists = ({ onSuccess }: UseQueryProps) => {
   return useQuery({
     queryKey: ["playlist.featuredPlaylists"],
     queryFn: () => getFeaturedPlaylists(),
-    onSuccess,
-  });
-};
-
-// GET - Category's Playlists
-export const useCategoryPlaylists = (
-  params: CategoryPlaylistReq,
-  { onSuccess }: UseQueryProps
-) => {
-  return useQuery({
-    queryKey: ["playlist.categoryPlaylists"],
-    queryFn: () => getCategoryPlaylist(params),
     onSuccess,
   });
 };

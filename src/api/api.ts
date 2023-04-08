@@ -14,16 +14,6 @@ export const getFeaturedPlaylists = async (): Promise<AxiosResponse<any>> => {
   const res = await axios.get("/browse/featured-playlists");
   return res;
 };
-// ## Categories
-// GET - Category's Playlists
-export const getCategoryPlaylist = async (
-  params: CategoryPlaylistReq
-): Promise<AxiosResponse<any>> => {
-  const res = await axios.get(
-    `/browse/categories/${params.category_id}/playlists`
-  );
-  return res;
-};
 
 // ## Artists
 // GET - Artist albums
