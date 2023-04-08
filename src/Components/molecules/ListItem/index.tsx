@@ -1,19 +1,18 @@
 import { Link } from "react-router-dom";
 import "./style.scss";
 
-interface ItemProps {
-  item: any;
+export interface Props {
+  id: string;
+  imageUrl: string;
+  title: string;
+  description: string;
 }
-export default function ListItem({ item }: ItemProps) {
+export default function ListItem({ id, imageUrl, title, description }: Props) {
   return (
     <li className={"list-item"}>
-      <Link className={"list-item__link"} to={`/playlist/detail?id=${item.id}`}>
+      <Link className={"list-item__link"} to={`/playlist/detail?id=${id}`}>
         <div className={"list-item__album"}>
-          <img
-            src={item.images[0].url}
-            className={"list-item__image"}
-            alt="album"
-          />
+          <img src={imageUrl} className={"list-item__image"} alt="album" />
           <button className="list-item__button--play" aria-hidden="true">
             <svg
               role="img"
@@ -27,8 +26,8 @@ export default function ListItem({ item }: ItemProps) {
             </svg>
           </button>
         </div>
-        <p className={"list-item__title"}>{item.name}</p>
-        <p className={"list-item__artists"}>{item.description}</p>
+        <p className={"list-item__title"}>{title}</p>
+        <p className={"list-item__artists"}>{description}</p>
       </Link>
     </li>
   );

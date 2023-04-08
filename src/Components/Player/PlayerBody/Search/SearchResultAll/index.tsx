@@ -1,4 +1,4 @@
-import ListSection from "../../Home/ListSection";
+import ListSection from "../../../../organisms/ListSection";
 import "./style.scss";
 export default function SearchResultAll(): JSX.Element {
   return (

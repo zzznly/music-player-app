@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // components
-import SongList from "../../components/Player/PlayerBody/Search/SongList";
+import SongList from "../../components/Player/PlayerBody/Search/SearchResultAll";
 
 // styles
 import "./style.scss";
@@ -9,7 +9,7 @@ import { Color } from "color-thief-react";
 
 // react-query
 import {
-  useCategoryPlaylists,
+  // useCategoryPlaylists,
   usePlaylistDetail,
   usePlaylistTracks,
 } from "../../logics/queries/useQueries";
@@ -66,14 +66,14 @@ export default function DetailPage(): JSX.Element {
     uri: "",
   });
 
-  usePlaylistTracks(playlistParams, {
-    onSuccess: ({ data }) => {
-      let arr: any[] = [];
-      data?.items.forEach((item: { track: any }) => arr.push(item.track));
-      setPlaylistTracks(arr);
-    },
-    enabled: !!location.search.includes("?id"),
-  });
+  // usePlaylistTracks(playlistParams, {
+  //   onSuccess: ({ data }) => {
+  //     let arr: any[] = [];
+  //     data?.items.forEach((item: { track: any }) => arr.push(item.track));
+  //     setPlaylistTracks(arr);
+  //   },
+  //   enabled: !!location.search.includes("?id"),
+  // });
 
   usePlaylistDetail(playlistParams, {
     onSuccess: ({ data }) => {
@@ -82,15 +82,15 @@ export default function DetailPage(): JSX.Element {
     enabled: !!location.search.includes("?id"),
   });
 
-  useCategoryPlaylists(
-    { category_id: window.location.search.slice(13) },
-    {
-      onSuccess: ({ data }) => {
-        console.log(data);
-      },
-      enabled: !!location.search.includes("?category_id"),
-    }
-  );
+  // useCategoryPlaylists(
+  //   { category_id: window.location.search.slice(13) },
+  //   {
+  //     onSuccess: ({ data }) => {
+  //       console.log(data);
+  //     },
+  //     enabled: !!location.search.includes("?category_id"),
+  //   }
+  // );
 
   // 배경 색상 밝기에 따른 텍스트 색상 지정
   const setTextColor = (hexColor: string): string => {
@@ -210,7 +210,7 @@ export default function DetailPage(): JSX.Element {
             <button>more</button>
           </div>
           <div className={"playlist-detail__content"}>
-            <SongList searchResult={playlistTracks} />
+            {/* <SongList searchResult={playlistTracks} /> */}
           </div>
         </>
       ) : (

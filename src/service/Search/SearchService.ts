@@ -1,8 +1,8 @@
 import instance from "../../utils/axios";
-
-class SearchService {
+import Service from "../Service";
+class SearchService extends Service {
   async getSearchResult(params: SearchReq) {
-    return await instance.get("search", {
+    return await this.service.get("search", {
       params,
     });
   }

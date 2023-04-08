@@ -1,3 +1,13 @@
+interface CategoryPlaylistReq {
+  category_id: string;
+}
+interface CategoryPlaylistRes {
+  playlists: {
+    href: string;
+    items: any[];
+  };
+}
+
 interface CategoriesRes {
   categories: {
     href: string;
@@ -8,4 +18,10 @@ interface CategoriesRes {
     previous: null;
     total: number;
   };
+}
+interface CategoriesItem {
+  href: string;
+  icons: Icon[];
+  id: string;
+  name: string;
 }
