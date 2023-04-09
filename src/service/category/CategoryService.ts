@@ -9,10 +9,5 @@ class CategoryService extends Service {
     return this.service.get(`/browse/categories/${category_id}/playlists`);
   }
 }
-// class CategoryService {
-//   async getCategories() {
-//     return await instance.get("browse/categories");
-//   }
-// }
 
 export default new CategoryService();

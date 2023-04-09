@@ -4,10 +4,6 @@ import { useEffect } from "react";
 // router
 import { Route, Routes } from "react-router-dom";
 
-// atoms
-import { useAtomValue } from "jotai";
-import { searchFilterMenuAtom } from "./logics/atoms/atom";
-
 // layouts
 import MainLayout from "./components/templates/MainLayout";
 import AuthLayout from "./components/templates/AuthLayout";
@@ -23,11 +19,9 @@ import PlaylistDetail from "./pages/DetailPage";
 import { saveTokenInfo } from "./utils/auth";
 
 export default function App(): React.ReactElement {
-  // 카테고리 목록 fetch
   useEffect(() => {
     saveTokenInfo();
   }, []);
-  const searchFilterMenu = useAtomValue(searchFilterMenuAtom);
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>

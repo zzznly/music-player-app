@@ -1,4 +1,3 @@
-import instance from "../../utils/axios";
 import Service from "../Service";
 class SearchService extends Service {
   async getSearchResult(params: SearchReq) {
