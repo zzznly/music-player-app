@@ -1,20 +1,18 @@
-import { useState } from "react";
-import { Props as ItemProps } from "../../molecules/ListItem";
 // styles
 import "./style.scss";
 
-// react-query
-// import { useCategoryPlaylists } from "../../../../../logics/queries/useQueries";
-
 // components
-import ListItem from "../../molecules/ListItem";
+import ListItem, { ListItemProps } from "../../molecules/ListItem";
 
-interface Props {
+export interface ListSectionProps {
   title: string;
-  data: ItemProps[];
+  data: ListItemProps[];
 }
 
-export default function ListSection({ title, data }: Props): JSX.Element {
+export default function ListSection({
+  title,
+  data,
+}: ListSectionProps): JSX.Element {
   return (
     <div className={"section"}>
       <div className={"section-head"}>

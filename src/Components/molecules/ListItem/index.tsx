@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import "./style.scss";
 
-export interface Props {
+export interface ListItemProps {
   id: string;
   imageUrl: string;
   title: string;
   description: string;
 }
-export default function ListItem({ id, imageUrl, title, description }: Props) {
+export default function ListItem({
+  id,
+  imageUrl,
+  title,
+  description,
+}: ListItemProps) {
   return (
     <li className={"list-item"}>
       <Link className={"list-item__link"} to={`/playlist/detail?id=${id}`}>

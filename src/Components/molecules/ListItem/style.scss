@@ -7,56 +7,54 @@
   background-color: #181818;
 }
 .list-item {
-  $root: &;
-
   &:hover {
     background-color: #272727;
     transition: background-color 0.3s ease;
   }
   &:nth-child(n + 10) {
-    display: block;
+    display: none;
   }
 
   @media (max-width: 2100px) {
     width: calc(12.5% - 24px);
     &:nth-child(n + 9) {
-      display: block;
+      display: none;
     }
   }
   @media (max-width: 1900px) {
     width: calc(14% - 24px);
     &:nth-child(n + 8) {
-      display: block;
+      display: none;
     }
   }
   @media (max-width: 1700px) {
     width: calc(16.6% - 24px);
     &:nth-child(n + 7) {
-      display: block;
+      display: none;
     }
   }
   @media (max-width: 1500px) {
     width: calc(20% - 24px);
     &:nth-child(n + 6) {
-      display: block;
+      display: none;
     }
   }
   @media (max-width: 1300px) {
     width: calc(25% - 24px);
     &:nth-child(n + 5) {
-      display: block;
+      display: none;
     }
   }
   @media (max-width: 980px) {
     width: calc(33.3% - 24px);
     &:nth-child(n + 4) {
-      display: block;
+      display: none;
     }
   }
   @media (max-width: 767px) {
     width: calc(50% - 24px);
     &:nth-child(n + 3) {
-      display: block;
+      display: none;
     }
   }
 

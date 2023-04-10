@@ -6,7 +6,9 @@ class CategoryService extends Service {
   }
 
   getCategoryPlaylist({ category_id }: CategoryPlaylistReq) {
-    return this.service.get(`/browse/categories/${category_id}/playlists`);
+    return this.service.get<CategoryPlaylistRes>(
+      `/browse/categories/${category_id}/playlists`
+    );
   }
 }
 
