@@ -1,18 +1,11 @@
 // react-query
 import { useQuery } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
 
 // service
 import CategoryService from "./CategoryService";
 
-interface Props {
-  onSuccess?: ({ data }: any) => void;
-  enabled?: boolean;
-  queryKey?: string[];
-}
-
 // GET - Categories
-export const useCategories = ({ onSuccess }: Props = {}) => {
+export const useCategories = ({ onSuccess }: UseQueryProps = {}) => {
   return useQuery({
     queryKey: ["category.categories"],
     queryFn: () => CategoryService.getCategories(),
@@ -20,13 +13,15 @@ export const useCategories = ({ onSuccess }: Props = {}) => {
   });
 };
 
+// GET - Category Playlists
 export const useCategoryPlaylists = (
   params: CategoryPlaylistReq,
-  { onSuccess }: UseQueryProps = {}
+  { onSuccess, enabled }: UseQueryProps = {}
 ) => {
   return useQuery({
     queryKey: ["category.playlists"],
     queryFn: () => CategoryService.getCategoryPlaylist(params),
     onSuccess,
+    enabled,
   });
 };

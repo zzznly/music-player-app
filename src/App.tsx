@@ -14,8 +14,8 @@ import Login from "./pages/Login";
 import Search from "./pages/Search";
 import SearchMain from "./components/Player/PlayerBody/Search/SearchMain";
 import SearchResult from "./components/Player/PlayerBody/Search/SearchResult";
-import SearchResultAll from "./components/Player/PlayerBody/Search/SearchResultAll";
-import PlaylistDetail from "./pages/DetailPage";
+import SearchResultAll from "./components/Player/PlayerBody/Search/SongList";
+import DetailPage from "./pages/DetailPage";
 import { saveTokenInfo } from "./utils/auth";
 
 export default function App(): React.ReactElement {
@@ -29,14 +29,14 @@ export default function App(): React.ReactElement {
         <Route path="/search" element={<Search />}>
           <Route index element={<SearchMain />} />
           <Route path="/search/:keyword" element={<SearchResult />}>
-            <Route index element={<SearchResultAll />} />
+            {/* <Route index element={<SearchResultAll />} /> */}
             <Route path={`/search/:keyword/tracks`} />
             <Route path={`/search/:keyword/playlists`} />
             <Route path={`/search/:keyword/artists`} />
             <Route path={`/search/:keyword/albums`} />
           </Route>
         </Route>
-        <Route path="/detail" element={<PlaylistDetail />} />
+        <Route path="/detail/:type" element={<DetailPage />} />
       </Route>
       <Route path="/login" element={<AuthLayout />}>
         <Route index element={<Login />} />

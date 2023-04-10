@@ -15,7 +15,7 @@ export default function ListItem({
 }: ListItemProps) {
   return (
     <li className={"list-item"}>
-      <Link className={"list-item__link"} to={`/playlist/detail?id=${id}`}>
+      <Link className={"list-item__link"} to={`/detail/playlist?id=${id}`}>
         <div className={"list-item__album"}>
           <img src={imageUrl} className={"list-item__image"} alt="album" />
           <button className="list-item__button--play" aria-hidden="true">

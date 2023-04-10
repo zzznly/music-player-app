@@ -1,137 +1,43 @@
 import { useState } from "react";
 
 // components
-import SongList from "../../components/Player/PlayerBody/Search/SearchResultAll";
+import SongList from "../../components/Player/PlayerBody/Search/SongList";
 
 // styles
 import "./style.scss";
 import { Color } from "color-thief-react";
 
 // react-query
-import {
-  // useCategoryPlaylists,
-  usePlaylistDetail,
-  usePlaylistTracks,
-} from "../../logics/queries/useQueries";
+import { usePlaylistDetail } from "../../service/Playlist/usePlaylist";
 
 // types
-import { PlaylistDetailRes } from "../../types/playlist";
-import { TrackItem } from "../../types/tracks";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import {
+  getTotalDurationTime,
+  setComma,
+  setTextColor,
+} from "../../utils/convert";
 
 export default function DetailPage(): JSX.Element {
   const location = useLocation();
-  const playlistParams = {
+  const {
+    data: {
+      description = "",
+      followers = {},
+      images = [],
+      name = "",
+      tracks = {},
+      type = "",
+    } = {},
+  } = usePlaylistDetail({
     playlist_id: location.search.slice(4),
-  };
-
-  const [playlistTracks, setPlaylistTracks] = useState<TrackItem[]>([]);
-  const [playlistDetail, setPlaylistDetail] = useState<PlaylistDetailRes>({
-    collaborative: false,
-    description: "",
-    external_urls: {
-      spotify: "",
-    },
-    followers: {
-      href: null,
-      total: 0,
-    },
-    href: "",
-    id: "",
-    images: [],
-    name: "",
-    owner: {
-      display_name: "",
-      external_urls: {
-        spotify: "",
-      },
-      href: "",
-      id: "",
-      type: "",
-      uri: "",
-    },
-    primary_color: null,
-    public: null,
-    snapshot_id: "",
-    tracks: {
-      href: "",
-      items: [],
-      limit: 0,
-      next: null,
-      offset: 0,
-      previous: null,
-      total: 0,
-    },
-    type: "",
-    uri: "",
   });
-
-  // usePlaylistTracks(playlistParams, {
-  //   onSuccess: ({ data }) => {
-  //     let arr: any[] = [];
-  //     data?.items.forEach((item: { track: any }) => arr.push(item.track));
-  //     setPlaylistTracks(arr);
-  //   },
-  //   enabled: !!location.search.includes("?id"),
-  // });
-
-  usePlaylistDetail(playlistParams, {
-    onSuccess: ({ data }) => {
-      setPlaylistDetail(data);
-    },
-    enabled: !!location.search.includes("?id"),
-  });
-
-  // useCategoryPlaylists(
-  //   { category_id: window.location.search.slice(13) },
-  //   {
-  //     onSuccess: ({ data }) => {
-  //       console.log(data);
-  //     },
-  //     enabled: !!location.search.includes("?category_id"),
-  //   }
-  // );
-
-  // 배경 색상 밝기에 따른 텍스트 색상 지정
-  const setTextColor = (hexColor: string): string => {
-    const color = hexColor?.slice(1); // 색상 앞의 # 제거
-    const rgb = parseInt(color, 16); // rrggbb를 10진수로 변환
-    const red = (rgb >> 16) & 0xff; // red 추출
-    const green = (rgb >> 8) & 0xff; // green 추출
-    const blue = (rgb >> 0) & 0xff; // blue 추출
-
-    const luma: number = 0.222 * red + 0.707 * green + 0.071 * blue;
-
-    return luma > 128 ? "#000" : "#fff";
-  };
-
-  // 플레이리스트 총 재생시간 계산
-  const getTotalDurationTime = (tracks: TrackItem[]): string => {
-    const totalSeconds = tracks.reduce(
-      (acc, item) => Math.floor(acc + item.duration_ms / 1000),
-      0
-    );
-    const totalMinutes = Math.floor(totalSeconds / 60);
-    const hh = Math.floor(totalMinutes / 60);
-    const mm = totalMinutes % 60;
-
-    return `약 ${hh}${hh && "시간"} ${mm}${mm && "분"}`;
-  };
-
-  // 숫자 세자리마다 콤마 삽입
-  const setComma = (value: number): string => {
-    return Number(value).toLocaleString();
-  };
 
   return (
     <div className={"playlist-detail"}>
-      {playlistDetail && playlistTracks.length ? (
+      {tracks.items ? (
         <>
-          <Color
-            src={playlistDetail?.images[0]?.url}
-            crossOrigin="anonymous"
-            format="hex"
-          >
+          <Color src={images[0]?.url} crossOrigin="anonymous" format="hex">
             {({ data }) => {
               return data ? (
                 <>
@@ -146,31 +52,22 @@ export default function DetailPage(): JSX.Element {
                     <div className={"playlist-detail__album"}>
                       <img
                         className={"playlist-detail__album-image"}
-                        src={playlistDetail?.images[0].url}
+                        src={images[0].url}
                         alt="playlist album"
                       />
                     </div>
                     <div className="playlist-detail__info">
-                      <p className={"playlist-detail__type"}>
-                        {playlistDetail?.type}
-                      </p>
-                      <h1 className={"playlist-detail__title"}>
-                        {playlistDetail?.name}
-                      </h1>
+                      <p className={"playlist-detail__type"}>{type}</p>
+                      <h1 className={"playlist-detail__title"}>{name}</h1>
                       <p className={"playlist-detail__description"}>
-                        {playlistDetail?.description}
+                        {description}
                       </p>
                       <div className={"playlist-detail__about"}>
                         <p className={"playlist-detail__about-data"}>
                           좋아요{" "}
-                          <strong>
-                            {setComma(playlistDetail?.followers?.total) ?? "-"}
-                          </strong>{" "}
-                          개 •{" "}
-                          <strong>
-                            {playlistDetail?.tracks?.total ?? "-"}
-                          </strong>
-                          곡, {getTotalDurationTime(playlistTracks)}
+                          <strong>{setComma(followers.total) ?? "-"}</strong> 개
+                          • <strong>{tracks.items.total ?? "-"}</strong>
+                          곡, {getTotalDurationTime(tracks.items)}
                         </p>
                       </div>
                     </div>
@@ -210,7 +107,7 @@ export default function DetailPage(): JSX.Element {
             <button>more</button>
           </div>
           <div className={"playlist-detail__content"}>
-            {/* <SongList searchResult={playlistTracks} /> */}
+            <SongList items={tracks.items} />
           </div>
         </>
       ) : (
