@@ -3,8 +3,9 @@ export const getToken = () => {
 };
 
 export const saveTokenInfo = () => {
-  if (!window.location.hash) return;
+  if (!window.location.hash) return; // window.location.hash 객체가 비어있으면 return
 
+  // window.location.hash 객체가 있으면 localStorage에 토큰정보 저장!
   const params = new URLSearchParams(window.location.hash.substring(1));
   localStorage.setItem("access_token", params.get("access_token") ?? "");
   localStorage.setItem("expires_in", params.get("expires_in") ?? "");
