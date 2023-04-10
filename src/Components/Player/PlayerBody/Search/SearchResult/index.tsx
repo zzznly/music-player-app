@@ -51,9 +51,9 @@ export default function SearchResult(): JSX.Element {
   useEffect(() => {
     if (params.searchType) {
       setSearchType(params.searchType.slice(0, -1));
-    } else {
-      setSearchType(filterMenu[0].type);
+      return;
     }
+    setSearchType(filterMenu[0].type);
   }, [params.searchType]);
 
   useEffect(() => {
