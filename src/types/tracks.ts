@@ -1,5 +1,3 @@
-import { Album, Artist } from "./common";
-
 export interface TrackItem {
   album: Album;
   artists: Artist[];

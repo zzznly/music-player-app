@@ -1,5 +1,3 @@
-import { Icon } from "./common";
-
 export interface CategoriesItem {
   href: string;
   icons: Icon[];

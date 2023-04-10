@@ -1,5 +1,3 @@
-import { Album, Artist, Image } from "./common";
-
 export interface SearchTracksItem {
   album: Album;
   artists: Artist[];
