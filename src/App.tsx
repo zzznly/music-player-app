@@ -34,13 +34,6 @@ export default function App(): React.ReactElement {
             <Route path={`/search/:keyword/playlists`} />
             <Route path={`/search/:keyword/artists`} />
             <Route path={`/search/:keyword/albums`} />
-            {/* {searchFilterMenu.map((route, idx) => (
-              <Route
-                path={`/search/:keyword/:searchType`}
-                element={<SearchResultList type={route.type} />}
-                key={idx}
-              />
-            ))} */}
           </Route>
         </Route>
         <Route path="/detail" element={<PlaylistDetail />} />

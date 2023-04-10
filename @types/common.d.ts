@@ -4,13 +4,13 @@ interface UseQueryProps {
   queryKey?: string[];
 }
 
-export interface Image {
+interface Image {
   height: number;
   url: string;
   width: number;
 }
 
-export interface Album {
+interface Album {
   album_group: string;
   album_type: string;
   artists: Artist[];
@@ -26,7 +26,7 @@ export interface Album {
   uri: string;
 }
 
-export interface Artist {
+interface Artist {
   external_urls: {
     spotify: string;
   };
@@ -37,7 +37,7 @@ export interface Artist {
   uri: string;
 }
 
-export interface Icon {
+interface Icon {
   width: number;
   height: number;
   url: string;
