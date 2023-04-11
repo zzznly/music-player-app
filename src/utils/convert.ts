@@ -30,4 +30,4 @@ export const getTotalDurationTime = (tracks: any[]): string => {
 };
 
 // 트랙 한곡 재생시간 변환 (mm분 ss초)
-export const convertTrackDurationTime = () => {};
+export const getTrackDurationTime = () => {};

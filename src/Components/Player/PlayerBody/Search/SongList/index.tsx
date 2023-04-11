@@ -1,4 +1,3 @@
-import ListSection from "../../../../organisms/ListSection";
 import "./style.scss";
 
 export default function SongList({ items }: any): JSX.Element {

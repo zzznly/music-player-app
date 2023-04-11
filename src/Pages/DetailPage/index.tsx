@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // components
 import SongList from "../../components/Player/PlayerBody/Search/SongList";
 
@@ -10,8 +8,10 @@ import { Color } from "color-thief-react";
 // react-query
 import { usePlaylistDetail } from "../../service/Playlist/usePlaylist";
 
+// router
+import { useLocation } from "react-router-dom";
+
 // types
-import { useLocation, useParams } from "react-router-dom";
 import {
   getTotalDurationTime,
   setComma,
