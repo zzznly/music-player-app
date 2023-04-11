@@ -2,7 +2,7 @@
 import "./style.scss";
 
 // images
-import logo from "../../../src/images/img-logo-spotify.png";
+import logo from "@assets/img-logo-spotify.png";
 
 // router
 import { NavLink } from "react-router-dom";
