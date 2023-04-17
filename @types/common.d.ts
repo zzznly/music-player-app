@@ -2,6 +2,7 @@ interface UseQueryProps {
   onSuccess?: ({ data }: any) => void;
   enabled?: boolean;
   queryKey?: string[];
+  // select?: ({ data }: any) => void;
 }
 
 interface Image {

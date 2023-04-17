@@ -21,7 +21,6 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
       }
     );
 
-  console.log(222, items);
   return (
     <ListSection
       title={name}

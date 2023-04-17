@@ -17,9 +17,6 @@ interface CategoriesItemColored extends CategoriesItem {
 }
 
 export default function SearchMain(): JSX.Element {
-  const [categoriesList, setCategoriesList] = useState<CategoriesItemColored[]>(
-    []
-  );
   const bgColors: string[] = [
     "rgb(225, 51, 0)",
     "rgb(115, 88, 255)",
@@ -43,48 +40,51 @@ export default function SearchMain(): JSX.Element {
     "rgb(220, 20, 140)",
   ];
 
-  const { data } = useCategories({
-    onSuccess: ({
-      data: {
-        categories: { items },
-      },
-    }) => {
-      let arr: any[] = [];
-      items.forEach((item: CategoriesItemColored, idx: number) => {
-        item = {
-          ...item,
-          bgColor: bgColors[idx],
-        };
-        arr.push(item);
-      });
-
-      setCategoriesList(arr);
+  const {
+    data: {
+      categories: { items },
     },
-  });
-  console.log(11, data?.data.categories.items);
-  console.log(22, categoriesList);
+  } = useCategories();
+
+  // Q: select가 안먹어요!
+  // {
+  // onSuccess: () => {
+  // items = items.map((v: CategoriesItemColored, idx: number) => {
+  //   return { ...v, bgColor: bgColors[idx] };
+  // });
+  // },
+  // select: data =>
+  //   data.categories.items.map((v: CategoriesItemColored, idx: number) => {
+  //     return { ...v, bgColor: bgColors[idx] };
+  //   }),
+  // }
 
   return (
     <div className="search-main">
       <h2 className="search-main__title">모두 둘러보기</h2>
       <div className="search-main__content">
-        {categoriesList.map((item: CategoriesItemColored) => (
-          <Link
-            className="search-main__item"
-            key={item.id}
-            to={`/playlist/detail?category_id=${item.id}`}
-            style={{ background: `${item.bgColor}` }}
-          >
-            <div className="search-main__item-wrap">
-              <p className="search-main__item-label">{item.name}</p>
-              <img
-                className="search-main__item-image"
-                src={item.icons[0].url}
-                alt={item.name}
-              />
-            </div>
-          </Link>
-        ))}
+        {items &&
+          items
+            .map((v: CategoriesItemColored, idx: number) => {
+              return { ...v, bgColor: bgColors[idx] };
+            })
+            .map((item: CategoriesItemColored) => (
+              <Link
+                className="search-main__item"
+                key={item.id}
+                to={`/playlist/detail?category_id=${item.id}`}
+                style={{ background: `${item.bgColor}` }}
+              >
+                <div className="search-main__item-wrap">
+                  <p className="search-main__item-label">{item.name}</p>
+                  <img
+                    className="search-main__item-image"
+                    src={item.icons[0].url}
+                    alt={item.name}
+                  />
+                </div>
+              </Link>
+            ))}
       </div>
     </div>
   );
