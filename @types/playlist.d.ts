@@ -1,6 +1,3 @@
-interface TrackRes {
-  tracks: TrackItem[];
-}
 interface TrackItem {
   album: Album;
   artists: Artist[];
