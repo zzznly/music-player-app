@@ -1,0 +1,28 @@
+.search-result {
+  &__filter {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__content {
+    margin-top: 16px;
+  }
+}
+
+.search-result__content {
+}
+
+.search-result__filter {
+  &-link {
+    padding: 6px 14px;
+    border-radius: 32px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    background-color: #232323;
+    &.is-active {
+      background-color: #fff;
+      color: #212121;
+    }
+  }
+}
