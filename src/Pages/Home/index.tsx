@@ -32,6 +32,7 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
           description,
         })
       )}
+      hasShowMore={true}
     />
   );
 };
