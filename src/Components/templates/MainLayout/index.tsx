@@ -2,9 +2,9 @@
 import "./style.scss";
 
 // components
-import NavBar from "../../NavBar";
-import Footer from "../../Player/Footer";
-import Header from "../../Player/Header";
+import NavBar from "../../organisms/NavBar";
+import Footer from "../../organisms/Footer";
+import Header from "../../organisms/Header";
 
 // router
 import { Outlet } from "react-router-dom";
