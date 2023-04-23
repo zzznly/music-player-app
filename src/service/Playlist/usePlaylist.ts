@@ -12,3 +12,16 @@ export const usePlaylistDetail = (
     enabled,
   });
 };
+
+// GET - Playlist Tracks
+export const usePlaylistTracks = (
+  params: PlaylistReq,
+  { onSuccess, enabled }: UseQueryProps
+) => {
+  return useQuery({
+    queryKey: ["playlist.tracks"],
+    // queryFn: () => getPlaylistTracks(params),
+    onSuccess,
+    enabled,
+  });
+};
