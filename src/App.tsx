@@ -9,14 +9,14 @@ import MainLayout from "./components/templates/MainLayout";
 import AuthLayout from "./components/templates/AuthLayout";
 
 // components
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Search from "./pages/Search";
-import SearchMain from "./components/Player/PlayerBody/Search/SearchMain";
-import SearchResult from "./components/Player/PlayerBody/Search/SearchResult";
-import SearchResultAll from "./components/Player/PlayerBody/Search/SongList";
-import DetailPage from "./pages/DetailPage";
-import { saveTokenInfo } from "./utils/auth";
+import Home from "@pages/Home";
+import Login from "@pages/Login";
+import Search from "@pages/Search";
+import DetailPage from "@pages/DetailPage";
+import { saveTokenInfo } from "@utils/auth";
+import SearchMain from "@components/organisms/SearchMain";
+import SearchResult from "@components/organisms/SearchResult";
+import SearchResultContent from "@components/organisms/SearchResultContent";
 
 export default function App(): React.ReactElement {
   useEffect(() => {
@@ -29,11 +29,10 @@ export default function App(): React.ReactElement {
         <Route path="/search" element={<Search />}>
           <Route index element={<SearchMain />} />
           <Route path="/search/:keyword" element={<SearchResult />}>
-            {/* <Route index element={<SearchResultAll />} /> */}
-            <Route path={`/search/:keyword/tracks`} />
-            <Route path={`/search/:keyword/playlists`} />
-            <Route path={`/search/:keyword/artists`} />
-            <Route path={`/search/:keyword/albums`} />
+            <Route
+              path="/search/:keyword/:searchType"
+              element={<SearchResultContent />}
+            />
           </Route>
         </Route>
         <Route path="/detail/:type" element={<DetailPage />} />

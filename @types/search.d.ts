@@ -1,6 +1,6 @@
 interface SearchReq {
   q: string;
-  type: string | string[];
+  type: string | string[] | undefined;
 }
 interface SearchFilterItem {
   id: number;

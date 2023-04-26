@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import "./style.scss";
 
 export interface ListItemProps {
-  id: string;
-  imageUrl: string;
-  title: string;
-  description: string;
+  id?: string;
+  imageUrl?: string;
+  title?: string;
+  description?: string;
 }
 export default function ListItem({
   id,
