@@ -3,7 +3,7 @@ import "./style.scss";
 export default function SongList({ items }: any): JSX.Element {
   return (
     <div className="songlist">
-      {items?.map((item: PlaylistDetailItems, idx: number) => (
+      {items?.map((item: any, idx: number) => (
         <li className={"songlist-item"} key={item.track.id}>
           <button className={"songlist-item__rank"}>{idx + 1}</button>
           <div className={"songlist-item__title"}>
@@ -19,10 +19,8 @@ export default function SongList({ items }: any): JSX.Element {
               </p>
             </div>
           </div>
-          <p className={"songlist-item__albumname"}>{item.track.album.name}</p>
-          <p className="songlist-item__addDate">
-            {item.track.album.release_date}
-          </p>
+          <p className={"songlist-item__albumname"}>{item.album.name}</p>
+          <p className="songlist-item__addDate">{item.album.release_date}</p>
           <div className={"songlist-item__runtime"}>
             <svg
               role="img"

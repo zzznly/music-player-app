@@ -5,12 +5,9 @@ import "./style.scss";
 import {
   Link,
   Outlet,
-  Route,
-  Routes,
   useLocation,
   useNavigate,
   useParams,
-  useOutletContext,
 } from "react-router-dom";
 
 // atoms

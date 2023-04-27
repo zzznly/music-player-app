@@ -1,5 +1,5 @@
 // components
-import SongList from "../../components/Player/PlayerBody/Search/SongList";
+// import SongList from "../../components/organisms/SongList";
 
 // styles
 import "./style.scss";
@@ -107,7 +107,7 @@ export default function DetailPage(): JSX.Element {
             <button>more</button>
           </div>
           <div className={"playlist-detail__content"}>
-            <SongList items={tracks.items} />
+            {/* <SongList items={tracks.items} /> */}
           </div>
         </>
       ) : (
