@@ -39,7 +39,6 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
 
 export default function Home(): JSX.Element {
   const { data: { categories: { items = [] } = {} } = {} } = useCategories();
-
   return (
     <div className={"wrap"}>
       {items.map((item: CategoriesItem) => (

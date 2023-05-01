@@ -24,17 +24,20 @@ import { useDebounce } from "../../../hooks/useDebounce";
 import { useSearchResult } from "../../../service/Search/useSearchResult";
 
 export default function SearchResult(): JSX.Element {
-  // 검색 조건 - 검색어, 검색 타입
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
-  const [searchType, setSearchType] = useAtom(searchTypeAtom);
-  const debouncedSearchKeyword = useDebounce<string>(searchKeyword, 300);
-
-  // 검색 필터 데이터
-  const filterMenu = useAtomValue(searchFilterMenuAtom);
-
   const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // 검색 조건 - 검색어, 검색 타입
+  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+  const [searchType, setSearchType] = useAtom(searchTypeAtom);
+  const debouncedSearchKeyword = useDebounce<string>(
+    params.keyword ?? searchKeyword,
+    300
+  );
+
+  // 검색 필터 데이터
+  const filterMenu = useAtomValue(searchFilterMenuAtom);
 
   // 검색 파라미터
   const searchParams: SearchReq = {
@@ -61,7 +64,7 @@ export default function SearchResult(): JSX.Element {
   }, [params.keyword]);
 
   useEffect(() => {
-    if (debouncedSearchKeyword) {
+    if (params.keyword !== debouncedSearchKeyword) {
       navigate(`/search/${debouncedSearchKeyword}`, {
         replace: true,
       });

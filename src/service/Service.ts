@@ -1,6 +1,6 @@
 // axios
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-
+import AuthService from "@service/Auth/AuthService";
 // router
 import { getToken, getSpotifyAuthUrl, removeAuthToken } from "../utils/auth";
 
@@ -23,16 +23,12 @@ export default class Service {
     );
   }
 
-  static handleRequest(request: any) {
+  static async handleRequest(request: any) {
+    // const data = await AuthService.refreshToken();
     const accessToken = getToken();
-
-    if (!accessToken) {
-      // accessToken 없으면 - authUrl로 redirect
-      window.location.replace(getSpotifyAuthUrl());
-    }
-
+    console.log(accessToken);
     // accessToken 있으면 - 헤더에 토큰 실어서 보냄
-    request.headers.Authorization = "Bearer " + accessToken;
+    accessToken && (request.headers.Authorization = "Bearer " + accessToken);
     return request;
   }
 
@@ -41,10 +37,12 @@ export default class Service {
   }
 
   static handleResponse<T>(response: AxiosResponse<T>) {
+    // TODO: error 공통처리 (try/catch)
     return response.data;
   }
 
   static handleResponseError(error: any) {
+    debugger;
     switch (error.response.status) {
       case 404:
         window.location.replace("/404");

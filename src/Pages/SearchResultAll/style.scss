@@ -1,0 +1,24 @@
+.search-result__content--all {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 24px 0;
+
+  color: #fff;
+}
+
+.search-result__section {
+  .search-result__list {
+    display: flex;
+  }
+}
+
+.search-result__section-wrap {
+  display: flex;
+  flex-direction: row;
+  height: 300px;
+
+  .search-result__section {
+    width: 50%;
+  }
+}

@@ -17,11 +17,12 @@ import DetailPage from "@pages/DetailPage";
 import { saveTokenInfo } from "@utils/auth";
 import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";
+import SearchCategory from "@pages/SearchCategory";
 import SearchResultTracks from "@pages/SearchResultTracks";
 import SearchResultPlaylists from "@pages/SearchResultPlaylists";
 import SearchResultArtists from "@pages/SearchResultArtists";
 import SearchResultAlbums from "@pages/SearchResultAlbums";
-import SearchResultContent from "@components/organisms/SearchResultContent";
+import SearchResultAll from "@pages/SearchResultAll";
 
 export default function App(): React.ReactElement {
   useEffect(() => {
@@ -34,8 +35,10 @@ export default function App(): React.ReactElement {
         <Route path="/search" element={<Search />}>
           <Route index element={<SearchMain />} />
           <Route path="/search/:keyword" element={<SearchResult />}>
-            <Route index element={<SearchResultContent />} />
-            <Route
+            <Route index element={<SearchResultAll />} />
+            <Route path=":category" element={<SearchCategory />} />
+
+            {/* <Route
               path="/search/:keyword/tracks"
               element={<SearchResultTracks />}
             />
@@ -50,7 +53,7 @@ export default function App(): React.ReactElement {
             <Route
               path="/search/:keyword/albums"
               element={<SearchResultAlbums />}
-            />
+            /> */}
             {/* <Route
               path="/search/:keyword/:searchType"
               element={<SearchResultContent />}

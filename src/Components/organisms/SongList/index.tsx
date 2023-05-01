@@ -20,7 +20,7 @@ export default function SongList({ items }: any): JSX.Element {
             </div>
           </div>
           <p className={"songlist-item__albumname"}>{item.album.name}</p>
-          <p className="songlist-item__addDate">{item.album.release_date}</p>
+          {/* <p className="songlist-item__addDate">{item.album.release_date}</p> */}
           <div className={"songlist-item__runtime"}>
             <svg
               role="img"
