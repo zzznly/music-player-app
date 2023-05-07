@@ -42,9 +42,7 @@ export default function SearchResult(): JSX.Element {
   // 검색 파라미터
   const searchParams: SearchReq = {
     q: debouncedSearchKeyword,
-    type: location.pathname.split("/")[3]
-      ? location.pathname.split("/")[3].slice(0, -1)
-      : filterMenu[0].type,
+    type: searchType,
   };
 
   // 검색결과 fetch
@@ -62,6 +60,15 @@ export default function SearchResult(): JSX.Element {
       setSearchKeyword(params.keyword);
     }
   }, [params.keyword]);
+
+  useEffect(() => {
+    console.log(location);
+    if (location.pathname.split("/")[3]) {
+      setSearchType(location.pathname.split("/")[3].slice(0, -1));
+    } else {
+      setSearchType(filterMenu[0].type);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (params.keyword !== debouncedSearchKeyword) {
