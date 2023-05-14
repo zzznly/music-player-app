@@ -53,7 +53,7 @@ export default function SearchResult(): JSX.Element {
   } = useSearchResult(searchParams, {
     enabled: !!debouncedSearchKeyword,
   });
-  console.log(11, data);
+  console.log("search result", data);
 
   useEffect(() => {
     if (params.keyword) {
@@ -63,7 +63,7 @@ export default function SearchResult(): JSX.Element {
 
   useEffect(() => {
     console.log(location);
-    if (location.pathname.split("/")[3]) {
+    if (location.pathname.split("/")[3] !== "all") {
       setSearchType(location.pathname.split("/")[3].slice(0, -1));
     } else {
       setSearchType(filterMenu[0].type);
@@ -84,7 +84,7 @@ export default function SearchResult(): JSX.Element {
         {filterMenu.map(item => (
           <Link
             to={`/search/${debouncedSearchKeyword}${
-              item.id ? `/${item.type}s` : ""
+              item.id ? `/${item.type}s` : "/all"
             }`}
             className={`search-result__filter-link ${
               searchType === item.type && `is-active`

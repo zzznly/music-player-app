@@ -16,7 +16,7 @@ export default function SearchResultAll(): JSX.Element {
     data.albums.items.length &&
     data.tracks.items.length ? (
     <div className={"search-result__content--all"}>
-      <div className="search-result__section-wrap">
+      {/* <div className="search-result__section-wrap">
         <div className="search-result__section">
           <h2 className="search-result__title">상위 결과</h2>
           <div className="search-result__card">
@@ -28,7 +28,7 @@ export default function SearchResultAll(): JSX.Element {
           <h2 className="search-result__title">곡</h2>
           <div className="search-result__list"></div>
         </div>
-      </div>
+      </div> */}
       <div className="search-result__section">
         <h2 className="search-result__title">아티스트</h2>
         <div className="search-result__list">

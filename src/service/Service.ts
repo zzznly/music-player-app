@@ -42,7 +42,7 @@ export default class Service {
   }
 
   static handleResponseError(error: any) {
-    debugger;
+    // debugger;
     switch (error.response.status) {
       case 404:
         window.location.replace("/404");
