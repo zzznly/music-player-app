@@ -22,7 +22,7 @@ export default function ListItem({
           <PlayButton />
         </div>
         <p className={"list-item__title"}>{title}</p>
-        <p className={"list-item__artists"}>{description}</p>
+        <p className={"list-item__description"}>{description}</p>
       </Link>
     </li>
   );

@@ -31,3 +31,8 @@ export const getTotalDurationTime = (tracks: any[]): string => {
 
 // 트랙 한곡 재생시간 변환 (mm분 ss초)
 export const getTrackDurationTime = () => {};
+
+// 단어의 첫글자를 대문자로 변환
+export const setFirstLetterUpperCase = (word: string) => {
+  return word.slice(0, 1).toLocaleUpperCase() + word.slice(1);
+};

@@ -18,7 +18,6 @@ import { saveTokenInfo } from "@utils/auth";
 import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";
 import SearchCategory from "@pages/SearchCategory";
-import SearchResultAll from "@pages/SearchResultAll";
 
 export default function App(): React.ReactElement {
   useEffect(() => {
@@ -31,7 +30,6 @@ export default function App(): React.ReactElement {
         <Route path="/search" element={<Search />}>
           <Route index element={<SearchMain />} />
           <Route path="/search/:keyword" element={<SearchResult />}>
-            {/* <Route index element={<SearchResultAll />} /> */}
             <Route path=":category" element={<SearchCategory />} />
           </Route>
         </Route>

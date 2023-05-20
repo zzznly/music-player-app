@@ -1,0 +1,73 @@
+.songlist-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+
+  &:hover {
+    background-color: #595959;
+    .song-albumname,
+    .song-artist {
+      color: #fff;
+    }
+  }
+
+  &__rank {
+    width: 16px;
+    color: #b3b3b3;
+  }
+
+  &__title {
+    flex: 4;
+    display: flex;
+
+    &-albumimage {
+      width: 40px;
+      height: 40px;
+      margin-right: 16px;
+    }
+
+    &-info {
+      .songlist-item__title-name {
+        margin-bottom: 4px;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+      }
+      .songlist-item__title-artist {
+        font-size: 14px;
+        font-weight: 400;
+        color: #b3b3b3;
+      }
+    }
+  }
+
+  &__albumname {
+    flex: 3;
+    font-size: 14px;
+    font-weight: 400;
+    color: #b3b3b3;
+  }
+
+  &__addDate {
+    flex: 2;
+    font-size: 14px;
+    font-weight: 400;
+    color: #b3b3b3;
+  }
+
+  &__runtime {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    font-size: 14px;
+    font-weight: 400;
+    color: #a7a7a7;
+
+    & > svg:first-child {
+      margin-right: 16px;
+    }
+  }
+}

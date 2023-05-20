@@ -62,11 +62,11 @@ export default function SearchResult(): JSX.Element {
   }, [params.keyword]);
 
   useEffect(() => {
-    console.log(location);
-    if (location.pathname.split("/")[3] !== "all") {
-      setSearchType(location.pathname.split("/")[3].slice(0, -1));
-    } else {
+    console.log(location.pathname.split("/")[3]);
+    if (location.pathname.split("/")[3] === "all") {
       setSearchType(filterMenu[0].type);
+    } else {
+      setSearchType(location?.pathname.split("/")[3].slice(0, -1));
     }
   }, [location]);
 
@@ -96,7 +96,7 @@ export default function SearchResult(): JSX.Element {
         ))}
       </div>
       <div className="search-result__content">
-        {data && <Outlet context={data} />}
+        {data ? <Outlet context={data} /> : <>no data</>}
       </div>
     </div>
   );
