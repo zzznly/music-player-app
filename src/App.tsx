@@ -14,15 +14,13 @@ import Home from "@pages/Home";
 import Login from "@pages/Login";
 import Search from "@pages/Search";
 import DetailPage from "@pages/DetailPage";
-import { saveTokenInfo } from "@utils/auth";
+import useSpotifyAuth from "@hooks/useSpotifyAuth";
 import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";
 import SearchCategory from "@pages/SearchCategory";
 
 export default function App(): React.ReactElement {
-  useEffect(() => {
-    saveTokenInfo();
-  }, []);
+  useSpotifyAuth();
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -30,14 +28,16 @@ export default function App(): React.ReactElement {
         <Route path="/search" element={<Search />}>
           <Route index element={<SearchMain />} />
           <Route path="/search/:keyword" element={<SearchResult />}>
+            <Route index element={<SearchCategory />} />
             <Route path=":category" element={<SearchCategory />} />
           </Route>
         </Route>
         <Route path="/detail/:type" element={<DetailPage />} />
       </Route>
-      <Route path="/login" element={<AuthLayout />}>
+      {/* login 페이지가 불필요함. OAuth2.0을 사용할 것이므로 스포티파이 로그인 페이지 계정으로 연결해주면 됨 */}
+      {/* <Route path="/login" element={<AuthLayout />}>
         <Route index element={<Login />} />
-      </Route>
+      </Route> */}
     </Routes>
   );
 }

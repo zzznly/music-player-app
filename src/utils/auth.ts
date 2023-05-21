@@ -7,11 +7,9 @@ export const saveTokenInfo = () => {
 
   // window.location.hash 객체가 있으면 localStorage에 토큰정보 저장!
   const params = new URLSearchParams(window.location.hash.substring(1));
-  console.log(window.location.hash);
   localStorage.setItem("access_token", params.get("access_token") ?? "");
   localStorage.setItem("expires_in", params.get("expires_in") ?? "");
   localStorage.setItem("token_type", params.get("token_type") ?? "");
-  console.log(localStorage);
 };
 
 export const removeAuthToken = () => {
@@ -25,13 +23,13 @@ export const getSpotifyAuthUrl = () => {
     response_type: "token",
     client_id: "9b8af0c052d94854acf5ccdbcf39b2d2",
     redirect_uri: "http://localhost:5005",
-    // scope: [
-    //   "user-read-currently-playing",
-    //   "user-read-recently-played",
-    //   "user-read-playback-state",
-    //   "user-top-read",
-    //   "user-modify-playback-state",
-    // ].join("%20"),
+    scope: [
+      "user-read-currently-playing",
+      "user-read-recently-played",
+      "user-read-playback-state",
+      "user-top-read",
+      "user-modify-playback-state",
+    ].join("%20"),
     // show_dialog: "true",
   };
 
