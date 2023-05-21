@@ -1,9 +1,16 @@
-import { useEffect } from "react";
-import { saveTokenInfo } from "@utils/auth";
+import { useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { saveTokenParams } from "@utils/auth";
 
 export default function useSpotifyAuth() {
-  useEffect(() => {
-    saveTokenInfo();
+  const navigate = useNavigate();
+  useLayoutEffect(() => {
+    const tokenString = window.location.hash.substring(1);
+    if (!tokenString) return;
+
+    saveTokenParams(new URLSearchParams(tokenString));
+    navigate("/");
   }, []);
 
   return {};

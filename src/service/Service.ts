@@ -2,7 +2,12 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import AuthService from "@service/Auth/AuthService";
 // router
-import { getToken, getSpotifyAuthUrl, removeAuthToken } from "../utils/auth";
+import {
+  getToken,
+  getSpotifyAuthUrl,
+  removeAuthToken,
+  redirectToLogin,
+} from "../utils/auth";
 
 export default class Service {
   service: AxiosInstance;
@@ -47,12 +52,10 @@ export default class Service {
         window.location.replace("/404");
         break;
       case 401: // 리소스 접근 자격 없음 (Unauthorized)
-        removeAuthToken(); // localStorage 토큰정보 제거
-        window.location.replace(getSpotifyAuthUrl()); // 다시 인증페이지로 이동
+        redirectToLogin();
         break;
       case 403: // 클라이언트에서 유효한 URL에 액세스하는 것이 금지됨 -> 계정이 Developer에 등록되지 않음
-        removeAuthToken();
-        window.location.replace(getSpotifyAuthUrl()); // 다시 인증페이지로 이동
+        redirectToLogin();
         break;
       default:
         return Promise.reject(error);
