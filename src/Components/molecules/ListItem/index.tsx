@@ -18,7 +18,9 @@ export default function ListItem({
     <li className={"list-item"}>
       <Link className={"list-item__link"} to={`/detail/playlist?id=${id}`}>
         <div className={"list-item__album"}>
-          <img src={imageUrl} className={"list-item__image"} alt="album" />
+          <div className={"list-item__image-wrap"}>
+            <img src={imageUrl} className={"list-item__image"} alt="album" />
+          </div>
           <PlayButton />
         </div>
         <p className={"list-item__title"}>{title}</p>

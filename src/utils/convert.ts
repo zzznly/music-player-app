@@ -36,3 +36,10 @@ export const getTrackDurationTime = () => {};
 export const setFirstLetterUpperCase = (word: string) => {
   return word.slice(0, 1).toLocaleUpperCase() + word.slice(1);
 };
+
+// 시간 단위 변환 - ms(밀리초) 를 mm:ss(mm분:ss초) 단위로 변환
+export const convertDurationTime = (ms: number): string => {
+  const seconds = ms / 1000;
+
+  return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60)}`;
+};

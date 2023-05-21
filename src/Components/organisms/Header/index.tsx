@@ -1,15 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-// atoms
-import { useAtom } from "jotai";
-import { searchKeywordAtom } from "../../../service/Search/SearchAtom";
-
+import { debounce } from "@utils/index";
 // styles
 import "./style.scss";
 
 export default function Header(): JSX.Element {
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -61,8 +56,12 @@ export default function Header(): JSX.Element {
               className="layout__header__input"
               type="search"
               placeholder="어떤 음악을 듣고 싶으세요?"
-              value={searchKeyword}
-              onChange={e => setSearchKeyword(e.target.value)}
+              onChange={debounce(e => {
+                console.log("debounce", e.target.value);
+                navigate(`/search/${e.target.value}`, {
+                  replace: true,
+                });
+              }, 200)}
             />
             <button className="layout__header__button layout__header__button--search">
               <svg

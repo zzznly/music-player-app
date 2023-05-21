@@ -2,47 +2,57 @@
 import "./style.scss";
 
 // routes
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 
-// atoms
-import { useAtom, useAtomValue } from "jotai";
-import {
-  searchFilterMenuAtom,
-  searchKeywordAtom,
-  searchTypeAtom,
-} from "../../../service/Search/SearchAtom";
-
-// hooks
-import { useEffect } from "react";
-import { useDebounce } from "../../../hooks/useDebounce";
 import { useSearchResult } from "../../../service/Search/useSearchResult";
+
+type Category = "ALL" | "TRACK" | "PLAYLIST" | "ARTIST" | "ALBUM";
+type CategoryInfo = {
+  label: string;
+  params: string;
+  path: string;
+};
+
+const CATEGORY: Record<Category, CategoryInfo> = {
+  ALL: {
+    label: "모두",
+    params: "track,playlist,artist,album",
+    path: "",
+  },
+  TRACK: {
+    label: "곡",
+    params: "track",
+    path: "tracks",
+  },
+  PLAYLIST: {
+    label: "플레이리스트",
+    params: "playlist",
+    path: "playlists",
+  },
+  ARTIST: {
+    label: "아티스트",
+    params: "artist",
+    path: "artists",
+  },
+  ALBUM: {
+    label: "앨범",
+    params: "album",
+    path: "albums",
+  },
+};
 
 export default function SearchResult(): JSX.Element {
   const params = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   // 검색 조건 - 검색어, 검색 타입
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
-  const [searchType, setSearchType] = useAtom(searchTypeAtom);
-  const debouncedSearchKeyword = useDebounce<string>(
-    params.keyword ?? searchKeyword,
-    300
-  );
-
-  // 검색 필터 데이터
-  const filterMenu = useAtomValue(searchFilterMenuAtom);
 
   // 검색 파라미터
   const searchParams: SearchReq = {
-    q: debouncedSearchKeyword,
-    type: searchType,
+    q: params.keyword ?? "",
+    type: (
+      Object.values(CATEGORY).find(({ path }) => path === params.category) ??
+      CATEGORY.ALL
+    ).params,
   };
 
   // 검색결과 fetch
@@ -51,47 +61,21 @@ export default function SearchResult(): JSX.Element {
     // **Question: AxiosResponse 타입 에러가 남
     data,
   } = useSearchResult(searchParams, {
-    enabled: !!debouncedSearchKeyword,
+    enabled: !!params.keyword,
   });
-  console.log("search result", data);
-
-  useEffect(() => {
-    if (params.keyword) {
-      setSearchKeyword(params.keyword);
-    }
-  }, [params.keyword]);
-
-  useEffect(() => {
-    console.log(location.pathname.split("/")[3]);
-    if (location.pathname.split("/")[3] === "all") {
-      setSearchType(filterMenu[0].type);
-    } else {
-      setSearchType(location?.pathname.split("/")[3].slice(0, -1));
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (params.keyword !== debouncedSearchKeyword) {
-      navigate(`/search/${debouncedSearchKeyword}`, {
-        replace: true,
-      });
-    }
-  }, [debouncedSearchKeyword]);
 
   return (
     <div className={"search-result"}>
       <div className={"search-result__filter"}>
-        {filterMenu.map(item => (
+        {Object.entries(CATEGORY).map(([key, { path, label }]) => (
           <Link
-            to={`/search/${debouncedSearchKeyword}${
-              item.id ? `/${item.type}s` : "/all"
-            }`}
+            key={key}
+            to={`/search/${params.keyword}${path && `/${path}`}`}
             className={`search-result__filter-link ${
-              searchType === item.type && `is-active`
+              (params.category ?? "") === path && `is-active`
             }`}
-            key={item.id}
           >
-            {item.label}
+            {label}
           </Link>
         ))}
       </div>

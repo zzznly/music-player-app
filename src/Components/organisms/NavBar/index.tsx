@@ -7,6 +7,10 @@ import logo from "@assets/img-logo-spotify.png";
 // router
 import { NavLink } from "react-router-dom";
 
+// 1. type, interface
+// 2. utility type
+// 3. Geneic type
+
 interface navMenu {
   menu: string;
   link: string;
@@ -67,23 +71,33 @@ export default function NavBar() {
     },
   ];
 
+  const setActiveMenu = () => {};
+
   return (
     <div className="layout__nav-bar">
-      <a href="/" className="layout__nav-bar__logo">
-        <img className="layout__nav-bar__logo-image" src={logo} alt="logo" />
-      </a>
       <div className="layout__nav-bar__menu">
-        {navMenu.map(item => (
-          <div
-            className="layout__nav-bar__item layout__nav-bar__item--active"
-            key={navMenu.indexOf(item)}
-          >
-            <NavLink className="layout__nav-bar__link" to={item.link}>
-              {item.icon}
-              <p className="layout__nav-bar__text">{item.menu}</p>
-            </NavLink>
+        <div className="layout__nav-bar__menu-wrap">
+          {navMenu.slice(0, 2).map(item => (
+            <div className="layout__nav-bar__item" key={navMenu.indexOf(item)}>
+              <NavLink
+                className="layout__nav-bar__link"
+                to={item.link}
+                // onClick={}
+              >
+                {item.icon}
+                <p className="layout__nav-bar__text">{item.menu}</p>
+              </NavLink>
+            </div>
+          ))}
+        </div>
+        <div className="layout__nav-bar__menu-wrap">
+          <div className="layout__nav-bar__item">
+            <button className="layout__nav-bar__menu-button">
+              {navMenu[2].icon}
+              <p className="layout__nav-bar__item-text">{navMenu[2].menu}</p>
+            </button>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

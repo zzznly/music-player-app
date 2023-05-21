@@ -7,7 +7,7 @@ interface Props {
   name: string;
   artist: string;
   album?: string;
-  durationTime: number;
+  durationTime: string;
 }
 export default function SongListItem({
   id,
@@ -20,11 +20,10 @@ export default function SongListItem({
 }: Props): JSX.Element {
   return (
     <li className={"songlist-item"} key={id}>
-      <button className={"songlist-item__rank"}>{idx}</button>
+      {idx && <button className={"songlist-item__rank"}>{idx}</button>}
       <div className={"songlist-item__title"}>
         <img
           className="songlist-item__title-albumimage"
-          // src={item.album.images[0].url}
           src={imgUrl}
           alt="album"
         />
@@ -33,7 +32,7 @@ export default function SongListItem({
           <p className={"songlist-item__title-artist"}>{artist}</p>
         </div>
       </div>
-      <p className={"songlist-item__albumname"}>{album}</p>
+      {album && <p className={"songlist-item__albumname"}>{album}</p>}
       <div className={"songlist-item__runtime"}>
         <svg
           role="img"
