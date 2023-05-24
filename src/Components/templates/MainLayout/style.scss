@@ -1,6 +1,6 @@
 .layout {
   width: 100%;
-  background-color: #121212;
+  // background-color: #121212;
 
   &__nav-bar {
   }
@@ -27,6 +27,7 @@
   align-items: flex-start;
   width: 100%;
   min-height: 100vh;
+  background-color: #121212;
   .layout__header {
   }
   &-main {
