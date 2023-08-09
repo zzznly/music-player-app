@@ -1,9 +1,10 @@
 import "./style.scss";
 
-import { searchKeywordAtom } from "@service/Search/SearchAtom";
-import { useOutletContext, useParams, useLocation } from "react-router-dom";
-import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
 import { useEffect, useState } from "react";
+import { useOutletContext, useParams, useLocation } from "react-router-dom";
+import { searchKeywordAtom } from "@service/Search/SearchAtom";
+import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
+
 import ListItem from "@components/molecules/ListItem";
 import SongListItem from "@components/molecules/SongListItem";
 
@@ -35,17 +36,15 @@ export default function SearchCategory(): JSX.Element {
           <div className="search-result__section tracks">
             <h2 className="search-result__title">곡</h2>
             <div className="search-result__list">
-              {data?.tracks?.items
-                ?.slice(0, 4)
-                .map((item: any, idx: number) => (
-                  <SongListItem
-                    id={item?.id}
-                    imgUrl={item?.album?.images[0]?.url}
-                    name={item?.name}
-                    artist={item?.artists[0]?.name}
-                    durationTime={convertDurationTime(item?.duration_ms)}
-                  />
-                ))}
+              {data?.tracks?.items?.slice(0, 4).map((item: any) => (
+                <SongListItem
+                  id={item?.id}
+                  imgUrl={item?.album?.images[0]?.url}
+                  name={item?.name}
+                  artist={item?.artists[0]?.name}
+                  durationTime={convertDurationTime(item?.duration_ms)}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -125,30 +124,30 @@ export default function SearchCategory(): JSX.Element {
   const { category = "all" } = useParams();
   const [resultComponent, setResultComponent] = useState(list[category]);
 
-  const [topResData, setTopResData] = useState<any>({});
+  // const [topResData, setTopResData] = useState<any>({});
 
   useEffect(() => {
     setResultComponent(list[category]);
   }, [location, category]);
 
-  const getTopResult = (data: any, type: string) => {
-    // 상위 결과 항목 노출!
-    // 1. 아티스트에 검색어가 100% 포함 되어있으면, 아티스트의 0번째 요소 노출
-    // 2. 아티스트에 검색어가 100% 포함 안되어있으면, 트랙 중에 검색어가 100% 포함된 것 노출
-    // 3. 앨범 중에 검색어가 100% 포함되어있으면 그거 노출
-    // 4. 플레이리스트 중에 검색어가 100% 포함되어있으면 그거 노출
+  // const getTopResult = () => {
+  //   // 상위 결과 항목 노출!
+  //   // - 아티스트에 검색어가 100% 포함 되어있으면, 아티스트의 0번째 요소 노출
+  //   // - 아티스트에 검색어가 100% 포함 안되어있으면, 트랙 앨범 플리 중에 검색어가 100% 포함된 것 노출
+  //   console.log(888, Object.keys(list).slice(1));
 
-    console.log(888, data);
+  //   Object.keys(list)
+  //     .slice(1)
+  //     .forEach(el => {
+  //       if (list?.el?.items[0].name.includes(searchKeywordAtom)) {
+  //         return list?.el?.items[0];
+  //       }
+  //     });
 
-    if (data?.tracks?.items[0].name.includes(searchKeywordAtom)) {
-      setTopResData(data?.tracks?.items[0]);
-      return;
-    }
-    setTopResData(data?.artists?.items[0]);
-  };
+  //   return list?.artists?.items[0];
+  // };
 
   console.log("searchCategory", list);
-
   console.log("outlet", data, data[category]);
 
   if (!list[category]) return <></>;

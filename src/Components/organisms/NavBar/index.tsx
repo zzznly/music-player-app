@@ -92,7 +92,10 @@ export default function NavBar() {
         </div>
         <div className="layout__nav-bar__menu-wrap">
           <div className="layout__nav-bar__item">
-            <button className="layout__nav-bar__menu-button">
+            <button
+              className="layout__nav-bar__menu-button"
+              onClick={() => alert("comming soon")}
+            >
               {navMenu[2].icon}
               <p className="layout__nav-bar__item-text">{navMenu[2].menu}</p>
             </button>

@@ -14,7 +14,7 @@ export default function Search(): JSX.Element {
 
   useEffect(() => {
     if (searchKeyword) {
-      navigate(`/search/${searchKeyword}/all`);
+      navigate(`/search/${searchKeyword}`);
     }
   }, [searchKeyword]);
 
