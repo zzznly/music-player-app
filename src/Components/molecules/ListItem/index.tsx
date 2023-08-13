@@ -21,7 +21,6 @@ export default function ListItem({
           <div className={"list-item__image-wrap"}>
             <img src={imageUrl} className={"list-item__image"} alt="album" />
           </div>
-          <PlayButton />
         </div>
         <p className={"list-item__title"}>{title}</p>
         <p className={"list-item__description"}>{description}</p>

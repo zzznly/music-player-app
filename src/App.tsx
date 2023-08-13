@@ -22,22 +22,24 @@ import SearchCategory from "@pages/SearchCategory";
 export default function App(): React.ReactElement {
   useSpotifyAuth();
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/search" element={<Search />}>
-          <Route index element={<SearchMain />} />
-          <Route path="/search/:keyword" element={<SearchResult />}>
-            <Route index element={<SearchCategory />} />
-            <Route path=":category" element={<SearchCategory />} />
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/search" element={<Search />}>
+            <Route index element={<SearchMain />} />
+            <Route path="/search/:keyword" element={<SearchResult />}>
+              <Route index element={<SearchCategory />} />
+              <Route path=":category" element={<SearchCategory />} />
+            </Route>
           </Route>
+          <Route path="/detail/:type" element={<DetailPage />} />
         </Route>
-        <Route path="/detail/:type" element={<DetailPage />} />
-      </Route>
-      {/* login 페이지가 불필요함. OAuth2.0을 사용할 것이므로 스포티파이 로그인 페이지 계정으로 연결해주면 됨 */}
-      {/* <Route path="/login" element={<AuthLayout />}>
+        {/* login 페이지가 불필요함. OAuth2.0을 사용할 것이므로 스포티파이 로그인 페이지 계정으로 연결해주면 됨 */}
+        {/* <Route path="/login" element={<AuthLayout />}>
         <Route index element={<Login />} />
       </Route> */}
-    </Routes>
+      </Routes>
+    </div>
   );
 }

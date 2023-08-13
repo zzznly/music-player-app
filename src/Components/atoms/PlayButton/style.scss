@@ -18,9 +18,9 @@
     left: 12px;
   }
 
-  .list-item:hover & {
-    transition: transform 0.3s ease;
-    opacity: 1;
-    transform: translateY(-12px);
-  }
+  // .list-item:hover & {
+  //   transition: transform 0.3s ease;
+  //   opacity: 1;
+  //   transform: translateY(-12px);
+  // }
 }

@@ -19,7 +19,6 @@ export default function MainLayout(): JSX.Element {
           <Outlet />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

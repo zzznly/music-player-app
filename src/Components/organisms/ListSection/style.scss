@@ -7,22 +7,26 @@
   }
   .list {
     display: flex;
-    flex-wrap: wrap;
-    margin: 0 -12px;
+    gap: 24px;
+
     &-item {
     }
   }
 }
 
 .section {
+  // padding: 24px 32px;
   margin-bottom: 16px;
+  // background-color: #fff;
+  border-radius: 24px;
 }
 
 .section-head {
   &__title {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
-    color: #ffffff;
+    line-height: 22px;
+    color: #4d4d56;
   }
   &__link--all {
     font-size: 14px;
