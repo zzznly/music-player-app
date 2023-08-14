@@ -11,7 +11,6 @@ import AuthLayout from "./components/templates/AuthLayout";
 
 // components
 import Home from "@pages/Home";
-import Login from "@pages/Login";
 import Search from "@pages/Search";
 import DetailPage from "@pages/DetailPage";
 import useSpotifyAuth from "@hooks/useSpotifyAuth";
@@ -37,8 +36,8 @@ export default function App(): React.ReactElement {
         </Route>
         {/* login 페이지가 불필요함. OAuth2.0을 사용할 것이므로 스포티파이 로그인 페이지 계정으로 연결해주면 됨 */}
         {/* <Route path="/login" element={<AuthLayout />}>
-        <Route index element={<Login />} />
-      </Route> */}
+          <Route index element={<Login />} />
+        </Route> */}
       </Routes>
     </div>
   );
