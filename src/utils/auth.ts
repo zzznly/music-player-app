@@ -25,6 +25,9 @@ export const getSpotifyAuthUrl = () => {
       "user-read-playback-state",
       "user-top-read",
       "user-modify-playback-state",
+      "streaming",
+      "user-read-email",
+      "user-read-private",
     ].join("%20"),
     show_dialog: "true",
   };

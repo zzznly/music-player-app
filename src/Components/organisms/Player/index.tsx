@@ -7,8 +7,43 @@ import prevIcon from "@assets/images/icon/ico-prev.svg";
 import nextIcon from "@assets/images/icon/ico-next.svg";
 import shuffleIcon from "@assets/images/icon/ico-shuffle.svg";
 import repeatIcon from "@assets/images/icon/ico-repeat.svg";
+import { useEffect, useState } from "react";
+import { getToken } from "@utils/auth";
 
 export default function Player(): JSX.Element {
+  const [player, setPlayer] = useState(undefined);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://sdk.scdn.co/spotify-player.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    (window as any).onSpotifyWebPlaybackSDKReady = () => {
+      const token = getToken();
+      const player = new (window as any).Spotify.Player({
+        name: "Web Playback SDK",
+        getOAuthToken: (cb: any) => {
+          cb(token);
+        },
+        volume: 0.5,
+      });
+
+      setPlayer(player);
+
+      player.addListener("ready", (event: { device_id: string }) => {
+        console.log("Ready with Device ID", event.device_id);
+      });
+
+      player.addListener("not_ready", (event: { device_id: string }) => {
+        console.log("Device ID has gone offline", event.device_id);
+      });
+
+      player.connect();
+    };
+  }, []);
+
   return (
     <div className="layout__player">
       <div className="layout__player__list">
