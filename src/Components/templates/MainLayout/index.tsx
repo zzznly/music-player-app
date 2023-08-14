@@ -3,8 +3,8 @@ import "./style.scss";
 
 // components
 import NavBar from "../../organisms/NavBar";
-import Footer from "../../organisms/Footer";
 import Header from "../../organisms/Header";
+import Player from "@components/organisms/Player";
 
 // router
 import { Outlet } from "react-router-dom";
@@ -19,6 +19,7 @@ export default function MainLayout(): JSX.Element {
           <Outlet />
         </div>
       </div>
+      <Player />
     </div>
   );
 }

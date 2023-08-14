@@ -1,8 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { debounce } from "@utils/index";
+
 // styles
 import "./style.scss";
+
+import searchIcon from "@assets/images/icon/ico-input-search.svg";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
@@ -46,17 +49,25 @@ export default function Header(): JSX.Element {
           </button>
         </div>
         <div
-          className={`layout__header__search ${
-            location.pathname.includes("search") &&
+          className={`layout__header__search 
+          ${
+            // location.pathname.includes("search") &&
             `layout__header__search--show`
-          }`}
+          }
+          `}
         >
           <div className="layout__header__search-content">
             <input
               className="layout__header__input"
               type="search"
-              placeholder="어떤 음악을 듣고 싶으세요?"
+              placeholder="Search..."
               onChange={debounce(e => {
+                console.log("debounce", e.target.value);
+                navigate(`/search/${e.target.value}`, {
+                  replace: true,
+                });
+              }, 200)}
+              onFocus={debounce(e => {
                 console.log("debounce", e.target.value);
                 navigate(`/search/${e.target.value}`, {
                   replace: true,
@@ -64,16 +75,7 @@ export default function Header(): JSX.Element {
               }, 200)}
             />
             <button className="layout__header__button layout__header__button--search">
-              <svg
-                role="img"
-                height="24"
-                width="24"
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                data-encore-id="icon"
-              >
-                <path d="M10.533 1.279c-5.18 0-9.407 4.14-9.407 9.279s4.226 9.279 9.407 9.279c2.234 0 4.29-.77 5.907-2.058l4.353 4.353a1 1 0 1 0 1.414-1.414l-4.344-4.344a9.157 9.157 0 0 0 2.077-5.816c0-5.14-4.226-9.28-9.407-9.28zm-7.407 9.279c0-4.006 3.302-7.28 7.407-7.28s7.407 3.274 7.407 7.28-3.302 7.279-7.407 7.279-7.407-3.273-7.407-7.28z"></path>
-              </svg>
+              <img src={searchIcon} />
             </button>
           </div>
         </div>
