@@ -45,6 +45,9 @@ export const redirectToLogin = ({
     "user-read-playback-state",
     "user-top-read",
     "user-modify-playback-state",
+    "streaming",
+    "user-read-email",
+    "user-read-private",
   ],
   show_dialog = true,
 }: {
