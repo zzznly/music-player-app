@@ -10,20 +10,30 @@ import repeatIcon from "@assets/images/icon/ico-repeat.svg";
 import { useEffect, useState } from "react";
 import { getToken } from "@utils/auth";
 import {
+  useCurrentPlayingTrack,
+  useMutationPlayerPause,
   useMutationPlayerStart,
+  useMutationSkipNext,
+  useMutationSkipPrev,
   usePlaybackState,
 } from "@service/Player/usePlayer";
 import axios from "axios";
 
-export default function Player(props: any): JSX.Element {
-  const [player, setPlayer] = useState(undefined);
-  const [device_id, setDeviceId] = useState<string>("");
-  const [playerReady, setReady] = useState<boolean>(false);
-  const [currentTrack, setTrack] = useState({});
-  const [paused, setPaused] = useState(false);
-  const [position, setPosition] = useState("");
+export default function Player({
+  current_track,
+  is_paused,
+  device_id,
+  spotifyUris,
+}: any): JSX.Element {
+  // 플레이어 컨트롤러
+  const onPlay = useMutationPlayerStart(device_id, spotifyUris);
+  const onPause = useMutationPlayerPause(device_id);
+  const skipNext = useMutationSkipNext(device_id);
+  const skipPrev = useMutationSkipPrev(device_id);
 
-  const { current_track, current_position, is_paused, onPlay } = props.data;
+  const { data: { is_playing = false, item = {}, progress_ms = 0 } = {} } =
+    useCurrentPlayingTrack({});
+  console.log("is_playing", is_playing, progress_ms, current_track);
 
   return (
     <div className="layout__player">
@@ -74,14 +84,25 @@ export default function Player(props: any): JSX.Element {
           </li>
         </ul>
       </div>
+
       <div className="layout__player__container">
         <h2 className="layout__player__container-title">NOW PLAYING</h2>
         <div className="layout__player__container-album">
-          <img src="" />
+          <img
+            src={
+              current_track?.album?.images[0].url ??
+              "https://dummyimage.com/200x120/ccc/fff.png"
+            }
+            alt="track album"
+          />
         </div>
         <div className="layout__player__container-song-info">
-          <p className="layout__player__container-song-name">Dynamite</p>
-          <p className="layout__player__container-song-artist">BTS</p>
+          <p className="layout__player__container-song-name">
+            {item?.name || "No track"}
+          </p>
+          <p className="layout__player__container-song-artist">
+            {item?.artists?.[0]?.name || "No Track"}
+          </p>
         </div>
         <div className="layout__player__bar">
           <div className="layout__player__progress"></div>
@@ -92,21 +113,29 @@ export default function Player(props: any): JSX.Element {
         </div>
         <div className="layout__player__controller">
           <div className="layout__player__controller-left">
-            <img src={shuffleIcon} />
-            <img src={prevIcon} />
+            <button>
+              <img src={shuffleIcon} />
+            </button>
+            <button onClick={() => skipPrev.mutate()}>
+              <img src={prevIcon} />
+            </button>
           </div>
           <button
             className="layout__player__controller-playpause"
-            // onClick={onPlay("spotify:track:6rdkCkjk6D12xRpdMXy0I2", true)}
+            onClick={() => (is_paused ? onPlay.mutate() : onPause.mutate())}
           >
             <img
-              className={true ? "icon--play" : "icon--pause"}
-              src={true ? playIcon : pauseIcon}
+              className={is_paused ? "icon--play" : "icon--pause"}
+              src={is_paused ? playIcon : pauseIcon}
             />
           </button>
           <div className="layout__player__controller-right">
-            <img src={nextIcon} />
-            <img src={repeatIcon} />
+            <button onClick={() => skipNext.mutate()}>
+              <img src={nextIcon} />
+            </button>
+            <button>
+              <img src={repeatIcon} />
+            </button>
           </div>
         </div>
       </div>
