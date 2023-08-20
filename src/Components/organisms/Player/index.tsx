@@ -9,40 +9,21 @@ import shuffleIcon from "@assets/images/icon/ico-shuffle.svg";
 import repeatIcon from "@assets/images/icon/ico-repeat.svg";
 import { useEffect, useState } from "react";
 import { getToken } from "@utils/auth";
+import {
+  useMutationPlayerStart,
+  usePlaybackState,
+} from "@service/Player/usePlayer";
+import axios from "axios";
 
-export default function Player(): JSX.Element {
+export default function Player(props: any): JSX.Element {
   const [player, setPlayer] = useState(undefined);
+  const [device_id, setDeviceId] = useState<string>("");
+  const [playerReady, setReady] = useState<boolean>(false);
+  const [currentTrack, setTrack] = useState({});
+  const [paused, setPaused] = useState(false);
+  const [position, setPosition] = useState("");
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://sdk.scdn.co/spotify-player.js";
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    (window as any).onSpotifyWebPlaybackSDKReady = () => {
-      const token = getToken();
-      const player = new (window as any).Spotify.Player({
-        name: "Web Playback SDK",
-        getOAuthToken: (cb: any) => {
-          cb(token);
-        },
-        volume: 0.5,
-      });
-
-      setPlayer(player);
-
-      player.addListener("ready", (event: { device_id: string }) => {
-        console.log("Ready with Device ID", event.device_id);
-      });
-
-      player.addListener("not_ready", (event: { device_id: string }) => {
-        console.log("Device ID has gone offline", event.device_id);
-      });
-
-      player.connect();
-    };
-  }, []);
+  const { current_track, current_position, is_paused, onPlay } = props.data;
 
   return (
     <div className="layout__player">
@@ -62,7 +43,6 @@ export default function Player(): JSX.Element {
               <p className="layout__player__track-artist">New Jeans</p>
             </div>
             <div className="layout__player__track-runtime">02:27</div>
-            {/* <button className="layout__player__track-button-more">..</button> */}
           </li>
           <li className="layout__player__track">
             <div className="layout__player__track-index">02</div>
@@ -77,7 +57,6 @@ export default function Player(): JSX.Element {
               <p className="layout__player__track-artist">New Jeans</p>
             </div>
             <div className="layout__player__track-runtime">02:27</div>
-            {/* <button className="layout__player__track-button-more">..</button> */}
           </li>
           <li className="layout__player__track">
             <div className="layout__player__track-index">03</div>
@@ -92,7 +71,6 @@ export default function Player(): JSX.Element {
               <p className="layout__player__track-artist">New Jeans</p>
             </div>
             <div className="layout__player__track-runtime">02:34</div>
-            {/* <button className="layout__player__track-button-more">..</button> */}
           </li>
         </ul>
       </div>
@@ -117,12 +95,15 @@ export default function Player(): JSX.Element {
             <img src={shuffleIcon} />
             <img src={prevIcon} />
           </div>
-          <div className="layout__player__controller-playpause">
+          <button
+            className="layout__player__controller-playpause"
+            // onClick={onPlay("spotify:track:6rdkCkjk6D12xRpdMXy0I2", true)}
+          >
             <img
               className={true ? "icon--play" : "icon--pause"}
               src={true ? playIcon : pauseIcon}
             />
-          </div>
+          </button>
           <div className="layout__player__controller-right">
             <img src={nextIcon} />
             <img src={repeatIcon} />
