@@ -25,11 +25,13 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
     <ListSection
       title={name}
       data={items.map(
-        ({ id, images, name, description }: CategoryPlaylistItem) => ({
+        // Q: 데이터 가공 안하고 쓰면 왜 이미지가 안나오지?
+        ({ id, images, name, type, description }: CategoryPlaylistItem) => ({
           id,
           imageUrl: images[0].url,
           title: name,
           description,
+          type,
         })
       )}
       hasShowMore={true}
