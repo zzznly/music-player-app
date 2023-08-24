@@ -5,6 +5,11 @@ interface UseQueryProps {
   // select?: ({ data }: any) => void;
 }
 
+interface UseMutationProps {
+  onSuccess: ({ data }: any) => void;
+  onError?: ({ error }: any) => void;
+}
+
 interface Image {
   height: number;
   url: string;
