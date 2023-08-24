@@ -7,11 +7,18 @@ class PlayerService extends Service {
   }
 
   // start/resume
-  startPlayback(device_id: string, uris: string[]) {
+  startPlayback(device_id: string, uri: string | undefined) {
     return this.service
-      .put(`/me/player/play?device_id=${device_id}`, {
-        uris,
-      })
+      .put(
+        `/me/player/play?device_id=${device_id}`,
+        uri?.split(":")[1] === "track"
+          ? {
+              uris: [uri],
+            }
+          : {
+              context_uri: uri,
+            }
+      )
       .then(res => {
         console.log("play", res);
       })
@@ -71,11 +78,16 @@ class PlayerService extends Service {
     );
   }
 
-  // add track to current playlist
+  // add track to current playlist (queue)
   addToPlaybackList(uri: string, device_id: string) {
     return this.service.post(
       `/me/player/queue?uri=${uri}&device_id=${device_id}`
     );
+  }
+
+  // get user's current playlist (queue)
+  getPlaybackList() {
+    return this.service.get("/me/player/queue");
   }
 }
 
