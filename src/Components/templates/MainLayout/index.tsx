@@ -17,6 +17,7 @@ import { getToken } from "@utils/auth";
 import PlayerService from "@service/Player/PlayerService";
 import {
   useCurrentPlayingTrack,
+  useCurrentPlaylist,
   useMutationPlayerStart,
 } from "@service/Player/usePlayer";
 
@@ -81,19 +82,6 @@ export default function MainLayout(): JSX.Element {
     };
   }, [token]);
 
-  const [spotifyUris, setUris] = useState<string[]>([
-    "spotify:track:2pIUpMhHL6L9Z5lnKxJJr9",
-    "spotify:track:6rdkCkjk6D12xRpdMXy0I2",
-    "spotify:track:0a4MMyCrzT0En247IhqZbD",
-    "spotify:track:56v8WEnGzLByGsDAXDiv4d",
-    "spotify:track:5702raF31K9rvD6KZ6sCTo",
-  ]);
-
-  useEffect(() => {
-    console.log("current_track", current_track);
-    console.log("is_paused", is_paused);
-  }, [current_track, is_paused]);
-
   return (
     <div className="layout layout--row">
       <NavBar />
@@ -109,7 +97,6 @@ export default function MainLayout(): JSX.Element {
             current_track,
             is_paused,
             device_id,
-            spotifyUris,
           }}
         />
       )}

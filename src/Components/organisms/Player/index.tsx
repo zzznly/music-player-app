@@ -11,134 +11,132 @@ import { useEffect, useState } from "react";
 import { getToken } from "@utils/auth";
 import {
   useCurrentPlayingTrack,
+  useCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
   useMutationSkipNext,
   useMutationSkipPrev,
   usePlaybackState,
 } from "@service/Player/usePlayer";
-import axios from "axios";
+import { useAtom, useAtomValue } from "jotai";
+import { spotifyUri } from "@service/Player/PlayerAtom";
 
 export default function Player({
   current_track,
   is_paused,
   device_id,
-  spotifyUris,
 }: any): JSX.Element {
+  // 재생할 항목의 uri (spotify:type:id)
+  const [item_uri, setUri] = useAtom(spotifyUri);
+
   // 플레이어 컨트롤러
-  const onPlay = useMutationPlayerStart(device_id, spotifyUris);
+  const onPlay = useMutationPlayerStart(device_id, item_uri);
   const onPause = useMutationPlayerPause(device_id);
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
 
-  const { data: { is_playing = false, item = {}, progress_ms = 0 } = {} } =
-    useCurrentPlayingTrack({});
-  console.log("is_playing", is_playing, progress_ms, current_track);
+  const { isSuccess, data: { queue } = {} } = useCurrentPlaylist({});
+
+  useEffect(() => {
+    if (device_id && item_uri) {
+      onPlay.mutate();
+    }
+  }, [item_uri]);
 
   return (
-    <div className="layout__player">
-      <div className="layout__player__list">
-        <h2 className="layout__player__list-title">NOW PLAYING</h2>
-        <ul className="layout__player__list-tracks">
-          <li className="layout__player__track layout__player__track--active">
-            <div className="layout__player__track-index">01</div>
-            <div className="layout__player__track-album">
-              <img
-                className="layout__player__track-album-image"
-                src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F658%2F2023%2F07%2F25%2F0000047479_001_20230725030416726.jpg&type=sc960_832"
-              />
-            </div>
-            <div className="layout__player__track-info">
-              <p className="layout__player__track-name">Cool With You</p>
-              <p className="layout__player__track-artist">New Jeans</p>
-            </div>
-            <div className="layout__player__track-runtime">02:27</div>
-          </li>
-          <li className="layout__player__track">
-            <div className="layout__player__track-index">02</div>
-            <div className="layout__player__track-album">
-              <img
-                className="layout__player__track-album-image"
-                src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F658%2F2023%2F07%2F25%2F0000047479_001_20230725030416726.jpg&type=sc960_832"
-              />
-            </div>
-            <div className="layout__player__track-info">
-              <p className="layout__player__track-name">ETA</p>
-              <p className="layout__player__track-artist">New Jeans</p>
-            </div>
-            <div className="layout__player__track-runtime">02:27</div>
-          </li>
-          <li className="layout__player__track">
-            <div className="layout__player__track-index">03</div>
-            <div className="layout__player__track-album">
-              <img
-                className="layout__player__track-album-image"
-                src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F658%2F2023%2F07%2F25%2F0000047479_001_20230725030416726.jpg&type=sc960_832"
-              />
-            </div>
-            <div className="layout__player__track-info">
-              <p className="layout__player__track-name">Super Shy</p>
-              <p className="layout__player__track-artist">New Jeans</p>
-            </div>
-            <div className="layout__player__track-runtime">02:34</div>
-          </li>
-        </ul>
-      </div>
-
-      <div className="layout__player__container">
-        <h2 className="layout__player__container-title">NOW PLAYING</h2>
-        <div className="layout__player__container-album">
-          <img
-            src={
-              current_track?.album?.images[0].url ??
-              "https://dummyimage.com/200x120/ccc/fff.png"
-            }
-            alt="track album"
-          />
+    <>
+      {/* {isSuccess && ( */}
+      <div className="layout__player">
+        <div className="layout__player__list">
+          <h2 className="layout__player__list-title">NOW PLAYING</h2>
+          <ul className="layout__player__list-tracks">
+            {queue?.map((item: any, idx: number) => (
+              <li
+                className={`layout__player__track ${
+                  item.id === current_track.id &&
+                  "layout__player__track--active"
+                }`}
+                onClick={() => setUri(item.uri)}
+              >
+                <div className="layout__player__track-index">
+                  {String(idx + 1).padStart(2, "0")}
+                </div>
+                <div className="layout__player__track-album">
+                  <img
+                    className="layout__player__track-album-image"
+                    src={
+                      item?.album?.images?.[0]?.url ??
+                      "https://dummyimage.com/200x120/ccc/fff.png"
+                    }
+                  />
+                </div>
+                <div className="layout__player__track-info">
+                  <p className="layout__player__track-name">{item.name}</p>
+                  <p className="layout__player__track-artist">
+                    {item?.artists?.[0]?.name}
+                  </p>
+                </div>
+                <div className="layout__player__track-runtime">02:27</div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="layout__player__container-song-info">
-          <p className="layout__player__container-song-name">
-            {item?.name || "No track"}
-          </p>
-          <p className="layout__player__container-song-artist">
-            {item?.artists?.[0]?.name || "No Track"}
-          </p>
-        </div>
-        <div className="layout__player__bar">
-          <div className="layout__player__progress"></div>
-          <div className="layout__player__time">
-            <div className="layout__player__time-left">2:18</div>
-            <div className="layout__player__time-left">4:15</div>
-          </div>
-        </div>
-        <div className="layout__player__controller">
-          <div className="layout__player__controller-left">
-            <button>
-              <img src={shuffleIcon} />
-            </button>
-            <button onClick={() => skipPrev.mutate()}>
-              <img src={prevIcon} />
-            </button>
-          </div>
-          <button
-            className="layout__player__controller-playpause"
-            onClick={() => (is_paused ? onPlay.mutate() : onPause.mutate())}
-          >
+        <div className="layout__player__container">
+          <h2 className="layout__player__container-title">NOW PLAYING</h2>
+          <div className="layout__player__container-album">
             <img
-              className={is_paused ? "icon--play" : "icon--pause"}
-              src={is_paused ? playIcon : pauseIcon}
+              src={
+                current_track?.album?.images?.[0]?.url ??
+                "https://dummyimage.com/200x120/ccc/fff.png"
+              }
+              alt="track album"
             />
-          </button>
-          <div className="layout__player__controller-right">
-            <button onClick={() => skipNext.mutate()}>
-              <img src={nextIcon} />
+          </div>
+          <div className="layout__player__container-song-info">
+            <p className="layout__player__container-song-name">
+              {current_track?.name || "No track"}
+            </p>
+            <p className="layout__player__container-song-artist">
+              {current_track?.artists?.[0]?.name || "No Track"}
+            </p>
+          </div>
+          <div className="layout__player__bar">
+            <div className="layout__player__progress"></div>
+            <div className="layout__player__time">
+              <div className="layout__player__time-left">2:18</div>
+              <div className="layout__player__time-left">4:15</div>
+            </div>
+          </div>
+          <div className="layout__player__controller">
+            <div className="layout__player__controller-left">
+              <button>
+                <img src={shuffleIcon} />
+              </button>
+              <button onClick={() => skipPrev.mutate()}>
+                <img src={prevIcon} />
+              </button>
+            </div>
+            <button
+              className="layout__player__controller-playpause"
+              onClick={() => (is_paused ? onPlay.mutate() : onPause.mutate())}
+            >
+              <img
+                className={is_paused ? "icon--play" : "icon--pause"}
+                src={is_paused ? playIcon : pauseIcon}
+              />
             </button>
-            <button>
-              <img src={repeatIcon} />
-            </button>
+            <div className="layout__player__controller-right">
+              <button onClick={() => skipNext.mutate()}>
+                <img src={nextIcon} />
+              </button>
+              <button>
+                <img src={repeatIcon} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {/* )} */}
+    </>
   );
 }
