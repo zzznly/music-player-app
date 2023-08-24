@@ -22,6 +22,8 @@
   }
   &__list-tracks {
     margin: 16px 0 8px;
+    height: 300px;
+    overflow-y: auto;
   }
 
   &__track {
