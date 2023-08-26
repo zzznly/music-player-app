@@ -51,11 +51,12 @@ export default function SearchCategory(): JSX.Element {
         <div className="search-result__section artists">
           <h2>{Object.keys(data)[1]}</h2>
           <ul className="search-result__list">
-            {data.artists?.items?.map((item: any) => (
+            {data.artists?.items?.map(({ name, images, type, uri }: any) => (
               <ListItem
-                title={item?.name}
-                imageUrl={item?.images[0]?.url}
-                description={item?.type}
+                title={name}
+                imageUrl={images[0]?.url}
+                description={type}
+                uri={uri}
               />
             ))}
           </ul>
@@ -63,11 +64,12 @@ export default function SearchCategory(): JSX.Element {
         <div className="search-result__section albums">
           <h2>{Object.keys(data)[0]}</h2>
           <ul className="search-result__list">
-            {data.albums?.items?.map((item: any) => (
+            {data.albums?.items?.map(({ name, images, type, uri }: any) => (
               <ListItem
-                title={item?.name}
-                imageUrl={item?.images[0]?.url}
-                description={item?.type}
+                title={name}
+                imageUrl={images[0]?.url}
+                description={type}
+                uri={uri}
               />
             ))}
           </ul>
@@ -75,11 +77,12 @@ export default function SearchCategory(): JSX.Element {
         <div className="search-result__section playlists">
           <h2>{Object.keys(data)[3]}</h2>
           <ul className="search-result__list">
-            {data.playlists?.items?.map((item: any) => (
+            {data.playlists?.items?.map(({ name, images, owner, uri }: any) => (
               <ListItem
-                title={item?.name}
-                imageUrl={item?.images[0]?.url}
-                description={`만든 사람: ${item?.owner?.display_name}`}
+                title={name}
+                imageUrl={images[0]?.url}
+                description={`만든 사람: ${owner?.display_name}`}
+                uri={uri}
               />
             ))}
           </ul>
@@ -97,25 +100,27 @@ export default function SearchCategory(): JSX.Element {
         durationTime={convertDurationTime(item?.duration_ms)}
       />
     )),
-    playlists: data?.playlists?.items?.map((item: any) => (
+    playlists: data?.playlists?.items?.map(({ name, images, owner }: any) => (
       <ListItem
-        title={item?.name}
-        imageUrl={item?.images[0]?.url}
-        description={`만든 사람: ${item?.owner?.display_name}`}
+        title={name}
+        imageUrl={images[0]?.url}
+        description={`만든 사람: ${owner?.display_name}`}
       />
     )),
-    artists: data?.artists?.items?.map((item: any) => (
+    artists: data?.artists?.items?.map(({ name, images, type, uri }: any) => (
       <ListItem
-        title={item?.name}
-        imageUrl={item?.images[0]?.url}
-        description={item?.type}
+        title={name}
+        imageUrl={images[0]?.url}
+        description={type}
+        uri={uri}
       />
     )),
-    albums: data?.albums?.items?.map((item: any) => (
+    albums: data?.albums?.items?.map(({ name, images, type, uri }: any) => (
       <ListItem
-        title={item.name}
-        imageUrl={item?.images[0]?.url}
-        description={item?.type}
+        title={name}
+        imageUrl={images[0]?.url}
+        description={type}
+        uri={uri}
       />
     )),
   };
