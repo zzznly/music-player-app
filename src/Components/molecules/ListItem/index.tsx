@@ -8,19 +8,19 @@ export interface ListItemProps {
   imageUrl?: string;
   title?: string;
   description?: string;
-  type?: string;
+  uri?: string;
 }
 export default function ListItem({
   id,
   imageUrl,
   title,
   description,
-  type,
+  uri,
 }: ListItemProps): JSX.Element {
   const [item_uri, setUri] = useAtom(spotifyUri);
 
   return (
-    <li className={"list-item"} onClick={() => setUri(`spotify:${type}:${id}`)}>
+    <li className={"list-item"} onClick={() => setUri(uri)}>
       {/* <Link className={"list-item__link"} to={`/detail/playlist?id=${id}`}> */}
       <div className={"list-item__album"}>
         <img src={imageUrl} className={"list-item__album-image"} alt="album" />

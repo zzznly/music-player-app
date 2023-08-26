@@ -26,12 +26,12 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
       title={name}
       data={items.map(
         // Q: 데이터 가공 안하고 쓰면 왜 이미지가 안나오지?
-        ({ id, images, name, type, description }: CategoryPlaylistItem) => ({
+        ({ id, images, name, description, uri }: CategoryPlaylistItem) => ({
           id,
           imageUrl: images[0].url,
           title: name,
           description,
-          type,
+          uri,
         })
       )}
       hasShowMore={true}
