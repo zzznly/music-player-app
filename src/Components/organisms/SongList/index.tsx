@@ -13,6 +13,7 @@ export default function SongList({ items }: any): JSX.Element {
           artist={item.artist[0].name}
           album={item.album[0].name}
           durationTime={item.duration_ms}
+          uri={item.uri}
         />
       ))}
     </div>

@@ -59,35 +59,41 @@ export default function Player({
         <div className="layout__player__list">
           <h2 className="layout__player__list-title">NOW PLAYING</h2>
           <ul className="layout__player__list-tracks">
-            {queue?.map((item: any, idx: number) => (
-              <li
-                className={`layout__player__track ${
-                  item.id === current_track.id &&
-                  "layout__player__track--active"
-                }`}
-                onClick={() => setUri(item.uri)}
-              >
-                <div className="layout__player__track-index">
-                  {String(idx + 1).padStart(2, "0")}
-                </div>
-                <div className="layout__player__track-album">
-                  <img
-                    className="layout__player__track-album-image"
-                    src={
-                      item?.album?.images?.[0]?.url ??
-                      "https://dummyimage.com/200x120/ccc/fff.png"
-                    }
-                  />
-                </div>
-                <div className="layout__player__track-info">
-                  <p className="layout__player__track-name">{item.name}</p>
-                  <p className="layout__player__track-artist">
-                    {item?.artists?.[0]?.name}
-                  </p>
-                </div>
-                <div className="layout__player__track-runtime">02:27</div>
-              </li>
-            ))}
+            {queue?.map(
+              (
+                { id, uri, album, artists, name, duration_ms }: any,
+                idx: number
+              ) => (
+                <li
+                  className={`layout__player__track ${
+                    id === current_track.id && "layout__player__track--active"
+                  }`}
+                  onClick={() => setUri(uri)}
+                >
+                  <div className="layout__player__track-index">
+                    {String(idx + 1).padStart(2, "0")}
+                  </div>
+                  <div className="layout__player__track-album">
+                    <img
+                      className="layout__player__track-album-image"
+                      src={
+                        album?.images?.[0]?.url ??
+                        "https://dummyimage.com/200x120/ccc/fff.png"
+                      }
+                    />
+                  </div>
+                  <div className="layout__player__track-info">
+                    <p className="layout__player__track-name">{name}</p>
+                    <p className="layout__player__track-artist">
+                      {artists?.[0]?.name}
+                    </p>
+                  </div>
+                  <div className="layout__player__track-runtime">
+                    {duration_ms}
+                  </div>
+                </li>
+              )
+            )}
           </ul>
         </div>
         <div className="layout__player__container">

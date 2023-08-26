@@ -43,6 +43,7 @@ export default function SearchCategory(): JSX.Element {
                   name={item?.name}
                   artist={item?.artists[0]?.name}
                   durationTime={convertDurationTime(item?.duration_ms)}
+                  uri={item.uri}
                 />
               ))}
             </div>
@@ -98,15 +99,19 @@ export default function SearchCategory(): JSX.Element {
         artist={item?.artists[0]?.name}
         album={item?.album?.name}
         durationTime={convertDurationTime(item?.duration_ms)}
+        uri={item.uri}
       />
     )),
-    playlists: data?.playlists?.items?.map(({ name, images, owner }: any) => (
-      <ListItem
-        title={name}
-        imageUrl={images[0]?.url}
-        description={`만든 사람: ${owner?.display_name}`}
-      />
-    )),
+    playlists: data?.playlists?.items?.map(
+      ({ name, images, owner, uri }: any) => (
+        <ListItem
+          title={name}
+          imageUrl={images[0]?.url}
+          description={`만든 사람: ${owner?.display_name}`}
+          uri={uri}
+        />
+      )
+    ),
     artists: data?.artists?.items?.map(({ name, images, type, uri }: any) => (
       <ListItem
         title={name}
