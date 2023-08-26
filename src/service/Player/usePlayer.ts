@@ -22,31 +22,38 @@ export const useCurrentPlayingTrack = ({
   });
 };
 
-export const useCurrentPlaylist = ({ onSuccess }: UseQueryProps) => {
+export const useCurrentPlaylist = ({ onSuccess, onError }: UseQueryProps) => {
   return useQuery({
     queryKey: ["player.currentPlaylist"],
     queryFn: () => PlayerService.getPlaybackList(),
     onSuccess,
-    retry: 3,
+    onError,
+  });
+};
+
+export const useMutationAddCurrentPlaylist = (
+  device_id: string,
+  uri: string | undefined
+) => {
+  return useMutation({
+    mutationFn: () => {
+      return PlayerService.addToPlaybackList(device_id, uri);
+    },
+    onSuccess: () => {
+      console.log("added to current playlist");
+    },
+    onError: () => {},
   });
 };
 
 export const useMutationPlayerStart = (
   device_id: string,
-  uri: string | undefined
+  uri: string | undefined,
+  { onSuccess, onError }: UseQueryProps
 ) => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: () => {
       return PlayerService.startPlayback(device_id, uri);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
-      console.log("play success");
-    },
-    onError: err => {
-      console.log("play error", err);
     },
   });
 };

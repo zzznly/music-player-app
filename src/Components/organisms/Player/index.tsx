@@ -30,12 +30,21 @@ export default function Player({
   const [item_uri, setUri] = useAtom(spotifyUri);
 
   // 플레이어 컨트롤러
-  const onPlay = useMutationPlayerStart(device_id, item_uri);
+  const onPlay = useMutationPlayerStart(device_id, item_uri, {
+    onSuccess: () => {
+      console.log("play success");
+    },
+    onError: err => {
+      console.log("play error", err);
+    },
+  });
   const onPause = useMutationPlayerPause(device_id);
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
 
-  const { isSuccess, data: { queue } = {} } = useCurrentPlaylist({});
+  const { data: { queue } = {} } = useCurrentPlaylist({});
+
+  useEffect(() => {}, [queue]);
 
   useEffect(() => {
     if (device_id && item_uri) {

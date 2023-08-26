@@ -1,5 +1,6 @@
 interface UseQueryProps {
   onSuccess?: ({ data }: any) => void;
+  onError?: (err: any) => void;
   enabled?: boolean;
   queryKey?: string[];
   // select?: ({ data }: any) => void;

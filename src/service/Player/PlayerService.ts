@@ -79,7 +79,7 @@ class PlayerService extends Service {
   }
 
   // add track to current playlist (queue)
-  addToPlaybackList(uri: string, device_id: string) {
+  addToPlaybackList(device_id: string, uri: string | undefined) {
     return this.service.post(
       `/me/player/queue?uri=${uri}&device_id=${device_id}`
     );
