@@ -41,5 +41,7 @@ export const setFirstLetterUpperCase = (word: string) => {
 export const convertDurationTime = (ms: number): string => {
   const seconds = ms / 1000;
 
-  return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60)}`;
+  return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60)
+    .toString()
+    .padStart(2, "0")}`;
 };
