@@ -91,15 +91,13 @@ export default function MainLayout(): JSX.Element {
           <Outlet />
         </div>
       </div>
-      {current_track && (
-        <Player
-          {...{
-            current_track,
-            is_paused,
-            device_id,
-          }}
-        />
-      )}
+      <Player
+        {...{
+          current_track,
+          is_paused,
+          device_id,
+        }}
+      />
     </div>
   );
 }
