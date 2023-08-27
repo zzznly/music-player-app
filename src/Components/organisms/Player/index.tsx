@@ -12,6 +12,7 @@ import { getToken } from "@utils/auth";
 import {
   useCurrentPlayingTrack,
   useCurrentPlaylist,
+  useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
   useMutationSkipNext,
@@ -20,32 +21,30 @@ import {
 } from "@service/Player/usePlayer";
 import { useAtom, useAtomValue } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";
+import { convertDurationTime } from "@utils/convert";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Player({
   current_track,
   is_paused,
   device_id,
 }: any): JSX.Element {
-  // 재생할 항목의 uri (spotify:type:id)
+  // queries
+  const { isLoading, data: { queue } = {} } = useCurrentPlaylist({});
+
+  // 재생할 item의 uri (spotify:type:id)
   const [item_uri, setUri] = useAtom(spotifyUri);
 
   // 플레이어 컨트롤러
-  const onPlay = useMutationPlayerStart(device_id, item_uri, {
-    onSuccess: () => {
-      console.log("play success");
-    },
-    onError: err => {
-      console.log("play error", err);
-    },
-  });
+  const onPlay = useMutationPlayerStart(device_id, item_uri);
   const onPause = useMutationPlayerPause(device_id);
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
 
-  const { data: { queue } = {} } = useCurrentPlaylist({});
+  // const addToPlaylist = useMutationAddCurrentPlaylist(device_id, item_uri);
 
   useEffect(() => {
-    if (device_id) {
+    if (device_id.length) {
       onPlay.mutate();
     }
   }, [item_uri]);
@@ -95,7 +94,7 @@ export default function Player({
                       </p>
                     </div>
                     <div className="layout__player__track-runtime">
-                      {duration_ms}
+                      {convertDurationTime(duration_ms)}
                     </div>
                   </li>
                 )

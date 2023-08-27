@@ -48,13 +48,18 @@ export const useMutationAddCurrentPlaylist = (
 
 export const useMutationPlayerStart = (
   device_id: string,
-  uri: string | undefined,
-  { onSuccess, onError }: UseQueryProps
+  uri: string | undefined
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: () => {
       return PlayerService.startPlayback(device_id, uri);
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
+    },
+    onError: () => {},
   });
 };
 
