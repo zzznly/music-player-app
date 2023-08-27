@@ -14,6 +14,7 @@
 
   &__rank {
     width: 16px;
+    margin-right: 8px;
     color: #b3b3b3;
   }
 
@@ -34,13 +35,13 @@
       .songlist-item__title-name {
         margin-bottom: 4px;
         font-size: 16px;
-        font-weight: 400;
-        color: #4d4d56;
+        font-weight: 600;
+        color: var(--font-main);
       }
       .songlist-item__title-artist {
         font-size: 14px;
         font-weight: 400;
-        color: #b3b3b3;
+        color: var(--font-sub);
       }
     }
   }
@@ -49,7 +50,7 @@
     flex: 3;
     font-size: 14px;
     font-weight: 400;
-    color: #b3b3b3;
+    color: var(--font-main);
   }
 
   &__addDate {
@@ -67,7 +68,7 @@
     flex: 1;
     font-size: 14px;
     font-weight: 400;
-    color: #a7a7a7;
+    color: var(--font-main);
 
     & > svg:first-child {
       margin-right: 16px;
