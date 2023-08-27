@@ -36,56 +36,68 @@ export default function SearchCategory(): JSX.Element {
           <div className="search-result__section tracks">
             <h2 className="search-result__title">곡</h2>
             <div className="search-result__list">
-              {data?.tracks?.items?.slice(0, 4).map((item: any) => (
-                <SongListItem
-                  id={item?.id}
-                  imgUrl={item?.album?.images[0]?.url}
-                  name={item?.name}
-                  artist={item?.artists[0]?.name}
-                  durationTime={convertDurationTime(item?.duration_ms)}
-                  uri={item.uri}
-                />
-              ))}
+              {data?.tracks?.items
+                ?.slice(0, 4)
+                .map((item: any, idx: number) => (
+                  <SongListItem
+                    id={item?.id}
+                    imgUrl={item?.album?.images[0]?.url}
+                    name={item?.name}
+                    artist={item?.artists[0]?.name}
+                    durationTime={convertDurationTime(item?.duration_ms)}
+                    uri={item.uri}
+                    key={idx}
+                  />
+                ))}
             </div>
           </div>
         </div>
         <div className="search-result__section artists">
-          <h2>{Object.keys(data)[1]}</h2>
+          <h2 className="search-result__title">{Object.keys(data)[1]}</h2>
           <ul className="search-result__list">
-            {data.artists?.items?.map(({ name, images, type, uri }: any) => (
-              <ListItem
-                title={name}
-                imageUrl={images[0]?.url}
-                description={type}
-                uri={uri}
-              />
-            ))}
+            {data.artists?.items?.map(
+              ({ name, images, type, uri }: any, idx: number) => (
+                <ListItem
+                  title={name}
+                  imageUrl={images[0]?.url}
+                  description={type}
+                  uri={uri}
+                  key={`item-${idx}`}
+                />
+              )
+            )}
           </ul>
         </div>
         <div className="search-result__section albums">
-          <h2>{Object.keys(data)[0]}</h2>
+          <h2 className="search-result__title">{Object.keys(data)[0]}</h2>
           <ul className="search-result__list">
-            {data.albums?.items?.map(({ name, images, type, uri }: any) => (
-              <ListItem
-                title={name}
-                imageUrl={images[0]?.url}
-                description={type}
-                uri={uri}
-              />
-            ))}
+            {data.albums?.items?.map(
+              ({ name, images, type, uri }: any, idx: number) => (
+                <ListItem
+                  title={name}
+                  imageUrl={images[0]?.url}
+                  description={type}
+                  uri={uri}
+                  key={`item-${idx}`}
+                />
+              )
+            )}
           </ul>
         </div>
         <div className="search-result__section playlists">
-          <h2>{Object.keys(data)[3]}</h2>
+          <h2 className="search-result__title">{Object.keys(data)[3]}</h2>
           <ul className="search-result__list">
-            {data.playlists?.items?.map(({ name, images, owner, uri }: any) => (
-              <ListItem
-                title={name}
-                imageUrl={images[0]?.url}
-                description={`만든 사람: ${owner?.display_name}`}
-                uri={uri}
-              />
-            ))}
+            {data.playlists?.items?.map(
+              ({ name, images, owner, uri }: any, idx: number) => (
+                <ListItem
+                  title={name}
+                  imageUrl={images[0]?.url}
+                  description={`만든 사람: ${owner?.display_name}`}
+                  uri={uri}
+                  key={`item-${idx}`}
+                />
+              )
+            )}
           </ul>
         </div>
       </div>
@@ -98,67 +110,53 @@ export default function SearchCategory(): JSX.Element {
         name={item?.name}
         artist={item?.artists[0]?.name}
         album={item?.album?.name}
-        durationTime={convertDurationTime(item?.duration_ms)}
+        durationTime={item?.duration_ms}
         uri={item.uri}
+        key={idx}
       />
     )),
     playlists: data?.playlists?.items?.map(
-      ({ name, images, owner, uri }: any) => (
+      ({ name, images, owner, uri }: any, idx: number) => (
         <ListItem
           title={name}
           imageUrl={images[0]?.url}
           description={`만든 사람: ${owner?.display_name}`}
           uri={uri}
+          key={`item-${idx}`}
         />
       )
     ),
-    artists: data?.artists?.items?.map(({ name, images, type, uri }: any) => (
-      <ListItem
-        title={name}
-        imageUrl={images[0]?.url}
-        description={type}
-        uri={uri}
-      />
-    )),
-    albums: data?.albums?.items?.map(({ name, images, type, uri }: any) => (
-      <ListItem
-        title={name}
-        imageUrl={images[0]?.url}
-        description={type}
-        uri={uri}
-      />
-    )),
+    artists: data?.artists?.items?.map(
+      ({ name, images, type, uri }: any, idx: number) => (
+        <ListItem
+          title={name}
+          imageUrl={images[0]?.url}
+          description={type}
+          uri={uri}
+          key={`item-${idx}`}
+        />
+      )
+    ),
+    albums: data?.albums?.items?.map(
+      ({ name, images, type, uri }: any, idx: number) => (
+        <ListItem
+          title={name}
+          imageUrl={images[0]?.url}
+          description={type}
+          uri={uri}
+          key={`item-${idx}`}
+        />
+      )
+    ),
   };
 
   const location = useLocation();
   const { category = "all" } = useParams();
   const [resultComponent, setResultComponent] = useState(list[category]);
 
-  // const [topResData, setTopResData] = useState<any>({});
-
   useEffect(() => {
     setResultComponent(list[category]);
   }, [location, category]);
-
-  // const getTopResult = () => {
-  //   // 상위 결과 항목 노출!
-  //   // - 아티스트에 검색어가 100% 포함 되어있으면, 아티스트의 0번째 요소 노출
-  //   // - 아티스트에 검색어가 100% 포함 안되어있으면, 트랙 앨범 플리 중에 검색어가 100% 포함된 것 노출
-  //   console.log(888, Object.keys(list).slice(1));
-
-  //   Object.keys(list)
-  //     .slice(1)
-  //     .forEach(el => {
-  //       if (list?.el?.items[0].name.includes(searchKeywordAtom)) {
-  //         return list?.el?.items[0];
-  //       }
-  //     });
-
-  //   return list?.artists?.items[0];
-  // };
-
-  console.log("searchCategory", list);
-  console.log("outlet", data, data[category]);
 
   if (!list[category]) return <></>;
   return (
