@@ -1,13 +1,5 @@
 import "./style.scss";
 
-// controller icons
-import playIcon from "@assets/images/icon/ico-play.png";
-import playlistPlayIcon from "@assets/images/icon/ico-playlist-play.svg";
-import pauseIcon from "@assets/images/icon/ico-pause.png";
-import prevIcon from "@assets/images/icon/ico-prev.svg";
-import nextIcon from "@assets/images/icon/ico-next.svg";
-import shuffleIcon from "@assets/images/icon/ico-shuffle.svg";
-import repeatIcon from "@assets/images/icon/ico-repeat.svg";
 import { useEffect, useState } from "react";
 import { getToken } from "@utils/auth";
 import {
@@ -24,6 +16,17 @@ import { useAtom, useAtomValue } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";
 import { convertDurationTime } from "@utils/convert";
 import { useQueryClient } from "@tanstack/react-query";
+
+// controller icons
+import playIcon from "@assets/images/icon/player/ico-play.png";
+import playlistPlayIcon from "@assets/images/icon/ico-playlist-play.svg";
+import pauseIcon from "@assets/images/icon/player/ico-pause.svg";
+import prevIcon from "@assets/images/icon/player/ico-prev.svg";
+import nextIcon from "@assets/images/icon/player/ico-next.svg";
+import shuffleIcon from "@assets/images/icon/player/ico-shuffle.svg";
+import shuffleActiveIcon from "@assets/images/icon/player/ico-shuffle-active.svg";
+import repeatIcon from "@assets/images/icon/player/ico-repeat.svg";
+import repeatActiveIcon from "@assets/images/icon/player/ico-repeat-active.svg";
 
 export default function Player({
   current_track,
@@ -58,40 +61,42 @@ export default function Player({
         <div className="layout__player__list">
           <h2 className="layout__player__list-title">NOW PLAYING</h2>
           <ul className="layout__player__list-tracks">
-            <div className="layout__player__current">
-              <li
-                className={`layout__player__track ${
-                  currently_playing?.id === current_track?.id &&
-                  "layout__player__track--active"
-                }`}
-                onClick={() => setUri(currently_playing?.uri)}
-                // key={`track-${idx}`}
-              >
-                <div className="layout__player__track-index">
-                  <img src={playlistPlayIcon} />
-                </div>
-                <div className="layout__player__track-album">
-                  <img
-                    className="layout__player__track-album-image"
-                    src={
-                      current_track?.album?.images?.[0]?.url ??
-                      "https://dummyimage.com/200x200/ccc/fff.png"
-                    }
-                  />
-                </div>
-                <div className="layout__player__track-info">
-                  <p className="layout__player__track-name">
-                    {current_track?.name}
-                  </p>
-                  <p className="layout__player__track-artist">
-                    {current_track?.artists?.[0]?.name}
-                  </p>
-                </div>
-                <div className="layout__player__track-runtime">
-                  {convertDurationTime(current_track?.duration_ms)}
-                </div>
-              </li>
-            </div>
+            {currently_playing && (
+              <div className="layout__player__current">
+                <li
+                  className={`layout__player__track ${
+                    currently_playing?.id === current_track?.id &&
+                    "layout__player__track--active"
+                  }`}
+                  onClick={() => setUri(currently_playing?.uri)}
+                  // key={`track-${idx}`}
+                >
+                  <div className="layout__player__track-index">
+                    <img src={playlistPlayIcon} />
+                  </div>
+                  <div className="layout__player__track-album">
+                    <img
+                      className="layout__player__track-album-image"
+                      src={
+                        current_track?.album?.images?.[0]?.url ??
+                        "https://dummyimage.com/200x200/ccc/fff.png"
+                      }
+                    />
+                  </div>
+                  <div className="layout__player__track-info">
+                    <p className="layout__player__track-name">
+                      {current_track?.name}
+                    </p>
+                    <p className="layout__player__track-artist">
+                      {current_track?.artists?.[0]?.name}
+                    </p>
+                  </div>
+                  <div className="layout__player__track-runtime">
+                    {convertDurationTime(current_track?.duration_ms)}
+                  </div>
+                </li>
+              </div>
+            )}
             <div className="layout__player__queue">
               {queue
                 ?.map((v: any, i: number, self: any[]) => {
