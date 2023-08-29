@@ -38,10 +38,12 @@
     }
 
     &-index {
+      width: 20px;
       color: #787887;
       font-size: 18px;
       font-weight: 400;
       line-height: 22px;
+      text-align: center;
     }
 
     &-album {
@@ -67,6 +69,10 @@
       font-size: 16px;
       font-weight: 600;
       line-height: 22px;
+      width: 200px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     &-artist {
@@ -102,7 +108,7 @@
     position: relative;
     margin-top: 16px;
     width: 200px;
-    height: 120px;
+    height: 200px;
     border-radius: 18px;
     background-color: #d6d6d6;
     overflow: hidden;

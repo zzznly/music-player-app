@@ -2,6 +2,7 @@ import "./style.scss";
 
 // controller icons
 import playIcon from "@assets/images/icon/ico-play.png";
+import playlistPlayIcon from "@assets/images/icon/ico-playlist-play.svg";
 import pauseIcon from "@assets/images/icon/ico-pause.png";
 import prevIcon from "@assets/images/icon/ico-prev.svg";
 import nextIcon from "@assets/images/icon/ico-next.svg";
@@ -30,7 +31,8 @@ export default function Player({
   device_id,
 }: any): JSX.Element {
   // queries
-  const { isLoading, data: { queue } = {} } = useCurrentPlaylist({});
+  const { isLoading, data: { currently_playing, queue } = {} } =
+    useCurrentPlaylist({});
 
   // 재생할 item의 uri (spotify:type:id)
   const [item_uri, setUri] = useAtom(spotifyUri);
@@ -56,49 +58,87 @@ export default function Player({
         <div className="layout__player__list">
           <h2 className="layout__player__list-title">NOW PLAYING</h2>
           <ul className="layout__player__list-tracks">
-            {queue
-              ?.map((v: any, i: number, self: any[]) => {
-                return self.findIndex((obj: any) => obj.uri === v.uri) === i
-                  ? v
-                  : null;
-              })
-              .filter((item: any) => item !== null)
-              .map(
-                (
-                  { id, uri, album, artists, name, duration_ms }: any,
-                  idx: number
-                ) => (
-                  <li
-                    className={`layout__player__track ${
-                      id === current_track.id && "layout__player__track--active"
-                    }`}
-                    onClick={() => setUri(uri)}
-                    key={`track-${idx}`}
-                  >
-                    <div className="layout__player__track-index">
-                      {String(idx + 1).padStart(2, "0")}
-                    </div>
-                    <div className="layout__player__track-album">
-                      <img
-                        className="layout__player__track-album-image"
-                        src={
-                          album?.images?.[0]?.url ??
-                          "https://dummyimage.com/200x120/ccc/fff.png"
-                        }
-                      />
-                    </div>
-                    <div className="layout__player__track-info">
-                      <p className="layout__player__track-name">{name}</p>
-                      <p className="layout__player__track-artist">
-                        {artists?.[0]?.name}
-                      </p>
-                    </div>
-                    <div className="layout__player__track-runtime">
-                      {convertDurationTime(duration_ms)}
-                    </div>
-                  </li>
-                )
-              )}
+            <div className="layout__player__current">
+              <li
+                className={`layout__player__track ${
+                  currently_playing?.id === current_track?.id &&
+                  "layout__player__track--active"
+                }`}
+                onClick={() => setUri(currently_playing?.uri)}
+                // key={`track-${idx}`}
+              >
+                <div className="layout__player__track-index">
+                  <img src={playlistPlayIcon} />
+                </div>
+                <div className="layout__player__track-album">
+                  <img
+                    className="layout__player__track-album-image"
+                    src={
+                      current_track?.album?.images?.[0]?.url ??
+                      "https://dummyimage.com/200x200/ccc/fff.png"
+                    }
+                  />
+                </div>
+                <div className="layout__player__track-info">
+                  <p className="layout__player__track-name">
+                    {current_track?.name}
+                  </p>
+                  <p className="layout__player__track-artist">
+                    {current_track?.artists?.[0]?.name}
+                  </p>
+                </div>
+                <div className="layout__player__track-runtime">
+                  {convertDurationTime(current_track?.duration_ms)}
+                </div>
+              </li>
+            </div>
+            <div className="layout__player__queue">
+              {queue
+                ?.map((v: any, i: number, self: any[]) => {
+                  return self.findIndex((obj: any) => obj.uri === v.uri) === i
+                    ? v
+                    : null;
+                })
+                .filter((item: any) => item !== null)
+                .map(
+                  (
+                    { id, uri, album, artists, name, duration_ms }: any,
+                    idx: number
+                  ) => (
+                    <li
+                      className={`layout__player__track ${
+                        // id === current_track.id &&
+                        // "layout__player__track--active"
+                        ""
+                      }`}
+                      onClick={() => setUri(uri)}
+                      key={`track-${idx}`}
+                    >
+                      <div className="layout__player__track-index">
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
+                      <div className="layout__player__track-album">
+                        <img
+                          className="layout__player__track-album-image"
+                          src={
+                            album?.images?.[0]?.url ??
+                            "https://dummyimage.com/200x120/ccc/fff.png"
+                          }
+                        />
+                      </div>
+                      <div className="layout__player__track-info">
+                        <p className="layout__player__track-name">{name}</p>
+                        <p className="layout__player__track-artist">
+                          {artists?.[0]?.name}
+                        </p>
+                      </div>
+                      <div className="layout__player__track-runtime">
+                        {convertDurationTime(duration_ms)}
+                      </div>
+                    </li>
+                  )
+                )}
+            </div>
           </ul>
         </div>
         <div className="layout__player__container">
@@ -107,7 +147,7 @@ export default function Player({
             <img
               src={
                 current_track?.album?.images?.[0]?.url ??
-                "https://dummyimage.com/200x120/ccc/fff.png"
+                "https://dummyimage.com/200x200/ccc/fff.png"
               }
               alt="track album"
             />

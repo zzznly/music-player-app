@@ -15,6 +15,9 @@
     }
 
     &__wrap {
+      & + & {
+        margin-top: 16px;
+      }
     }
 
     &__title {

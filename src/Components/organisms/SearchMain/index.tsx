@@ -57,7 +57,9 @@ export default function SearchMain(): JSX.Element {
 
   return (
     <div className="search-main">
-      <h2 className="search-main__title">모두 둘러보기</h2>
+      <div className="search-main__title">
+        <h2>Search</h2>
+      </div>
       <div className="search-main__content">
         {items &&
           items
