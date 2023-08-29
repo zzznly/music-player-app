@@ -86,9 +86,9 @@
   &__container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding: 20px 42px 26px 24px;
+    padding: 24px 42px;
   }
   &__container-title {
     color: #24242e;

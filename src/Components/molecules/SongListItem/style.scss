@@ -2,7 +2,9 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 16px;
 
   &:hover {
     background-color: #f0f0f5;
@@ -19,24 +21,30 @@
   }
 
   &__title {
-    flex: 4;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex: 2 1 200px;
 
     &-albumimage {
       width: 40px;
       height: 40px;
       margin-right: 16px;
+      border-radius: 4px;
     }
 
     &-info {
-      flex: 1;
       .songlist-item__title-name {
         margin-bottom: 4px;
         font-size: 16px;
         font-weight: 600;
         color: var(--font-main);
+
+        min-width: 300px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        -webkit-line-clamp: 1;
       }
       .songlist-item__title-artist {
         font-size: 14px;
@@ -47,14 +55,13 @@
   }
 
   &__albumname {
-    flex: 3;
+    flex: 1 1;
     font-size: 14px;
     font-weight: 400;
     color: var(--font-main);
   }
 
   &__addDate {
-    flex: 2;
     font-size: 14px;
     font-weight: 400;
     color: #b3b3b3;
@@ -65,7 +72,6 @@
     justify-content: flex-end;
     align-items: center;
     gap: 16px;
-    flex: 1;
     font-size: 14px;
     font-weight: 400;
     color: var(--font-main);
