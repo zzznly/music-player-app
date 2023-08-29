@@ -1,63 +1,51 @@
 .section {
-  &-wrap {
-  }
-
-  &-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  &-content {
-    .list {
-    }
-  }
-}
-
-.section {
+  position: relative;
   width: 100%;
   overflow: hidden;
 }
 
 .section-wrap {
-  margin-bottom: 16px;
-}
-
-.section-head {
-  &__title {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 22px;
-    color: #4d4d56;
-  }
-  &__link--all {
-    font-size: 14px;
-    color: #b3b3b3;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.section-content {
-  // overflow: hidden;
-}
-
-.list {
   padding: 0 32px 23px;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  scrollbar-width: none; /* Firefox에 대한 스크롤바 숨김 */
+  -ms-overflow-style: none; /* IE/Edge에 대한 스크롤바 숨김 */
 
-  &-wrap {
-    padding: 24px 36px;
-    display: flex;
-    gap: 24px;
-    background-color: #fff;
-    border-radius: 20px;
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari에 대한 스크롤바 숨김 */
   }
 
-  &-item {
+  .list {
+    padding: 24px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+
+    &__title {
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 22px;
+        color: var(--font-sub);
+      }
+
+      .list__link--more {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 22px;
+        color: var(--primary);
+      }
+    }
+
+    &__content {
+      display: flex;
+      gap: 24px;
+    }
   }
 }

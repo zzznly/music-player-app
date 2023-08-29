@@ -44,7 +44,9 @@ export default function Home(): JSX.Element {
   return (
     <div className={"wrap"}>
       <div className="playlist">
-        <h2 className="playlist__title">Explore</h2>
+        <div className="playlist__title">
+          <h2>Explore</h2>
+        </div>
         <div className="playlist__content">
           {items.map((item: CategoriesItem) => (
             <Section key={item.id} {...item} />

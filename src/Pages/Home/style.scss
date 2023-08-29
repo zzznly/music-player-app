@@ -12,18 +12,17 @@
 }
 
 .playlist {
-  // &__container {
-  //   width: 100%;
-  //   overflow: hidden;
-  // }
-
   width: 100%;
 
   &__title {
-    color: #4343ef;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 22px;
+    padding: 0 42px;
+    margin-top: 42px;
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 22px;
+      color: #4343ef;
+    }
   }
 
   &__content {

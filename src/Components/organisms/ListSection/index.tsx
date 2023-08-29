@@ -17,21 +17,24 @@ export default function ListSection({
 }: ListSectionProps): JSX.Element {
   return (
     <div className={"section"}>
-      <div className="section-wrap">
-        <div className={"section-head"}>
-          <h2 className={"section-head__title"}>{title}</h2>
-          {/* {hasShowMore && (
-          <a className={"section-head__link--all"} href="/">
-            모두 표시
-          </a>
-        )} */}
+      <ul className={"section-wrap"}>
+        <div className="list">
+          <div className={"list__title"}>
+            <h2>{title}</h2>
+            {hasShowMore && (
+              <a className={"list__link--more"} href="/">
+                See All
+              </a>
+            )}
+          </div>
+
+          <div className="list__content">
+            {data.slice(0, 6).map(item => (
+              <ListItem {...item} key={item.id} />
+            ))}
+          </div>
         </div>
-        <ul className={"list"}>
-          {data.slice(0, 6).map(item => (
-            <ListItem {...item} key={item.id} />
-          ))}
-        </ul>
-      </div>
+      </ul>
     </div>
   );
 }
