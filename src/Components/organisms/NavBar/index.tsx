@@ -3,10 +3,6 @@ import "./style.scss";
 
 // images
 import logo from "@assets/img-logo-spotify.png";
-import DiscoverIcon from "@assets/images/icon/ico-discover.svg";
-import DiscoverIconActive from "@assets/images/icon/ico-discover-active.svg";
-import SearchIcon from "@assets/images/icon/ico-search.svg";
-import SearchIconActive from "@assets/images/icon/ico-search-active.svg";
 
 import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 
@@ -30,35 +26,37 @@ export default function NavBar() {
         <img src={NavLogo} alt="" />
       </div>
       <div className="layout__nav-bar__menu">
-        <div className="layout__nav-bar__wrap">
-          <p className="layout__nav-bar__title">MENU</p>
-          <ul className="layout__nav-bar__list">
-            {nav_menu.slice(0, 2).map(item => (
-              <li
-                className={`layout__nav-bar__item ${
-                  item.menu === active_menu ? "active" : ""
-                }`}
-                key={nav_menu.indexOf(item)}
-              >
-                <NavLink
-                  className="layout__nav-bar__link"
-                  to={item.link}
-                  onClick={() => {
-                    setActiveMenu(item.menu);
-                  }}
+        {Object.keys(nav_menu).map((menu, idx) => (
+          <div className="layout__nav-bar__wrap">
+            <p className="layout__nav-bar__title">{menu}</p>
+            <ul className="layout__nav-bar__list">
+              {nav_menu[menu].map((item: any, idx: number) => (
+                <li
+                  className={`layout__nav-bar__item ${
+                    item.menu === active_menu ? "active" : ""
+                  }`}
+                  key={`item-${idx}`}
                 >
-                  <img
-                    src={
-                      item.menu === active_menu ? item.iconActive : item.icon
-                    }
-                    className="layout__nav-bar__menu-icon"
-                  />
-                  <p className="layout__nav-bar__menu-text">{item.menu}</p>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
+                  <NavLink
+                    className="layout__nav-bar__link"
+                    to={item.link}
+                    onClick={() => {
+                      setActiveMenu(item.menu);
+                    }}
+                  >
+                    <img
+                      src={
+                        item.menu === active_menu ? item.iconActive : item.icon
+                      }
+                      className="layout__nav-bar__menu-icon"
+                    />
+                    <p className="layout__nav-bar__menu-text">{item.menu}</p>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   );
