@@ -25,3 +25,10 @@ export const usePlaylistTracks = (
     enabled,
   });
 };
+
+export const useNewReleases = () => {
+  return useQuery({
+    queryFn: () => PlaylistService.getNewReleases(),
+    queryKey: ["playlist.newReleases"],
+  });
+};
