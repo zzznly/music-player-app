@@ -1,6 +1,7 @@
 .wrap {
   display: flex;
   flex-direction: row;
+  margin-top: 42px;
 
   overflow: hidden;
 
@@ -15,7 +16,7 @@
 
   &__title {
     padding: 0 42px;
-    margin-top: 42px;
+
     h2 {
       font-size: 24px;
       font-weight: 600;
@@ -27,5 +28,46 @@
   &__content {
     width: 100%;
     margin-top: 42px;
+    overflow-x: hidden;
+  }
+}
+
+.section {
+  &.section--new-release {
+    overflow-x: auto;
+
+    .section-wrap {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 12px;
+      padding: 0 42px;
+    }
+
+    .section__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 20px;
+      min-width: 338px;
+      height: 200px;
+
+      background: linear-gradient(to top, #4d4d563b, #4d4d5600);
+      border-radius: 10px;
+
+      color: #fff;
+      text-align: center;
+      line-height: 22px;
+
+      &-name {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      &-artist {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
   }
 }
