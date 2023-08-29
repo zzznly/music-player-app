@@ -7,6 +7,8 @@
 
   &__list {
     border-bottom: 1px solid #e8e8fd;
+    height: 50%;
+    overflow: hidden;
 
     &-title {
     }
@@ -21,8 +23,8 @@
     line-height: 22px;
   }
   &__list-tracks {
-    margin: 16px 0 8px;
-    height: 518px;
+    margin-top: 16px;
+    height: calc(100% - 38px);
     overflow-y: auto;
   }
 
@@ -96,6 +98,7 @@
     justify-content: flex-start;
     align-items: center;
     padding: 24px 42px;
+    height: 50%;
   }
   &__container-title {
     color: #24242e;
@@ -108,7 +111,7 @@
     position: relative;
     margin-top: 16px;
     width: 200px;
-    height: 200px;
+    height: 120px;
     border-radius: 18px;
     background-color: #d6d6d6;
     overflow: hidden;
