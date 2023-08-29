@@ -6,10 +6,14 @@ import { debounce } from "@utils/index";
 import "./style.scss";
 
 import searchIcon from "@assets/images/icon/ico-input-search.svg";
+import { useAtom } from "jotai";
+import { activeMenu } from "@service/Common/CommonAtom";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [active_menu, setActiveMenu] = useAtom(activeMenu);
 
   return (
     <div className="layout__header">
@@ -67,12 +71,12 @@ export default function Header(): JSX.Element {
                   replace: true,
                 });
               }, 200)}
-              onFocus={debounce(e => {
-                console.log("debounce", e.target.value);
-                navigate(`/search/${e.target.value}`, {
+              onFocus={() => {
+                setActiveMenu("Search");
+                navigate(`/search`, {
                   replace: true,
                 });
-              }, 200)}
+              }}
             />
             <button className="layout__header__button layout__header__button--search">
               <img src={searchIcon} />

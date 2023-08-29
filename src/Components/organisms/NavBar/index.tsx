@@ -13,34 +13,16 @@ import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 // router
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { activeMenu, navMenu } from "@service/Common/CommonAtom";
 
 // 1. type, interface
 // 2. utility type
 // 3. Generic type
 
-interface navMenu {
-  menu: string;
-  link: string;
-  icon: string;
-  iconActive: string;
-}
 export default function NavBar() {
-  const navMenu: navMenu[] = [
-    {
-      menu: "Discover",
-      link: "/",
-      icon: DiscoverIcon,
-      iconActive: DiscoverIconActive,
-    },
-    {
-      menu: "Search",
-      link: "/search",
-      icon: SearchIcon,
-      iconActive: SearchIconActive,
-    },
-  ];
-
-  const [activeMenu, setActiveMenu] = useState<string>("Discover");
+  const [active_menu, setActiveMenu] = useAtom(activeMenu);
+  const nav_menu = useAtomValue(navMenu);
 
   return (
     <div className="layout__nav-bar">
@@ -51,12 +33,12 @@ export default function NavBar() {
         <div className="layout__nav-bar__wrap">
           <p className="layout__nav-bar__title">MENU</p>
           <ul className="layout__nav-bar__list">
-            {navMenu.slice(0, 2).map(item => (
+            {nav_menu.slice(0, 2).map(item => (
               <li
                 className={`layout__nav-bar__item ${
-                  item.menu === activeMenu ? "active" : ""
+                  item.menu === active_menu ? "active" : ""
                 }`}
-                key={navMenu.indexOf(item)}
+                key={nav_menu.indexOf(item)}
               >
                 <NavLink
                   className="layout__nav-bar__link"
@@ -66,7 +48,9 @@ export default function NavBar() {
                   }}
                 >
                   <img
-                    src={item.menu === activeMenu ? item.iconActive : item.icon}
+                    src={
+                      item.menu === active_menu ? item.iconActive : item.icon
+                    }
                     className="layout__nav-bar__menu-icon"
                   />
                   <p className="layout__nav-bar__menu-text">{item.menu}</p>
