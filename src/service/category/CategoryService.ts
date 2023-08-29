@@ -10,6 +10,10 @@ class CategoryService extends Service {
       `/browse/categories/${category_id}/playlists`
     );
   }
+
+  getGenreSeeds() {
+    return this.service.get("/recommendations/available-genre-seeds");
+  }
 }
 
 export default new CategoryService();

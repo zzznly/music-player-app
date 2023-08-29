@@ -25,3 +25,11 @@ export const useCategoryPlaylists = (
     enabled,
   });
 };
+
+// GET - Available Genre Seeds
+export const useGenreSeeds = () => {
+  return useQuery({
+    queryFn: () => CategoryService.getGenreSeeds(),
+    queryKey: ["category.genreSeeds"],
+  });
+};
