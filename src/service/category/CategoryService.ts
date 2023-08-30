@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import Service from "../Service";
 
 class CategoryService extends Service {
@@ -12,7 +13,9 @@ class CategoryService extends Service {
   }
 
   getGenreSeeds() {
-    return this.service.get("/recommendations/available-genre-seeds");
+    return this.service.get<any, AxiosResponse<any[]>>(
+      "/recommendations/available-genre-seeds"
+    );
   }
 }
 

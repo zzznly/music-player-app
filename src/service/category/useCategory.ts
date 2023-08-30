@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // service
 import CategoryService from "./CategoryService";
+import { AxiosResponse } from "axios";
 
 // GET - Categories
 export const useCategories = ({ onSuccess }: UseQueryProps = {}) => {
@@ -27,9 +28,10 @@ export const useCategoryPlaylists = (
 };
 
 // GET - Available Genre Seeds
-export const useGenreSeeds = () => {
+export const useGenreSeeds = ({ onSuccess }: UseQueryProps = {}) => {
   return useQuery({
-    queryFn: () => CategoryService.getGenreSeeds(),
     queryKey: ["category.genreSeeds"],
+    queryFn: () => CategoryService.getGenreSeeds(),
+    onSuccess,
   });
 };

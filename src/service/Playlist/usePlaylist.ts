@@ -26,9 +26,11 @@ export const usePlaylistTracks = (
   });
 };
 
-export const useNewReleases = () => {
+export const useNewReleases = ({ onSuccess, onError }: UseQueryProps = {}) => {
   return useQuery({
     queryFn: () => PlaylistService.getNewReleases(),
     queryKey: ["playlist.newReleases"],
+    onSuccess,
+    onError,
   });
 };
