@@ -8,8 +8,10 @@ import {
   useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
+  useMutationSetRepeat,
   useMutationSkipNext,
   useMutationSkipPrev,
+  useMutationToggleShuffle,
   usePlaybackState,
 } from "@service/Player/usePlayer";
 import { useAtom, useAtomValue } from "jotai";
@@ -25,8 +27,9 @@ import prevIcon from "@assets/images/icon/player/ico-prev.svg";
 import nextIcon from "@assets/images/icon/player/ico-next.svg";
 import shuffleIcon from "@assets/images/icon/player/ico-shuffle.svg";
 import shuffleActiveIcon from "@assets/images/icon/player/ico-shuffle-active.svg";
-import repeatIcon from "@assets/images/icon/player/ico-repeat.svg";
-import repeatActiveIcon from "@assets/images/icon/player/ico-repeat-active.svg";
+import repeatOffIcon from "@assets/images/icon/player/ico-repeat-track.svg";
+import repeatContextIcon from "@assets/images/icon/player/ico-repeat-context.svg";
+import repeatTrackIcon from "@assets/images/icon/player/ico-repeat-off.svg";
 
 export default function Player({
   current_track,
@@ -40,11 +43,20 @@ export default function Player({
   // 재생할 item의 uri (spotify:type:id)
   const [item_uri, setUri] = useAtom(spotifyUri);
 
+  const repeatStateList = ["off", "context", "track"];
+  const [repeatStateIdx, setRepeatIdx] = useState<number>(0);
+  const [isShuffle, setShuffle] = useState<boolean>(false);
+
   // 플레이어 컨트롤러
   const onPlay = useMutationPlayerStart(device_id, item_uri);
   const onPause = useMutationPlayerPause(device_id);
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
+  const setRepeat = useMutationSetRepeat(
+    repeatStateList[repeatStateIdx],
+    device_id
+  );
+  const toggleShuffle = useMutationToggleShuffle(isShuffle, device_id);
 
   // const addToPlaylist = useMutationAddCurrentPlaylist(device_id, item_uri);
 
@@ -53,6 +65,19 @@ export default function Player({
       onPlay.mutate();
     }
   }, [item_uri]);
+
+  useEffect(() => {
+    if (device_id.length) {
+      setRepeat.mutate();
+    }
+    setRepeatIdx(repeatStateIdx % 3);
+  }, [repeatStateIdx]);
+
+  useEffect(() => {
+    if (device_id.length) {
+      toggleShuffle.mutate();
+    }
+  }, [isShuffle]);
 
   return (
     <>
@@ -172,8 +197,8 @@ export default function Player({
           </div>
           <div className="player__controller">
             <div className="player__controller-left">
-              <button>
-                <img src={shuffleIcon} />
+              <button onClick={() => setShuffle(!isShuffle)}>
+                <img src={isShuffle ? shuffleActiveIcon : shuffleIcon} />
               </button>
               <button onClick={() => skipPrev.mutate()}>
                 <img src={prevIcon} />
@@ -192,8 +217,16 @@ export default function Player({
               <button onClick={() => skipNext.mutate()}>
                 <img src={nextIcon} />
               </button>
-              <button>
-                <img src={repeatIcon} />
+              <button onClick={() => setRepeatIdx(prev => prev + 1)}>
+                <img
+                  src={
+                    {
+                      0: repeatOffIcon,
+                      1: repeatContextIcon,
+                      2: repeatTrackIcon,
+                    }[repeatStateIdx]
+                  }
+                />
               </button>
             </div>
           </div>

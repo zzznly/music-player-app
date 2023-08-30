@@ -104,3 +104,27 @@ export const useMutationSkipPrev = (device_id: string) => {
     },
   });
 };
+
+export const useMutationSetRepeat = (state: string, device_id: string) => {
+  return useMutation({
+    mutationFn: () => PlayerService.setRepeat(state, device_id),
+    onSuccess: data => {
+      console.log("set repeat success", data);
+    },
+    onError: err => {
+      console.log("set repeat error", err);
+    },
+  });
+};
+
+export const useMutationToggleShuffle = (state: boolean, device_id: string) => {
+  return useMutation({
+    mutationFn: () => PlayerService.toggleShuffle(state, device_id),
+    onSuccess: data => {
+      console.log("toggle shuffle success", data);
+    },
+    onError: err => {
+      console.log("toggle shuffle error", err);
+    },
+  });
+};

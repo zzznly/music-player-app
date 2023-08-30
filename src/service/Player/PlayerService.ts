@@ -72,7 +72,7 @@ class PlayerService extends Service {
   }
 
   // toggle playback shuffle
-  toggleShuffle(state: string, device_id: string) {
+  toggleShuffle(state: boolean, device_id: string) {
     return this.service.put(
       `/me/player/shuffle?state=${state}&device_id=${device_id}`
     );
