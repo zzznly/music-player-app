@@ -7,16 +7,27 @@ import ListItem, { ListItemProps } from "../../molecules/ListItem";
 export interface ListSectionProps {
   title: string;
   data: ListItemProps[];
-  hasShowMore: boolean;
+  hasShowMore?: boolean;
+  className?: string;
 }
+
+// interface ListItemProps {
+//   id?: string;
+//   imageUrl?: string;
+//   title?: string;
+//   name ? : string;
+//   description?: string;
+//   uri?: string;
+// }
 
 export default function ListSection({
   title,
   data,
-  hasShowMore,
+  hasShowMore = false,
+  className,
 }: ListSectionProps): JSX.Element {
   return (
-    <div className={"section"}>
+    <div className={`section ${className || ""}`}>
       <ul className={"section-wrap"}>
         <div className="list">
           <div className={"list__title"}>
@@ -29,9 +40,10 @@ export default function ListSection({
           </div>
 
           <div className="list__content">
-            {data.slice(0, 6).map(item => (
-              <ListItem {...item} key={item.id} />
-            ))}
+            {data.slice(0, 6).map(item => {
+              const { name = "", title = "", ...rest } = item;
+              return <ListItem {...rest} name={title || name} key={item.id} />;
+            })}
           </div>
         </div>
       </ul>
