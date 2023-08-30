@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // styles
 import "./style.scss";
 
 // react-query
-import { useCategories } from "../../../service/Category/useCategory";
+import {
+  useCategories,
+  useGenreSeeds,
+} from "../../../service/Category/useCategory";
 
 // types
 import { CategoriesItem } from "../../../types/categories";
 
 // router
 import { Link } from "react-router-dom";
+import ListSection from "../ListSection";
+import { useUserTopItems } from "@service/User/useUser";
+import { ListItemProps } from "@components/molecules/ListItem";
+import { useAtom } from "jotai";
+import { searchKeywordAtom } from "@service/Search/SearchAtom";
 
 interface CategoriesItemColored extends CategoriesItem {
   bgColor: string;
@@ -18,26 +26,15 @@ interface CategoriesItemColored extends CategoriesItem {
 
 export default function SearchMain(): JSX.Element {
   const bgColors: string[] = [
-    "rgb(225, 51, 0)",
-    "rgb(115, 88, 255)",
-    "rgb(30, 50, 100)",
-    "rgb(232, 17, 91)",
-    "rgb(45, 70, 185)",
-    "rgb(20, 138, 8)",
-    "rgb(188, 89, 0)",
-    "rgb(220, 20, 140)",
-    "rgb(141, 103, 171)",
-    "rgb(119, 119, 119)",
-    "rgb(255, 0, 144)",
-    "rgb(5, 105, 82)",
-    "rgb(225, 51, 0)",
-    "rgb(115, 88, 255)",
-    "rgb(30, 50, 100)",
-    "rgb(232, 17, 91)",
-    "rgb(45, 70, 185)",
-    "rgb(20, 138, 8)",
-    "rgb(188, 89, 0)",
-    "rgb(220, 20, 140)",
+    "#E67588",
+    "#68CDE4",
+    "#C275E6",
+    "#E2A65F",
+    "#C8E25F",
+    "#8C75E6",
+    "#E67575",
+    "#999999",
+    "#81E468",
   ];
 
   const { data: { categories: { items = [] } = {} } = {} } = useCategories();
@@ -55,34 +52,91 @@ export default function SearchMain(): JSX.Element {
   //   }),
   // }
 
+  const { data: { genres = [] } = {} } = useGenreSeeds();
+
+  const [topArtists, setTopArtists] = useState([]);
+  const [topTracks, setTopTracks] = useState([]);
+
+  const typeArr = ["artists", "tracks"];
+  const [topItemsType, setType] = useState("artists");
+
+  const obj: any = useMemo(
+    () => ({
+      artists: [],
+      tracks: [],
+    }),
+    []
+  );
+
+  useUserTopItems(
+    {
+      type: topItemsType,
+    },
+    {
+      onSuccess: data => {
+        obj[topItemsType] = data?.items || [];
+        setType("tracks");
+      },
+    }
+  );
+
+  const getRandomGenres = (genres: string[]) => {
+    return genres.sort(() => 0.5 - Math.random()).slice(0, 9);
+  };
+
+  const [, setKeyword] = useAtom(searchKeywordAtom);
+
   return (
     <div className="search-main">
       <div className="search-main__title">
         <h2>Search</h2>
       </div>
       <div className="search-main__content">
-        {items &&
-          items
-            .map((v: CategoriesItemColored, idx: number) => {
-              return { ...v, bgColor: bgColors[idx] };
+        <ListSection
+          className="section--top-artists"
+          title={`TOP ARTISTS`}
+          data={obj["artists"].map(
+            ({ images, name, popularity, uri }: any) => ({
+              uri,
+              name,
+              description: `${popularity} Plays`,
+              imageUrl: images?.[0]?.url,
             })
-            .map((item: CategoriesItemColored) => (
-              <Link
-                className="search-main__item"
-                key={item.id}
-                to={`/playlist/detail?category_id=${item.id}`}
-                style={{ background: `${item.bgColor}` }}
-              >
-                <div className="search-main__item-wrap">
-                  <p className="search-main__item-label">{item.name}</p>
-                  <img
-                    className="search-main__item-image"
-                    src={item.icons[0].url}
-                    alt={item.name}
-                  />
+          )}
+        />
+        <div className="search-main__content-row">
+          <ListSection
+            className="section--top-tracks"
+            title={"TOP TRACKS"}
+            data={obj["tracks"]
+              ?.slice(1, 10)
+              .map(({ id, album: { images = [] } = {}, uri }: any) => ({
+                id,
+                uri,
+                imageUrl: images?.[0]?.url,
+              }))}
+          />
+          <div className={"section section--genres"}>
+            <div className={"section-wrap"}>
+              <div className="list">
+                <div className="list__title">
+                  <h2>GENRES</h2>
                 </div>
-              </Link>
-            ))}
+                <div className="list__content">
+                  {getRandomGenres(genres).map((genre: string, idx: number) => (
+                    <button
+                      className="label"
+                      style={{ backgroundColor: bgColors[idx] }}
+                      onClick={() => setKeyword(genre)}
+                    >
+                      {genre}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

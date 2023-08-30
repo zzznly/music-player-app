@@ -3,12 +3,12 @@ import "./styles.scss";
 
 // router
 import { Outlet, useNavigate } from "react-router-dom";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
 
 export default function Search(): JSX.Element {
-  const searchKeyword = useAtomValue(searchKeywordAtom);
+  const [searchKeyword, setKeyword] = useAtom(searchKeywordAtom);
 
   const navigate = useNavigate();
 
@@ -17,6 +17,12 @@ export default function Search(): JSX.Element {
       navigate(`/search/${searchKeyword}`);
     }
   }, [searchKeyword]);
+
+  useEffect(() => {
+    return () => {
+      setKeyword("");
+    };
+  }, []);
 
   return (
     <div className={"wrap"}>

@@ -58,7 +58,7 @@ export default function SearchCategory(): JSX.Element {
             {data.artists?.items?.map(
               ({ name, images, type, uri }: any, idx: number) => (
                 <ListItem
-                  title={name}
+                  name={name}
                   imageUrl={images[0]?.url}
                   description={type}
                   uri={uri}
@@ -74,7 +74,7 @@ export default function SearchCategory(): JSX.Element {
             {data.albums?.items?.map(
               ({ name, images, type, uri }: any, idx: number) => (
                 <ListItem
-                  title={name}
+                  name={name}
                   imageUrl={images[0]?.url}
                   description={type}
                   uri={uri}
@@ -90,7 +90,7 @@ export default function SearchCategory(): JSX.Element {
             {data.playlists?.items?.map(
               ({ name, images, owner, uri }: any, idx: number) => (
                 <ListItem
-                  title={name}
+                  name={name}
                   imageUrl={images[0]?.url}
                   description={`만든 사람: ${owner?.display_name}`}
                   uri={uri}
@@ -118,7 +118,7 @@ export default function SearchCategory(): JSX.Element {
     playlists: data?.playlists?.items?.map(
       ({ name, images, owner, uri }: any, idx: number) => (
         <ListItem
-          title={name}
+          name={name}
           imageUrl={images[0]?.url}
           description={`만든 사람: ${owner?.display_name}`}
           uri={uri}
@@ -129,7 +129,7 @@ export default function SearchCategory(): JSX.Element {
     artists: data?.artists?.items?.map(
       ({ name, images, type, uri }: any, idx: number) => (
         <ListItem
-          title={name}
+          name={name}
           imageUrl={images[0]?.url}
           description={type}
           uri={uri}
@@ -140,7 +140,7 @@ export default function SearchCategory(): JSX.Element {
     albums: data?.albums?.items?.map(
       ({ name, images, type, uri }: any, idx: number) => (
         <ListItem
-          title={name}
+          name={name}
           imageUrl={images[0]?.url}
           description={type}
           uri={uri}
