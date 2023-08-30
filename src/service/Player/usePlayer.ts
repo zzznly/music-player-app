@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import PlayerService from "./PlayerService";
 
-export const usePlaybackState = ({ onSuccess, enabled }: UseQueryProps) => {
+export const usePlaybackState = ({
+  onSuccess,
+  enabled,
+}: UseQueryProps = {}) => {
   return useQuery({
     queryKey: ["player.playbackState"],
     queryFn: () => PlayerService.getPlaybackState(),
@@ -125,6 +128,21 @@ export const useMutationToggleShuffle = (state: boolean, device_id: string) => {
     },
     onError: err => {
       console.log("toggle shuffle error", err);
+    },
+  });
+};
+
+export const useMutationSeekPosition = (
+  position_ms: number,
+  device_id: string
+) => {
+  return useMutation({
+    mutationFn: () => PlayerService.seekPosition(position_ms, device_id),
+    onSuccess: data => {
+      console.log("seek position success", data);
+    },
+    onError: err => {
+      console.log("seek position error", err);
     },
   });
 };

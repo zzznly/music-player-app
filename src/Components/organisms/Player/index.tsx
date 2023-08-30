@@ -8,6 +8,7 @@ import {
   useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
+  useMutationSeekPosition,
   useMutationSetRepeat,
   useMutationSkipNext,
   useMutationSkipPrev,
@@ -35,9 +36,12 @@ export default function Player({
   current_track,
   is_paused,
   device_id,
+  duration_ms,
+  current_position,
 }: any): JSX.Element {
   // queries
-  const { isLoading, data: { currently_playing, queue } = {} } =
+  const { data: { progress_ms } = {} } = usePlaybackState();
+  const { data: { currently_playing = {}, queue = [] } = {} } =
     useCurrentPlaylist({});
 
   // 재생할 item의 uri (spotify:type:id)
@@ -58,7 +62,22 @@ export default function Player({
   );
   const toggleShuffle = useMutationToggleShuffle(isShuffle, device_id);
 
-  // const addToPlaylist = useMutationAddCurrentPlaylist(device_id, item_uri);
+  let [duration, setDuration] = useState<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const seekPosition = useMutationSeekPosition(currentTime, device_id);
+
+  useEffect(() => {
+    console.log("duration", duration);
+  }, [duration]);
+
+  // useEffect(() => {
+  //   if (duration_ms > 0) setDuration(duration_ms);
+  //   // console.log("duration_ms", Math.floor(duration_ms / 1000));
+  // }, [duration_ms]);
+
+  // useEffect(() => {
+  //   console.log("current_position", current_position);
+  // }, [current_position]);
 
   useEffect(() => {
     if (device_id.length) {
@@ -79,9 +98,17 @@ export default function Player({
     }
   }, [isShuffle]);
 
+  const seekToPosition = (e: any) => {
+    // console.log("e", e.target.value, convertDurationTime(e.target.value));
+    setCurrentTime(e.target.value);
+  };
+
+  useEffect(() => {
+    if (currentTime > 0) seekPosition.mutate();
+  }, [currentTime]);
+
   return (
     <>
-      {/* {isSuccess && ( */}
       <div className="player">
         <div className="player__list">
           <h2 className="player__list-title">NOW PLAYING</h2>
@@ -188,11 +215,22 @@ export default function Player({
               {current_track?.artists?.[0]?.name || "No Track"}
             </p>
           </div>
+          <input
+            type="range"
+            min={0}
+            max={duration_ms}
+            value={currentTime}
+            onChange={seekToPosition}
+          />
           <div className="player__bar">
             <div className="player__progress"></div>
             <div className="player__time">
-              <div className="player__time-left">2:18</div>
-              <div className="player__time-left">4:15</div>
+              <div className="player__time-left">
+                {convertDurationTime(currentTime)}
+              </div>
+              <div className="player__time-left">
+                {convertDurationTime(duration_ms)}
+              </div>
             </div>
           </div>
           <div className="player__controller">
@@ -232,7 +270,6 @@ export default function Player({
           </div>
         </div>
       </div>
-      {/* )} */}
     </>
   );
 }
