@@ -12,6 +12,8 @@ import ListSection from "../../components/organisms/ListSection";
 import { useNewReleases } from "@service/Playlist/usePlaylist";
 import { useEffect } from "react";
 import PlaylistService from "@service/Playlist/PlaylistService";
+import { useAtom } from "jotai";
+import { spotifyUri } from "@service/Player/PlayerAtom";
 
 const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
   const { data: { playlists: { items = [] } = {} } = {} } =
@@ -28,32 +30,31 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
     <ListSection
       title={name}
       data={items.map(
-        // Q: 데이터 가공 안하고 쓰면 왜 이미지가 안나오지?
-        ({ id, images, name, description, uri }: CategoryPlaylistItem) => ({
+        ({ id, name, description, uri, images }: CategoryPlaylistItem) => ({
           id,
-          imageUrl: images[0].url,
-          title: name,
+          name,
           description,
           uri,
+          imageUrl: images[0].url,
         })
       )}
-      hasShowMore={true}
+      hasShowMore={false}
     />
   );
 };
 
 export default function Home(): JSX.Element {
+  const [, setUri] = useAtom(spotifyUri);
+
   const { data: { categories: { items: categoryItems = [] } = {} } = {} } =
     useCategories();
 
-  const {
-    data: {
-      // @ts-ignore
-      albums: { items: newReleaseItems } = {},
-    } = {},
-  } = useNewReleases();
+  const { data: { albums: { items: newReleaseItems = [] } = {} } = {} } =
+    useNewReleases();
 
-  console.log(1313, newReleaseItems);
+  const getRandomContents = (arr: any[]) => {
+    return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
+  };
 
   return (
     <div className={"wrap"}>
@@ -63,8 +64,14 @@ export default function Home(): JSX.Element {
         </div>
         <div className="playlist__content">
           <div className="section section--new-release">
-            <div className="section-wrap">
-              {newReleaseItems?.slice(3, 8).map((item: any) => (
+            <div className="section__title">
+              <h2>New Release</h2>
+              {/* <a className={"list__link--more"} href="/">
+                See All
+              </a> */}
+            </div>
+            <div className="section__content">
+              {getRandomContents(newReleaseItems)?.map((item: any) => (
                 <div
                   className="section__item"
                   style={{
@@ -72,6 +79,7 @@ export default function Home(): JSX.Element {
                     backgroundSize: "cover",
                     backgroundBlendMode: "multiply",
                   }}
+                  onClick={() => setUri(item.uri)}
                 >
                   <p className="section__item-name">{item?.name}</p>
                   <p className="section__item-artist">
