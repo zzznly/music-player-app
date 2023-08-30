@@ -57,47 +57,45 @@ export default function Player({
   return (
     <>
       {/* {isSuccess && ( */}
-      <div className="layout__player">
-        <div className="layout__player__list">
-          <h2 className="layout__player__list-title">NOW PLAYING</h2>
-          <ul className="layout__player__list-tracks">
+      <div className="player">
+        <div className="player__list">
+          <h2 className="player__list-title">NOW PLAYING</h2>
+          <ul className="player__list-tracks">
             {currently_playing && (
-              <div className="layout__player__current">
+              <div className="player__current">
                 <li
-                  className={`layout__player__track ${
+                  className={`player__track ${
                     currently_playing?.id === current_track?.id &&
-                    "layout__player__track--active"
+                    "player__track--active"
                   }`}
                   onClick={() => setUri(currently_playing?.uri)}
                   // key={`track-${idx}`}
                 >
-                  <div className="layout__player__track-index">
+                  <div className="player__track-index">
                     <img src={playlistPlayIcon} />
                   </div>
-                  <div className="layout__player__track-album">
+                  <div className="player__track-album">
                     <img
-                      className="layout__player__track-album-image"
+                      className="player__track-album-image"
                       src={
                         current_track?.album?.images?.[0]?.url ??
                         "https://dummyimage.com/200x200/ccc/fff.png"
                       }
                     />
                   </div>
-                  <div className="layout__player__track-info">
-                    <p className="layout__player__track-name">
-                      {current_track?.name}
-                    </p>
-                    <p className="layout__player__track-artist">
+                  <div className="player__track-info">
+                    <p className="player__track-name">{current_track?.name}</p>
+                    <p className="player__track-artist">
                       {current_track?.artists?.[0]?.name}
                     </p>
                   </div>
-                  <div className="layout__player__track-runtime">
+                  <div className="player__track-runtime">
                     {convertDurationTime(current_track?.duration_ms)}
                   </div>
                 </li>
               </div>
             )}
-            <div className="layout__player__queue">
+            <div className="player__queue">
               {queue
                 ?.map((v: any, i: number, self: any[]) => {
                   return self.findIndex((obj: any) => obj.uri === v.uri) === i
@@ -111,33 +109,33 @@ export default function Player({
                     idx: number
                   ) => (
                     <li
-                      className={`layout__player__track ${
+                      className={`player__track ${
                         // id === current_track.id &&
-                        // "layout__player__track--active"
+                        // "player__track--active"
                         ""
                       }`}
                       onClick={() => setUri(uri)}
                       key={`track-${idx}`}
                     >
-                      <div className="layout__player__track-index">
+                      <div className="player__track-index">
                         {String(idx + 1).padStart(2, "0")}
                       </div>
-                      <div className="layout__player__track-album">
+                      <div className="player__track-album">
                         <img
-                          className="layout__player__track-album-image"
+                          className="player__track-album-image"
                           src={
                             album?.images?.[0]?.url ??
                             "https://dummyimage.com/200x120/ccc/fff.png"
                           }
                         />
                       </div>
-                      <div className="layout__player__track-info">
-                        <p className="layout__player__track-name">{name}</p>
-                        <p className="layout__player__track-artist">
+                      <div className="player__track-info">
+                        <p className="player__track-name">{name}</p>
+                        <p className="player__track-artist">
                           {artists?.[0]?.name}
                         </p>
                       </div>
-                      <div className="layout__player__track-runtime">
+                      <div className="player__track-runtime">
                         {convertDurationTime(duration_ms)}
                       </div>
                     </li>
@@ -146,9 +144,9 @@ export default function Player({
             </div>
           </ul>
         </div>
-        <div className="layout__player__container">
-          <h2 className="layout__player__container-title">NOW PLAYING</h2>
-          <div className="layout__player__container-album">
+        <div className="player__container">
+          <h2 className="player__title">NOW PLAYING</h2>
+          <div className="player__album">
             <img
               src={
                 current_track?.album?.images?.[0]?.url ??
@@ -157,23 +155,23 @@ export default function Player({
               alt="track album"
             />
           </div>
-          <div className="layout__player__container-song-info">
-            <p className="layout__player__container-song-name">
+          <div className="player__song-info">
+            <p className="player__song-name">
               {current_track?.name || "No track"}
             </p>
-            <p className="layout__player__container-song-artist">
+            <p className="player__song-artist">
               {current_track?.artists?.[0]?.name || "No Track"}
             </p>
           </div>
-          <div className="layout__player__bar">
-            <div className="layout__player__progress"></div>
-            <div className="layout__player__time">
-              <div className="layout__player__time-left">2:18</div>
-              <div className="layout__player__time-left">4:15</div>
+          <div className="player__bar">
+            <div className="player__progress"></div>
+            <div className="player__time">
+              <div className="player__time-left">2:18</div>
+              <div className="player__time-left">4:15</div>
             </div>
           </div>
-          <div className="layout__player__controller">
-            <div className="layout__player__controller-left">
+          <div className="player__controller">
+            <div className="player__controller-left">
               <button>
                 <img src={shuffleIcon} />
               </button>
@@ -182,7 +180,7 @@ export default function Player({
               </button>
             </div>
             <button
-              className="layout__player__controller-playpause"
+              className="player__controller-playpause"
               onClick={() => (is_paused ? onPlay.mutate() : onPause.mutate())}
             >
               <img
@@ -190,7 +188,7 @@ export default function Player({
                 src={is_paused ? playIcon : pauseIcon}
               />
             </button>
-            <div className="layout__player__controller-right">
+            <div className="player__controller-right">
               <button onClick={() => skipNext.mutate()}>
                 <img src={nextIcon} />
               </button>

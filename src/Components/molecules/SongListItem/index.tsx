@@ -15,7 +15,6 @@ interface Props {
 }
 export default function SongListItem({
   id,
-  idx,
   imgUrl,
   name,
   artist,
@@ -26,12 +25,7 @@ export default function SongListItem({
   const [item_uri, setUri] = useAtom(spotifyUri);
 
   return (
-    <li
-      className={"songlist-item"}
-      key={`item-${idx}`}
-      onClick={() => setUri(uri)}
-    >
-      <button className={"songlist-item__rank"}>{idx}</button>
+    <li className={"songlist-item"} onClick={() => setUri(uri)}>
       <div className={"songlist-item__title"}>
         <img
           className="songlist-item__title-albumimage"
