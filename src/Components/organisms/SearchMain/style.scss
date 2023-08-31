@@ -35,6 +35,10 @@
 .section.section--top-artists {
   .list {
     width: 100%;
+
+    &__content {
+      flex-wrap: wrap;
+    }
   }
 }
 
@@ -45,6 +49,9 @@
 
     &-wrap {
       padding: 0;
+    }
+    .list {
+      padding: 24px;
     }
   }
 
