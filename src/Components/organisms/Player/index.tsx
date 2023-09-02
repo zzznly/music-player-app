@@ -44,13 +44,16 @@ export default function Player({
   const { data: { currently_playing = {}, queue = [] } = {} } =
     useCurrentPlaylist({});
 
+  // states
   const [item_uri, setUri] = useAtom(spotifyUri); // 재생할 item의 uri (spotify:type:id)
   const repeatStateList = ["off", "context", "track"];
   const [repeatStateIdx, setRepeatIdx] = useState<number>(0);
   const [isShuffle, setShuffle] = useState<boolean>(false);
+  const [currentProgress, setCurrentProgress] = useState<number>(0);
+  const [isSeeking, setIsSeeking] = useState<boolean>(false);
 
-  // Player Controller
-  const onPlay = useMutationPlayerStart(device_id, item_uri);
+  // mutations - player controller
+  const onPlay = useMutationPlayerStart(device_id, item_uri, currentProgress);
   const onPause = useMutationPlayerPause(device_id, {});
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
@@ -59,16 +62,14 @@ export default function Player({
     device_id
   );
   const toggleShuffle = useMutationToggleShuffle(isShuffle, device_id);
-
-  const [currentProgress, setCurrentProgress] = useState<number>(0);
-  const [isSeeking, setIsSeeking] = useState<boolean>(false);
   const {
+    // isIdle: isSeekPositionIdle,
     // isLoading: isSeekPositionLoading,
     // isSuccess: isSeekPositionSuccess,
     mutate: seekPositionMutate,
   } = useMutationSeekPosition(currentProgress, device_id, {
     onSuccess: () => {
-      setIsSeeking(false); // success
+      setIsSeeking(false);
     },
     enabled: isSeeking,
   });
@@ -87,10 +88,22 @@ export default function Player({
   //   return mutation;
   // };
 
+  // useEffect(() => {
+  //   setCurrentProgress(0);
+  // }, [current_track.id]);
+
+  useEffect(() => {
+    console.log("current progress", currentProgress);
+  }, [currentProgress]);
+
   useEffect(() => {
     if (device_id?.length) {
       onPlay.mutate();
     }
+
+    return () => {
+      setCurrentProgress(0);
+    };
   }, [item_uri]);
 
   useEffect(() => {
@@ -112,14 +125,13 @@ export default function Player({
   }, [currentProgress, isSeeking]);
 
   const seekToPosition = (e: any) => {
-    setIsSeeking(true);
     setCurrentProgress(Number(e.target.value));
-    console.log(111, e.target.value);
+    setIsSeeking(true); // TODO: local state 대신 server state 활용할수 없을까? (react-query)
   };
 
   useEffect(() => {
-    console.log("current_position", current_position);
     if (!isSeeking) setCurrentProgress(current_position);
+    // console.log("current_position", current_position);
   }, [current_position]);
 
   // useEffect(() => {

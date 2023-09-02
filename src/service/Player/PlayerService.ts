@@ -7,16 +7,21 @@ class PlayerService extends Service {
   }
 
   // start/resume
-  startPlayback(device_id: string, uri: string | undefined) {
+  startPlayback(device_id: string, uri: string | undefined, position: number) {
     return this.service
       .put(
         `/me/player/play?device_id=${device_id}`,
         uri?.split(":")[1] === "track"
           ? {
               uris: [uri],
+              // offset: {
+              //   position,
+              // },
+              position_ms: position,
             }
           : {
               context_uri: uri,
+              position_ms: position,
             }
       )
       .then(res => {
