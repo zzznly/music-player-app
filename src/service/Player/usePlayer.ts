@@ -51,32 +51,33 @@ export const useMutationAddCurrentPlaylist = (
 
 export const useMutationPlayerStart = (
   device_id: string,
-  uri: string | undefined
+  uri: string | undefined,
+  { onSuccess, onError }: UseMutationProps = {}
 ) => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: () => {
       return PlayerService.startPlayback(device_id, uri);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
-    },
-    onError: () => {},
+    onSuccess,
+    onError,
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
+    // }
   });
 };
 
-export const useMutationPlayerPause = (device_id: string) => {
+export const useMutationPlayerPause = (
+  device_id: string,
+  { onSuccess, onError }: any = {}
+) => {
   return useMutation({
     mutationFn: () => {
       return PlayerService.pausePlayback(device_id);
     },
-    onSuccess: () => {
-      console.log("pause success");
-    },
-    onError: err => {
-      console.log("pause error", err);
-    },
+    onSuccess,
+    onError,
   });
 };
 
@@ -134,15 +135,14 @@ export const useMutationToggleShuffle = (state: boolean, device_id: string) => {
 
 export const useMutationSeekPosition = (
   position_ms: number,
-  device_id: string
+  device_id: string,
+  { onSuccess, onError, enabled }: UseMutationProps
 ) => {
   return useMutation({
+    // @ts-ignore // Q: 이거 왜 타입에러?
     mutationFn: () => PlayerService.seekPosition(position_ms, device_id),
-    onSuccess: data => {
-      console.log("seek position success", data);
-    },
-    onError: err => {
-      console.log("seek position error", err);
-    },
+    onSuccess,
+    onError,
+    enabled,
   });
 };

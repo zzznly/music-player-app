@@ -13,23 +13,15 @@ import { useEffect, useState } from "react";
 // utils
 import { getToken } from "@utils/auth";
 
-// service
-import PlayerService from "@service/Player/PlayerService";
-import {
-  useCurrentPlayingTrack,
-  useCurrentPlaylist,
-  useMutationPlayerStart,
-} from "@service/Player/usePlayer";
-
 export default function MainLayout(): JSX.Element {
+  // player states
+  const [device_id, setDeviceId] = useState<string>("");
+  const [duration_ms, setDurationMs] = useState<number>(0);
   const [current_track, setTrack] = useState({});
   const [current_position, setPosition] = useState(0);
   const [is_paused, setPaused] = useState(true);
 
   const [token] = useState<string>(getToken() ?? "");
-  const [player, setPlayer] = useState({});
-  const [device_id, setDeviceId] = useState<string>("");
-  const [readyState, setReady] = useState<boolean>(false);
 
   // 플레이어 생성
   useEffect(() => {
@@ -50,19 +42,20 @@ export default function MainLayout(): JSX.Element {
 
       console.log("player instance", playerInstance);
 
-      setPlayer(playerInstance);
-
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         setDeviceId(event.device_id);
-        setReady(true);
         console.log("Ready with Device ID", event.device_id);
+      });
+
+      playerInstance.addListener("progress", (state: any) => {
+        console.log("progress", state.position);
+        setPosition(state.position);
       });
 
       playerInstance.addListener(
         "not_ready",
         (event: { device_id: string }) => {
           console.log("Device ID has gone offline", event.device_id);
-          // setDeviceId(event.device_id);
         }
       );
 
@@ -70,9 +63,9 @@ export default function MainLayout(): JSX.Element {
         if (!state) {
           return;
         }
-        setTrack(state.track_window.current_track);
-        setPaused(state.paused);
-
+        setTrack(state?.track_window.current_track);
+        setPaused(state?.paused);
+        setDurationMs(state?.duration);
         console.log("state changed", state);
       });
 
@@ -96,6 +89,8 @@ export default function MainLayout(): JSX.Element {
           current_track,
           is_paused,
           device_id,
+          current_position,
+          duration_ms,
         }}
       />
     </div>

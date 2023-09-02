@@ -1,6 +1,6 @@
 import "./style.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getToken } from "@utils/auth";
 import {
   useCurrentPlayingTrack,
@@ -18,7 +18,7 @@ import {
 import { useAtom, useAtomValue } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";
 import { convertDurationTime } from "@utils/convert";
-import { useQueryClient } from "@tanstack/react-query";
+import { UseMutationResult, useQueryClient } from "@tanstack/react-query";
 
 // controller icons
 import playIcon from "@assets/images/icon/player/ico-play.png";
@@ -44,16 +44,14 @@ export default function Player({
   const { data: { currently_playing = {}, queue = [] } = {} } =
     useCurrentPlaylist({});
 
-  // 재생할 item의 uri (spotify:type:id)
-  const [item_uri, setUri] = useAtom(spotifyUri);
-
+  const [item_uri, setUri] = useAtom(spotifyUri); // 재생할 item의 uri (spotify:type:id)
   const repeatStateList = ["off", "context", "track"];
   const [repeatStateIdx, setRepeatIdx] = useState<number>(0);
   const [isShuffle, setShuffle] = useState<boolean>(false);
 
-  // 플레이어 컨트롤러
+  // Player Controller
   const onPlay = useMutationPlayerStart(device_id, item_uri);
-  const onPause = useMutationPlayerPause(device_id);
+  const onPause = useMutationPlayerPause(device_id, {});
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
   const setRepeat = useMutationSetRepeat(
@@ -62,50 +60,102 @@ export default function Player({
   );
   const toggleShuffle = useMutationToggleShuffle(isShuffle, device_id);
 
-  let [duration, setDuration] = useState<number>(0);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const seekPosition = useMutationSeekPosition(currentTime, device_id);
+  const [currentProgress, setCurrentProgress] = useState<number>(0);
+  const [isSeeking, setIsSeeking] = useState<boolean>(false);
+  const {
+    // isLoading: isSeekPositionLoading,
+    // isSuccess: isSeekPositionSuccess,
+    mutate: seekPositionMutate,
+  } = useMutationSeekPosition(currentProgress, device_id, {
+    onSuccess: () => {
+      setIsSeeking(false); // success
+    },
+    enabled: isSeeking,
+  });
+
+  /* TODO: 커스텀훅 만들까 말까... */
+  // const usePlayerController = (
+  //   device_id: string,
+  //   dependancies: any[],
+  //   mutation: UseMutationResult
+  // ) => {
+  //   useEffect(() => {
+  //     if (device_id.length) {
+  //       mutation.mutate({});
+  //     }
+  //   }, dependencies);
+  //   return mutation;
+  // };
 
   useEffect(() => {
-    console.log("duration", duration);
-  }, [duration]);
-
-  // useEffect(() => {
-  //   if (duration_ms > 0) setDuration(duration_ms);
-  //   // console.log("duration_ms", Math.floor(duration_ms / 1000));
-  // }, [duration_ms]);
-
-  // useEffect(() => {
-  //   console.log("current_position", current_position);
-  // }, [current_position]);
-
-  useEffect(() => {
-    if (device_id.length) {
+    if (device_id?.length) {
       onPlay.mutate();
     }
   }, [item_uri]);
 
   useEffect(() => {
-    if (device_id.length) {
+    if (device_id?.length) {
       setRepeat.mutate();
     }
     setRepeatIdx(repeatStateIdx % 3);
   }, [repeatStateIdx]);
 
   useEffect(() => {
-    if (device_id.length) {
+    if (device_id?.length) {
       toggleShuffle.mutate();
     }
   }, [isShuffle]);
 
+  useEffect(() => {
+    console.log("currentProgress", currentProgress);
+    if (currentProgress && isSeeking) seekPositionMutate();
+  }, [currentProgress, isSeeking]);
+
   const seekToPosition = (e: any) => {
-    // console.log("e", e.target.value, convertDurationTime(e.target.value));
-    setCurrentTime(e.target.value);
+    setIsSeeking(true);
+    setCurrentProgress(Number(e.target.value));
+    console.log(111, e.target.value);
   };
 
   useEffect(() => {
-    if (currentTime > 0) seekPosition.mutate();
-  }, [currentTime]);
+    console.log("current_position", current_position);
+    if (!isSeeking) setCurrentProgress(current_position);
+  }, [current_position]);
+
+  // useEffect(() => {
+  //   let req: number;
+  //   let startTime: number;
+  //   let prevTime: number;
+
+  //   if (!is_paused) {
+  //     const startPlayAnimation = (timestamp: number) => {
+  //       if (!startTime) startTime = timestamp;
+  //       if (!prevTime) prevTime = timestamp;
+
+  //       const elapsed = timestamp - startTime; // 경과한 시간
+  //       const deltaTime = timestamp - prevTime; // 시간 간격
+
+  //       if (deltaTime >= 1000) {
+  //         setCurrentProgress(prevPosition =>
+  //           Math.floor(prevPosition + deltaTime)
+  //         );
+  //         prevTime = timestamp;
+  //       }
+
+  //       if (elapsed < duration_ms) {
+  //         req = requestAnimationFrame(startPlayAnimation);
+  //       } else {
+  //         setCurrentProgress(0);
+  //       }
+  //     };
+
+  //     req = requestAnimationFrame(startPlayAnimation);
+  //   }
+
+  //   return () => {
+  //     cancelAnimationFrame(req); // 애니메이션 멈춤
+  //   };
+  // }, [is_paused, item_uri]);
 
   return (
     <>
@@ -215,47 +265,65 @@ export default function Player({
               {current_track?.artists?.[0]?.name || "No Track"}
             </p>
           </div>
-          <input
-            type="range"
-            min={0}
-            max={duration_ms}
-            value={currentTime}
-            onChange={seekToPosition}
-          />
           <div className="player__bar">
-            <div className="player__progress"></div>
+            <input
+              className="player__progress"
+              name="progress"
+              type="range"
+              min={0}
+              max={duration_ms}
+              value={currentProgress}
+              onChange={seekToPosition}
+              step={1000}
+            />
             <div className="player__time">
-              <div className="player__time-left">
-                {convertDurationTime(currentTime)}
+              <div className="player__current-time">
+                {convertDurationTime(current_position)}
               </div>
-              <div className="player__time-left">
+              <div className="player__duration">
                 {convertDurationTime(duration_ms)}
               </div>
             </div>
           </div>
           <div className="player__controller">
             <div className="player__controller-left">
-              <button onClick={() => setShuffle(!isShuffle)}>
-                <img src={isShuffle ? shuffleActiveIcon : shuffleIcon} />
+              <button
+                className="player__shuffle"
+                onClick={() => setShuffle(!isShuffle)}
+              >
+                <img
+                  src={isShuffle ? shuffleActiveIcon : shuffleIcon}
+                  alt="shuffle"
+                />
               </button>
-              <button onClick={() => skipPrev.mutate()}>
-                <img src={prevIcon} />
+              <button
+                className="player__skip-prev"
+                onClick={() => skipPrev.mutate()}
+              >
+                <img src={prevIcon} alt="skip prev" />
               </button>
             </div>
             <button
-              className="player__controller-playpause"
+              className="player__playpause"
               onClick={() => (is_paused ? onPlay.mutate() : onPause.mutate())}
             >
               <img
-                className={is_paused ? "icon--play" : "icon--pause"}
+                className={`icon ${is_paused ? "icon--play" : "icon--pause"}`}
                 src={is_paused ? playIcon : pauseIcon}
+                alt="play or pause"
               />
             </button>
             <div className="player__controller-right">
-              <button onClick={() => skipNext.mutate()}>
-                <img src={nextIcon} />
+              <button
+                className="player__skip-next"
+                onClick={() => skipNext.mutate()}
+              >
+                <img src={nextIcon} alt="skip next" />
               </button>
-              <button onClick={() => setRepeatIdx(prev => prev + 1)}>
+              <button
+                className="player__repeat"
+                onClick={() => setRepeatIdx(prev => prev + 1)}
+              >
                 <img
                   src={
                     {
@@ -264,6 +332,7 @@ export default function Player({
                       2: repeatTrackIcon,
                     }[repeatStateIdx]
                   }
+                  alt="repeat"
                 />
               </button>
             </div>
