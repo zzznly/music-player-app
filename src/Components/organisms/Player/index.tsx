@@ -146,7 +146,15 @@ export default function Player({
                     currently_playing?.id === current_track?.id &&
                     "player__track--active"
                   }`}
-                  onClick={() => setUri(currently_playing?.uri)}
+                  onClick={() =>
+                    setUri(prevUri => {
+                      if (prevUri !== currently_playing?.uri) {
+                        return currently_playing?.uri;
+                      } else {
+                        setCurrentProgress(0);
+                      }
+                    })
+                  }
                   // key={`track-${idx}`}
                 >
                   <div className="player__track-index">
@@ -188,9 +196,7 @@ export default function Player({
                   ) => (
                     <li
                       className={`player__track ${
-                        // id === current_track.id &&
-                        // "player__track--active"
-                        ""
+                        id === current_track.id && "player__track--active"
                       }`}
                       onClick={() => setUri(uri)}
                       key={`track-${idx}`}

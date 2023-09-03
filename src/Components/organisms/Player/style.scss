@@ -164,6 +164,12 @@
       font-size: 14px;
       font-weight: 400;
       color: #787887;
+
+      .player__current-time {
+        color: var(--primary);
+      }
+      .player__duration {
+      }
     }
 
     .player__progress {
