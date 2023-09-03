@@ -10,7 +10,7 @@ import MainLayout from "./components/templates/MainLayout";
 import AuthLayout from "./components/templates/AuthLayout";
 
 // components
-import Home from "@pages/Home";
+import Explore from "@pages/Explore";
 import Search from "@pages/Search";
 import DetailPage from "@pages/DetailPage";
 import useSpotifyAuth from "@hooks/useSpotifyAuth";
@@ -24,7 +24,7 @@ export default function App(): React.ReactElement {
     <div className="App">
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Explore />} />
           <Route path="/search" element={<Search />}>
             <Route index element={<SearchMain />} />
             <Route path="/search/:keyword" element={<SearchResult />}>
