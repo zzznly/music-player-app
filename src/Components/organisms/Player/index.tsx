@@ -53,7 +53,7 @@ export default function Player({
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
 
   // mutations - player controller
-  const onPlay = useMutationPlayerStart(
+  const { mutate: onPlayMutate } = useMutationPlayerStart(
     device_id,
     item_uri,
     currentProgress,
@@ -95,7 +95,7 @@ export default function Player({
   // };
   useEffect(() => {
     if (device_id?.length) {
-      onPlay.mutate();
+      onPlayMutate();
     }
   }, [item_uri]);
 
@@ -122,6 +122,17 @@ export default function Player({
     setIsSeeking(true); // TODO: local state 대신 server state 활용할수 없을까? (react-query)
   };
 
+  const clickPrev = () => {
+    /*
+      진행 시간 3초 이상 : 곡의 처음으로 이동
+      진행 시간 3초 이하 : 이전곡 이동
+    */
+    if (current_position > 3000) {
+      seekPositionMutate();
+    } else {
+      skipPrev.mutate();
+    }
+  };
   return (
     <>
       <div className="player">
@@ -261,16 +272,13 @@ export default function Player({
                   alt="shuffle"
                 />
               </button>
-              <button
-                className="player__skip-prev"
-                onClick={() => skipPrev.mutate()}
-              >
+              <button className="player__skip-prev" onClick={clickPrev}>
                 <img src={prevIcon} alt="skip prev" />
               </button>
             </div>
             <button
               className="player__playpause"
-              onClick={() => (is_paused ? onPlay.mutate() : onPause.mutate())}
+              onClick={() => (is_paused ? onPlayMutate() : onPause.mutate())}
             >
               <img
                 className={`icon ${is_paused ? "icon--play" : "icon--pause"}`}
