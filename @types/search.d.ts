@@ -14,13 +14,3 @@ interface SearchRes {
   tracks?: CommonRes<TrackRes>;
   playlists?: CommonRes<any>;
 }
-
-interface CommonRes<T> {
-  href: string;
-  limit: number;
-  next: string;
-  items: T[];
-  offset: number;
-  previous: null;
-  total: number;
-}

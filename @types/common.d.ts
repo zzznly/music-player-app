@@ -1,3 +1,13 @@
+interface CommonRes<T> {
+  href: string;
+  limit: number;
+  next: string;
+  items: T[];
+  offset: number;
+  previous: null;
+  total: number;
+}
+
 interface UseQueryProps {
   onSuccess?: ({ data }: any) => void;
   onError?: (err: any) => void;
@@ -7,8 +17,9 @@ interface UseQueryProps {
 }
 
 interface UseMutationProps {
-  onSuccess: ({ data }: any) => void;
+  onSuccess?: ({ data }: any) => void;
   onError?: ({ error }: any) => void;
+  enabled?: any;
 }
 
 interface Image {
@@ -48,4 +59,28 @@ interface Icon {
   width: number;
   height: number;
   url: string;
+}
+
+interface ExternalUrls {
+  spotify: string;
+}
+
+interface Follower {
+  href: string;
+  total: number;
+}
+
+interface Owner {
+  external_urls: ExternalUrls;
+  followers: Follower;
+  href: string;
+  id: string;
+  type: string;
+  uri: string;
+  display_name: string;
+}
+
+interface Tracks {
+  href: string;
+  total: number;
 }
