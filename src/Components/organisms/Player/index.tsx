@@ -53,7 +53,12 @@ export default function Player({
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
 
   // mutations - player controller
-  const onPlay = useMutationPlayerStart(device_id, item_uri, currentProgress);
+  const onPlay = useMutationPlayerStart(
+    device_id,
+    item_uri,
+    currentProgress,
+    {}
+  );
   const onPause = useMutationPlayerPause(device_id, {});
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
@@ -70,6 +75,7 @@ export default function Player({
   } = useMutationSeekPosition(currentProgress, device_id, {
     onSuccess: () => {
       setIsSeeking(false);
+      setCurrentProgress(0);
     },
     enabled: isSeeking,
   });
@@ -87,23 +93,10 @@ export default function Player({
   //   }, dependencies);
   //   return mutation;
   // };
-
-  // useEffect(() => {
-  //   setCurrentProgress(0);
-  // }, [current_track.id]);
-
-  useEffect(() => {
-    console.log("current progress", currentProgress);
-  }, [currentProgress]);
-
   useEffect(() => {
     if (device_id?.length) {
       onPlay.mutate();
     }
-
-    return () => {
-      setCurrentProgress(0);
-    };
   }, [item_uri]);
 
   useEffect(() => {
@@ -120,54 +113,14 @@ export default function Player({
   }, [isShuffle]);
 
   useEffect(() => {
-    console.log("currentProgress", currentProgress);
-    if (currentProgress && isSeeking) seekPositionMutate();
+    // console.log("currentProgress", currentProgress);
+    if (currentProgress > 0 && isSeeking) seekPositionMutate();
   }, [currentProgress, isSeeking]);
 
   const seekToPosition = (e: any) => {
     setCurrentProgress(Number(e.target.value));
     setIsSeeking(true); // TODO: local state 대신 server state 활용할수 없을까? (react-query)
   };
-
-  useEffect(() => {
-    if (!isSeeking) setCurrentProgress(current_position);
-    // console.log("current_position", current_position);
-  }, [current_position]);
-
-  // useEffect(() => {
-  //   let req: number;
-  //   let startTime: number;
-  //   let prevTime: number;
-
-  //   if (!is_paused) {
-  //     const startPlayAnimation = (timestamp: number) => {
-  //       if (!startTime) startTime = timestamp;
-  //       if (!prevTime) prevTime = timestamp;
-
-  //       const elapsed = timestamp - startTime; // 경과한 시간
-  //       const deltaTime = timestamp - prevTime; // 시간 간격
-
-  //       if (deltaTime >= 1000) {
-  //         setCurrentProgress(prevPosition =>
-  //           Math.floor(prevPosition + deltaTime)
-  //         );
-  //         prevTime = timestamp;
-  //       }
-
-  //       if (elapsed < duration_ms) {
-  //         req = requestAnimationFrame(startPlayAnimation);
-  //       } else {
-  //         setCurrentProgress(0);
-  //       }
-  //     };
-
-  //     req = requestAnimationFrame(startPlayAnimation);
-  //   }
-
-  //   return () => {
-  //     cancelAnimationFrame(req); // 애니메이션 멈춤
-  //   };
-  // }, [is_paused, item_uri]);
 
   return (
     <>
@@ -284,7 +237,7 @@ export default function Player({
               type="range"
               min={0}
               max={duration_ms}
-              value={currentProgress}
+              value={current_position}
               onChange={seekToPosition}
               step={1000}
             />
