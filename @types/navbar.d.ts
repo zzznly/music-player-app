@@ -2,7 +2,7 @@ interface NavSubMenu {
   menu: string;
   path: string;
   icon: string;
-  iconActive: string;
+  iconActive?: string;
 }
 
 interface NavMenu {

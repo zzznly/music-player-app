@@ -34,7 +34,9 @@ export default function NavBar() {
               {nav_menu[menu].map((item: NavSubMenu, idx: number) => (
                 <li
                   className={`layout__nav-bar__item ${
-                    item.path === location.pathname ? "active" : ""
+                    location.pathname.split("/")[1] === item.path.split("/")[1]
+                      ? "active"
+                      : ""
                   }`}
                   key={`item-${idx}`}
                 >
@@ -50,7 +52,8 @@ export default function NavBar() {
                   >
                     <img
                       src={
-                        item.path === location.pathname
+                        location.pathname.split("/")[1] ===
+                        item.path.split("/")[1]
                           ? item.iconActive
                           : item.icon
                       }
