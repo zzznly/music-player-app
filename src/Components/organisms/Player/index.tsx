@@ -75,7 +75,7 @@ export default function Player({
   } = useMutationSeekPosition(currentProgress, device_id, {
     onSuccess: () => {
       setIsSeeking(false);
-      setCurrentProgress(0);
+      !is_paused && setCurrentProgress(0);
     },
     enabled: isSeeking,
   });
