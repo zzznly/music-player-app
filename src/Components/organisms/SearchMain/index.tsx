@@ -60,6 +60,7 @@ export default function SearchMain(): JSX.Element {
   const typeArr = ["artists", "tracks"];
   const [topItemsType, setType] = useState("artists");
 
+  // TODO: useMemo 에 대해 정리하기
   const obj: any = useMemo(
     () => ({
       artists: [],
@@ -108,13 +109,14 @@ export default function SearchMain(): JSX.Element {
           <ListSection
             className="section--top-tracks"
             title={"TOP TRACKS"}
-            data={obj["tracks"]
-              ?.slice(1, 10)
-              .map(({ id, album: { images = [] } = {}, uri }: any) => ({
+            data={obj["tracks"]?.map(
+              ({ id, name, album: { images = [] } = {}, uri }: any) => ({
                 id,
+                name,
                 uri,
                 imageUrl: images?.[0]?.url,
-              }))}
+              })
+            )}
           />
           <div className={"section section--genres"}>
             <div className={"section-wrap"}>

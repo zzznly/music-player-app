@@ -27,7 +27,7 @@ export default function ListItem({
 
   const clickUriItem = (uri: string | undefined) => {
     if (location.pathname === "/search") {
-      setKeyword(name);
+      setKeyword(name || title);
       return;
     }
     setUri(uri);
