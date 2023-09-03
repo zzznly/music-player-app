@@ -11,49 +11,38 @@ import MyPlaylistIconActive from "@assets/images/icon/navbar/ico-menu-my-playlis
 import MyArtistIcon from "@assets/images/icon/navbar/ico-menu-my-artists.svg";
 import MyArtistIconActive from "@assets/images/icon/navbar/ico-menu-my-artists-active.svg";
 
-interface Menu {
-  menu: string;
-  link: string;
-  icon: string;
-  iconActive: string;
-}
-
-interface NavMenu {
-  MENU: Menu[];
-  MY: Menu[];
-}
-
-export const navMenu = atom<any>({
+export const navMenu = atom<NavMenu>({
   MENU: [
     {
       menu: "Explore",
-      link: "/",
+      path: "/",
       icon: ExploreIcon,
       iconActive: ExploreIconActive,
     },
     {
       menu: "Search",
-      link: "/search",
+      path: "/search",
       icon: SearchIcon,
       iconActive: SearchIconActive,
     },
   ],
   MY: [
+    // comming soon
     {
       menu: "Playlists",
-      link: "/",
+      path: "/playlists",
       icon: MyPlaylistIcon,
       iconActive: MyPlaylistIconActive,
     },
     {
       menu: "Favorites",
-      link: "/",
+      path: "/favorites",
       icon: MyFavoriteIcon,
       iconActive: MyFavoriteIconActive,
     },
     {
       menu: "Artists",
-      link: "/",
+      path: "/artists",
       icon: MyArtistIcon,
       iconActive: MyArtistIconActive,
     },
