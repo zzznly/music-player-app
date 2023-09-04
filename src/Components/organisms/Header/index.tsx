@@ -7,13 +7,13 @@ import "./style.scss";
 
 import searchIcon from "@assets/images/icon/ico-input-search.svg";
 import { useAtom } from "jotai";
-import { activeMenu } from "@service/Common/CommonAtom";
+import { searchKeywordAtom } from "@service/Search/SearchAtom";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [active_menu, setActiveMenu] = useAtom(activeMenu);
+  const [keyword, setKeyword] = useAtom(searchKeywordAtom);
 
   return (
     <div className="layout__header">
@@ -72,7 +72,6 @@ export default function Header(): JSX.Element {
                 });
               }, 200)}
               onFocus={() => {
-                setActiveMenu("Search");
                 navigate(`/search`, {
                   replace: true,
                 });
