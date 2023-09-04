@@ -12,8 +12,14 @@ import { useEffect, useState } from "react";
 
 // utils
 import { getToken } from "@utils/auth";
+import { isSpinnerLoading } from "@service/Common/CommonAtom";
+import Loading from "@components/atoms/Loading";
+import { useAtom } from "jotai";
 
 export default function MainLayout(): JSX.Element {
+  // loading
+  const [isLoading, setLoading] = useAtom(isSpinnerLoading);
+
   // player states
   const [device_id, setDeviceId] = useState<string>("");
   const [duration_ms, setDurationMs] = useState<number>(0);
@@ -40,7 +46,7 @@ export default function MainLayout(): JSX.Element {
         volume: 0.5,
       });
 
-      console.log("player instance", playerInstance);
+      // console.log("player instance", playerInstance);
 
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         setDeviceId(event.device_id);
@@ -48,7 +54,7 @@ export default function MainLayout(): JSX.Element {
       });
 
       playerInstance.addListener("progress", (state: any) => {
-        console.log("progress", state.position);
+        // console.log("progress", state.position);
         setPosition(state.position);
       });
 
@@ -71,6 +77,7 @@ export default function MainLayout(): JSX.Element {
 
       playerInstance.connect().then((res: boolean) => {
         console.log("player connected", res);
+        setLoading(false);
       });
     };
   }, [token]);
@@ -93,6 +100,7 @@ export default function MainLayout(): JSX.Element {
           duration_ms,
         }}
       />
+      {isLoading && <Loading />}
     </div>
   );
 }

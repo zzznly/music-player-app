@@ -3,9 +3,7 @@ import "./style.scss";
 import { useEffect, useRef, useState } from "react";
 import { getToken } from "@utils/auth";
 import {
-  useCurrentPlayingTrack,
   useCurrentPlaylist,
-  useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
   useMutationSeekPosition,
@@ -31,6 +29,7 @@ import shuffleActiveIcon from "@assets/images/icon/player/ico-shuffle-active.svg
 import repeatOffIcon from "@assets/images/icon/player/ico-repeat-track.svg";
 import repeatContextIcon from "@assets/images/icon/player/ico-repeat-context.svg";
 import repeatTrackIcon from "@assets/images/icon/player/ico-repeat-off.svg";
+import { isSpinnerLoading } from "@service/Common/CommonAtom";
 
 export default function Player({
   current_track,
@@ -52,13 +51,14 @@ export default function Player({
   const [currentProgress, setCurrentProgress] = useState<number>(0);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
 
+  const [isLoadingSpinner, setLoading] = useAtom(isSpinnerLoading);
+
   // mutations - player controller
-  const { mutate: onPlayMutate } = useMutationPlayerStart(
-    device_id,
-    item_uri,
-    currentProgress,
-    {}
-  );
+  const {
+    isLoading: onPlayLoading,
+    isSuccess,
+    mutate: onPlayMutate,
+  } = useMutationPlayerStart(device_id, item_uri, currentProgress, {});
   const onPause = useMutationPlayerPause(device_id, {});
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
@@ -79,6 +79,10 @@ export default function Player({
     },
     enabled: isSeeking,
   });
+
+  useEffect(() => {
+    setLoading(onPlayLoading);
+  }, [onPlayLoading]);
 
   /* TODO: 커스텀훅 만들까 말까... */
   // const usePlayerController = (
@@ -114,7 +118,9 @@ export default function Player({
 
   useEffect(() => {
     // console.log("currentProgress", currentProgress);
-    if (currentProgress > 0 && isSeeking) seekPositionMutate();
+    if (device_id?.length) {
+      if (currentProgress > 0 && isSeeking) seekPositionMutate();
+    }
   }, [currentProgress, isSeeking]);
 
   const seekToPosition = (e: any) => {
@@ -142,10 +148,7 @@ export default function Player({
             {currently_playing && (
               <div className="player__current">
                 <li
-                  className={`player__track ${
-                    currently_playing?.id === current_track?.id &&
-                    "player__track--active"
-                  }`}
+                  className={`player__track`}
                   onClick={() =>
                     setUri(prevUri => {
                       if (prevUri !== currently_playing?.uri) {

@@ -10,6 +10,7 @@ import MyPlaylistIcon from "@assets/images/icon/navbar/ico-menu-my-playlist.svg"
 import MyPlaylistIconActive from "@assets/images/icon/navbar/ico-menu-my-playlist-active.svg";
 import MyArtistIcon from "@assets/images/icon/navbar/ico-menu-my-artists.svg";
 import MyArtistIconActive from "@assets/images/icon/navbar/ico-menu-my-artists-active.svg";
+import LogoutIcon from "@assets/images/icon/navbar/ico-menu-logout.svg";
 
 export const navMenu = atom<NavMenu>({
   MENU: [
@@ -47,6 +48,13 @@ export const navMenu = atom<NavMenu>({
       iconActive: MyArtistIconActive,
     },
   ],
+  OTHERS: [
+    {
+      menu: "Logout",
+      path: "/logout",
+      icon: LogoutIcon,
+    },
+  ],
 });
 
-export const activeMenu = atom<string>("Explore");
+export const isSpinnerLoading = atom<boolean>(true);
