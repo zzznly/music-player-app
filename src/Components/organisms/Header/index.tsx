@@ -8,12 +8,27 @@ import "./style.scss";
 import searchIcon from "@assets/images/icon/ico-input-search.svg";
 import { useAtom } from "jotai";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
+import { ChangeEvent, useEffect, useState } from "react";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [keyword, setKeyword] = useAtom(searchKeywordAtom);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
+  useEffect(
+    debounce(() => {
+      if (keyword.length)
+        navigate(`/search/${keyword}`, {
+          replace: true,
+        });
+    }, 200),
+    [keyword]
+  );
 
   return (
     <div className="layout__header">
@@ -65,12 +80,14 @@ export default function Header(): JSX.Element {
               className="layout__header__input"
               type="search"
               placeholder="Search..."
-              onChange={debounce(e => {
-                console.log("debounce", e.target.value);
-                navigate(`/search/${e.target.value}`, {
-                  replace: true,
-                });
-              }, 200)}
+              value={keyword}
+              onChange={handleChange}
+              // onChange={debounce(e => {
+              //   console.log("debounce", e.target.value);
+              //   navigate(`/search/${e.target.value}`, {
+              //     replace: true,
+              //   });
+              // }, 200)}
               onFocus={() => {
                 navigate(`/search`, {
                   replace: true,
