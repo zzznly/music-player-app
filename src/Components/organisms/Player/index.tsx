@@ -59,7 +59,11 @@ export default function Player({
     isSuccess,
     mutate: onPlayMutate,
   } = useMutationPlayerStart(device_id, item_uri, currentProgress, {});
-  const onPause = useMutationPlayerPause(device_id, {});
+  const onPause = useMutationPlayerPause(device_id, {
+    onSuccess: () => {
+      setCurrentProgress(current_position);
+    },
+  });
   const skipNext = useMutationSkipNext(device_id);
   const skipPrev = useMutationSkipPrev(device_id);
   const setRepeat = useMutationSetRepeat(
@@ -117,7 +121,6 @@ export default function Player({
   }, [isShuffle]);
 
   useEffect(() => {
-    // console.log("currentProgress", currentProgress);
     if (device_id?.length) {
       if (currentProgress > 0 && isSeeking) seekPositionMutate();
     }
