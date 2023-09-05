@@ -109,14 +109,14 @@ export default function SearchMain(): JSX.Element {
           <ListSection
             className="section--top-tracks"
             title={"TOP TRACKS"}
-            data={obj["tracks"]?.map(
-              ({ id, name, album: { images = [] } = {}, uri }: any) => ({
+            data={obj["tracks"]
+              ?.map(({ id, name, album: { images = [] } = {}, uri }: any) => ({
                 id,
                 name,
                 uri,
                 imageUrl: images?.[0]?.url,
-              })
-            )}
+              }))
+              .slice(0, 6)}
           />
           <div className={"section section--genres"}>
             <div className={"section-wrap"}>

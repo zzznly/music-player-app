@@ -5,7 +5,9 @@
   gap: 32px;
   width: 100%;
 
-  .search-result__section-wrap {
+  .search-result__section-box {
+    padding: 0 24px;
+
     .search-result__section {
       width: 100%;
       &:first-child {
@@ -59,7 +61,7 @@
   }
 }
 
-.search-result__section-wrap {
+.search-result__section-box {
   display: flex;
   flex-direction: row;
   width: 100%;

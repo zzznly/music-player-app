@@ -7,13 +7,18 @@ import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
 
 import ListItem from "@components/molecules/ListItem";
 import SongListItem from "@components/molecules/SongListItem";
+import ListSection from "@components/organisms/ListSection";
 
 export default function SearchCategory(): JSX.Element {
   const data: any = useOutletContext();
+  console.log(
+    "data",
+    Object.keys(data).filter(v => v !== "tracks")
+  );
   const list: Record<string, React.ReactNode> = {
     all: (
       <div className="search-result__content--all">
-        <div className="search-result__section-wrap">
+        <div className="search-result__section-box">
           <div className="search-result__section topResult">
             <h2 className="search-result__title">상위 결과</h2>
             <div
@@ -52,54 +57,23 @@ export default function SearchCategory(): JSX.Element {
             </div>
           </div>
         </div>
-        <div className="search-result__section artists">
-          <h2 className="search-result__title">{Object.keys(data)[1]}</h2>
-          <ul className="search-result__list">
-            {data.artists?.items?.map(
-              ({ name, images, type, uri }: any, idx: number) => (
-                <ListItem
-                  name={name}
-                  imageUrl={images[0]?.url}
-                  description={type}
-                  uri={uri}
-                  key={`item-${idx}`}
-                />
-              )
-            )}
-          </ul>
-        </div>
-        <div className="search-result__section albums">
-          <h2 className="search-result__title">{Object.keys(data)[0]}</h2>
-          <ul className="search-result__list">
-            {data.albums?.items?.map(
-              ({ name, images, type, uri }: any, idx: number) => (
-                <ListItem
-                  name={name}
-                  imageUrl={images[0]?.url}
-                  description={type}
-                  uri={uri}
-                  key={`item-${idx}`}
-                />
-              )
-            )}
-          </ul>
-        </div>
-        <div className="search-result__section playlists">
-          <h2 className="search-result__title">{Object.keys(data)[3]}</h2>
-          <ul className="search-result__list">
-            {data.playlists?.items?.map(
-              ({ name, images, owner, uri }: any, idx: number) => (
-                <ListItem
-                  name={name}
-                  imageUrl={images[0]?.url}
-                  description={`만든 사람: ${owner?.display_name}`}
-                  uri={uri}
-                  key={`item-${idx}`}
-                />
-              )
-            )}
-          </ul>
-        </div>
+        {Object.keys(data)
+          .filter(v => v !== "tracks")
+          .map((key: string, idx: number) => (
+            <div className={`search-result__section ${key}`}>
+              <ListSection
+                title={key}
+                data={data?.[key]?.items?.map(
+                  ({ name, images, type, uri }: any, idx: number) => ({
+                    name,
+                    imageUrl: images[0]?.url,
+                    description: type,
+                    uri,
+                  })
+                )}
+              />
+            </div>
+          ))}
       </div>
     ),
     tracks: data?.tracks?.items?.map((item: any, idx: number) => (
@@ -115,38 +89,45 @@ export default function SearchCategory(): JSX.Element {
         key={idx}
       />
     )),
-    playlists: data?.playlists?.items?.map(
-      ({ name, images, owner, uri }: any, idx: number) => (
-        <ListItem
-          name={name}
-          imageUrl={images[0]?.url}
-          description={`만든 사람: ${owner?.display_name}`}
-          uri={uri}
-          key={`item-${idx}`}
-        />
-      )
+    // TODO: 여기서부터만 반복문을 돌릴까?
+    playlists: (
+      <ListSection
+        title={`${data?.playlists?.items?.length} playlists`}
+        data={data?.playlists?.items?.map(
+          ({ name, images, type, uri }: any, idx: number) => ({
+            name,
+            imageUrl: images[0]?.url,
+            description: type,
+            uri,
+          })
+        )}
+      />
     ),
-    artists: data?.artists?.items?.map(
-      ({ name, images, type, uri }: any, idx: number) => (
-        <ListItem
-          name={name}
-          imageUrl={images[0]?.url}
-          description={type}
-          uri={uri}
-          key={`item-${idx}`}
-        />
-      )
+    artists: (
+      <ListSection
+        title={`${data?.artists?.items?.length} artists`}
+        data={data?.artists?.items?.map(
+          ({ name, images, type, uri }: any, idx: number) => ({
+            name,
+            imageUrl: images[0]?.url,
+            description: type,
+            uri,
+          })
+        )}
+      />
     ),
-    albums: data?.albums?.items?.map(
-      ({ name, images, type, uri }: any, idx: number) => (
-        <ListItem
-          name={name}
-          imageUrl={images[0]?.url}
-          description={type}
-          uri={uri}
-          key={`item-${idx}`}
-        />
-      )
+    albums: (
+      <ListSection
+        title={`${data?.albums?.items?.length} albums`}
+        data={data?.albums?.items?.map(
+          ({ name, images, type, uri }: any, idx: number) => ({
+            name,
+            imageUrl: images[0]?.url,
+            description: type,
+            uri,
+          })
+        )}
+      />
     ),
   };
 
