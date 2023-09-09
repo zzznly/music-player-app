@@ -18,6 +18,7 @@
     "colorthief": "^2.4.0",
     "jotai": "^2.0.3",
     "node-sass": "^7.0.3",
+    "rc-slider": "^10.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
