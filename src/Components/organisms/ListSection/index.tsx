@@ -40,7 +40,7 @@ export default function ListSection({
           </div>
 
           <div className="list__content">
-            {data.slice(0, 6).map(item => {
+            {data.map(item => {
               const { name = "", title = "", ...rest } = item;
               return <ListItem {...rest} name={title || name} key={item.id} />;
             })}
