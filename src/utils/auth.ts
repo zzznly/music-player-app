@@ -38,7 +38,8 @@ export const getSpotifyAuthUrl = () => {
 };
 
 export const redirectToLogin = ({
-  redirect_uri = "http://localhost:5005",
+  // redirect_uri = "http://localhost:5005",
+  redirect_uri = "http://zzznlyawsbucket.s3-website.ap-northeast-2.amazonaws.com",
   scope = [
     "user-read-currently-playing",
     "user-read-recently-played",
