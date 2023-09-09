@@ -11,3 +11,12 @@ export const useUserTopItems = (
     onSuccess,
   });
 };
+
+export const useUserInfo = ({ onSuccess, onError }: UseQueryProps = {}) => {
+  return useQuery({
+    queryFn: () => UserService.getUserInfo(),
+    queryKey: ["user.userInfo"],
+    onSuccess,
+    onError,
+  });
+};
