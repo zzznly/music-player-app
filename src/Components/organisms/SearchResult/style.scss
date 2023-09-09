@@ -1,5 +1,4 @@
 .search-result {
-  // padding: 0 20px;
   width: 100%;
 
   &__filter {
@@ -13,6 +12,9 @@
 }
 
 .search-result__content {
+  .search-result__title {
+    margin-bottom: 24px;
+  }
   .section {
     .list__content {
       flex-wrap: wrap;
@@ -21,7 +23,11 @@
 }
 
 .search-result__title {
-  color: var(--font-main);
+  padding: 0 42px;
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 22px;
 }
 
 .search-result__filter {
