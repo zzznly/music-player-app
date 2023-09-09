@@ -30,15 +30,15 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 16px;
     gap: 24px;
   }
 
   &.tracks {
     .search-result__list {
-      margin-top: 12px;
+      // margin-top: 12px;
       flex-direction: column;
       gap: 10px;
+      padding: 0 24px;
       .list-item {
         &__album {
           border-radius: 500px;
@@ -48,14 +48,15 @@
   }
 
   &.artists {
-    .search-result__list {
-      .list-item {
-        &__image-wrap {
-          width: 160px;
-          height: 160px;
-          border-radius: 500px;
-          overflow: hidden;
-        }
+    .list {
+      width: 100%;
+    }
+    .list-item {
+      &__image-wrap {
+        width: 160px;
+        height: 160px;
+        border-radius: 500px;
+        overflow: hidden;
       }
     }
   }
@@ -68,15 +69,23 @@
   gap: 20px;
 
   .search-result__section {
-    width: 50%;
+    &.topResult {
+      flex: 1;
+    }
+    &.tracks {
+      flex: 1;
+
+      .search-result__list {
+        padding: 0;
+      }
+    }
 
     .search-result__card {
-      padding: 20px;
-      margin-top: 16px;
+      padding: 36px;
       height: 100%;
       background-color: #fff;
       color: var(--font-main);
-      border-radius: 8px;
+      border-radius: 20px;
 
       &.search-result__card--artist {
         .search-result__image {

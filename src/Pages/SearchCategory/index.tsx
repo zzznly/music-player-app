@@ -20,7 +20,7 @@ export default function SearchCategory(): JSX.Element {
       <div className="search-result__content--all">
         <div className="search-result__section-box">
           <div className="search-result__section topResult">
-            <h2 className="search-result__title">상위 결과</h2>
+            {/* <h2 className="search-result__title">상위 결과</h2> */}
             <div
               className={`search-result__card ${
                 data?.artists?.items[0]?.type === "artist" &&
@@ -39,7 +39,7 @@ export default function SearchCategory(): JSX.Element {
             </div>
           </div>
           <div className="search-result__section tracks">
-            <h2 className="search-result__title">곡</h2>
+            {/* <h2 className="search-result__title">곡</h2> */}
             <div className="search-result__list">
               {data?.tracks?.items
                 ?.slice(0, 4)
@@ -49,7 +49,7 @@ export default function SearchCategory(): JSX.Element {
                     imgUrl={item?.album?.images[0]?.url}
                     name={item?.name}
                     artist={item?.artists[0]?.name}
-                    durationTime={convertDurationTime(item?.duration_ms)}
+                    durationTime={item?.duration_ms}
                     uri={item.uri}
                     key={idx}
                   />
@@ -141,15 +141,13 @@ export default function SearchCategory(): JSX.Element {
 
   if (!list[category]) return <></>;
   return (
-    <div className={"search-result__content--playlists"}>
-      <div className={`search-result__section ${category}`}>
-        <h2 className="search-result__title">
-          {Object.keys(list)
-            .filter(key => key !== "all")
-            .some(key => key === category) && category}
-        </h2>
-        <div className="search-result__list">{resultComponent}</div>
-      </div>
+    <div className={`search-result__section ${category}`}>
+      <h2 className="search-result__title">
+        {Object.keys(list)
+          .filter(key => key !== "all")
+          .some(key => key === category) && category}
+      </h2>
+      <div className="search-result__list">{resultComponent}</div>
     </div>
   );
 }
