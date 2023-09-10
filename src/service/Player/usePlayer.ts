@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import PlayerService from "./PlayerService";
+import usePlaying from "@store/playing/usePlaying";
+import useSDK from "@store/playing/useSDK";
 
 export const usePlaybackState = ({
   onSuccess,
@@ -25,9 +27,19 @@ export const useCurrentPlayingTrack = ({
   });
 };
 
-export const useCurrentPlaylist = ({ onSuccess, onError }: UseQueryProps) => {
+export const useCurrentPlaylist = ({
+  onSuccess,
+  onError,
+}: UseQueryProps = {}) => {
+  const { deviceID } = useSDK();
+  const { playingURL, category } = usePlaying();
+  const { mutate } = useMutationAddCurrentPlaylist(deviceID, playingURL);
+
+  if (category === "track") {
+    mutate();
+  }
   return useQuery({
-    queryKey: ["player.currentPlaylist"],
+    queryKey: ["player.currentPlaylist", playingURL],
     queryFn: () => PlayerService.getPlaybackList(),
     onSuccess,
     onError,
