@@ -33,11 +33,7 @@ export const useCurrentPlaylist = ({
 }: UseQueryProps = {}) => {
   const { deviceID } = useSDK();
   const { playingURL, category } = usePlaying();
-  const { mutate } = useMutationAddCurrentPlaylist(deviceID, playingURL);
 
-  if (category === "track") {
-    mutate();
-  }
   return useQuery({
     queryKey: ["player.currentPlaylist", playingURL],
     queryFn: () => PlayerService.getPlaybackList(),
@@ -46,15 +42,22 @@ export const useCurrentPlaylist = ({
   });
 };
 
-export const useMutationAddCurrentPlaylist = (
-  device_id: string,
-  uri: string | undefined
-) => {
+export const useMutationAddCurrentPlaylist = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: () => {
+    mutationFn: ({
+      device_id,
+      uri,
+    }: {
+      device_id: string;
+      uri: string | undefined;
+    }) => {
+      console.log("addToPlaybackList", uri);
       return PlayerService.addToPlaybackList(device_id, uri);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
       console.log("added to current playlist");
     },
     onError: () => {},

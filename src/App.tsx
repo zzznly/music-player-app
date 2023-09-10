@@ -12,7 +12,7 @@ import MainLayout from "./components/templates/MainLayout";
 // components
 import Explore from "@pages/Explore";
 import Search from "@pages/Search";
-import DetailPage from "@pages/DetailPage";
+// import DetailPage from "@pages/DetailPage";
 import useSpotifyAuth from "@hooks/useSpotifyAuth";
 import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";

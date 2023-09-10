@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getToken } from "@utils/auth";
 import {
   useCurrentPlaylist,
+  useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
   useMutationSeekPosition,
@@ -17,7 +18,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";
 import { convertDurationTime } from "@utils/convert";
 import { UseMutationResult, useQueryClient } from "@tanstack/react-query";
-
+import usePlaying from "@store/playing/usePlaying";
 // controller icons
 import playIcon from "@assets/images/icon/player/ico-play.png";
 import playlistPlayIcon from "@assets/images/icon/ico-playlist-play.svg";
@@ -44,10 +45,12 @@ export default function Player({
   duration_ms,
   current_position,
 }: any): JSX.Element {
+  const { playingURL, category } = usePlaying();
+
   // queries
   const { data: { progress_ms } = {} } = usePlaybackState();
   const { data: { currently_playing = {}, queue = [] } = {} } =
-    useCurrentPlaylist({});
+    useCurrentPlaylist();
 
   // states
   const [item_uri, setUri] = useAtom(spotifyUri); // 재생할 item의 uri (spotify:type:id)
@@ -90,6 +93,7 @@ export default function Player({
     enabled: isSeeking,
   });
 
+  const { mutate: addCurrentMutatate } = useMutationAddCurrentPlaylist();
   // useEffect(() => {
   //   setLoading(onPlayLoading);
   // }, [onPlayLoading]);
@@ -107,6 +111,13 @@ export default function Player({
   //   }, dependencies);
   //   return mutation;
   // };
+
+  useEffect(() => {
+    if (!device_id) return;
+    onPlayMutate();
+    category === "track" && addCurrentMutatate({ device_id, uri: playingURL });
+  }, [playingURL]);
+
   useEffect(() => {
     if (device_id?.length) {
       onPlayMutate();

@@ -1,7 +1,6 @@
-import { useAtom } from "jotai";
 import "./style.scss";
-import { spotifyUri } from "@service/Player/PlayerAtom";
 import { convertDurationTime } from "@utils/convert";
+import usePlaying from "@store/playing/usePlaying";
 
 interface Props {
   idx?: number;
@@ -22,10 +21,10 @@ export default function SongListItem({
   durationTime,
   uri,
 }: Props): JSX.Element {
-  const [item_uri, setUri] = useAtom(spotifyUri);
-
+  const { setPlayingURL } = usePlaying();
+  console.log("render");
   return (
-    <li className={"songlist-item"} onClick={() => setUri(uri)}>
+    <li className={"songlist-item"} onClick={() => setPlayingURL(uri)}>
       <div className={"songlist-item__title"}>
         <img
           className="songlist-item__title-albumimage"

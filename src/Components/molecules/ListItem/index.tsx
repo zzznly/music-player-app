@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
+import usePlaying from "@store/playing/usePlaying";
 
 export interface ListItemProps {
   id?: string;
@@ -22,15 +23,17 @@ export default function ListItem({
 }: ListItemProps): JSX.Element {
   const [, setUri] = useAtom(spotifyUri);
   const [, setKeyword] = useAtom(searchKeywordAtom);
-
+  const { setPlayingURL } = usePlaying();
   const location = useLocation();
 
-  const clickUriItem = (uri: string | undefined) => {
+  const clickUriItem = (uri: string = "") => {
     if (location.pathname === "/search") {
       setKeyword(name || title);
       return;
     }
+    console.log(uri);
     setUri(uri);
+    setPlayingURL(uri);
   };
 
   return (

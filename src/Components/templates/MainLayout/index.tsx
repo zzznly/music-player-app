@@ -15,6 +15,7 @@ import { getToken } from "@utils/auth";
 import { isSpinnerLoading } from "@service/Common/CommonAtom";
 import Loading from "@components/atoms/Loading";
 import { useAtom } from "jotai";
+import useSDK from "@store/playing/useSDK";
 
 export default function MainLayout(): JSX.Element {
   // loading
@@ -27,10 +28,11 @@ export default function MainLayout(): JSX.Element {
   const [current_position, setPosition] = useState(0);
   const [is_paused, setPaused] = useState(true);
 
-  const [token] = useState<string>(getToken() ?? "");
-
+  const token = getToken();
+  const { setDeviceID } = useSDK();
   // 플레이어 생성
   useEffect(() => {
+    console.log("useEffect PlayerInstance");
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
@@ -50,6 +52,7 @@ export default function MainLayout(): JSX.Element {
 
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         setDeviceId(event.device_id);
+        setDeviceID(event.device_id);
         console.log("Ready with Device ID", event.device_id);
       });
 
