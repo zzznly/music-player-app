@@ -15,7 +15,7 @@ import { getToken } from "@utils/auth";
 import { isSpinnerLoading } from "@service/Common/CommonAtom";
 import Loading from "@components/atoms/Loading";
 import { useAtom } from "jotai";
-import useSDK from "@store/playing/useSDK";
+import useSDK from "@store/sdk/useSDK";
 
 export default function MainLayout(): JSX.Element {
   // loading
