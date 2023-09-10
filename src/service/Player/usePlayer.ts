@@ -137,7 +137,7 @@ export const useMutationToggleShuffle = (state: boolean, device_id: string) => {
 export const useMutationSeekPosition = (
   position_ms: number,
   device_id: string,
-  { onSuccess, onError, enabled }: UseMutationProps
+  { onSuccess, onError, enabled }: UseMutationProps = {}
 ) => {
   return useMutation({
     // @ts-ignore // Q: 이거 왜 타입에러?
