@@ -2,7 +2,7 @@
   position: fixed;
   z-index: 10;
   top: 0;
-  width: 100%;
+  width: calc(100% - 260px);
   height: 98px;
   padding: 24px 42px;
 
@@ -44,7 +44,7 @@
 .layout__header__user {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
 
