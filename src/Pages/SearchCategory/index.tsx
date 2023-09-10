@@ -5,7 +5,6 @@ import { useOutletContext, useParams, useLocation } from "react-router-dom";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
 import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
 
-import ListItem from "@components/molecules/ListItem";
 import SongListItem from "@components/molecules/SongListItem";
 import ListSection from "@components/organisms/ListSection";
 

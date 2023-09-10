@@ -4,25 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import "./style.scss";
 
 // react-query
-import {
-  useCategories,
-  useGenreSeeds,
-} from "../../../service/Category/useCategory";
-
+import { useCategories, useGenreSeeds } from "@service/category/useCategory";
 // types
 import { CategoriesItem } from "../../../types/categories";
 
 // router
-import { Link } from "react-router-dom";
 import ListSection from "../ListSection";
 import { useUserTopItems } from "@service/User/useUser";
-import { ListItemProps } from "@components/molecules/ListItem";
 import { useAtom } from "jotai";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
 
-interface CategoriesItemColored extends CategoriesItem {
-  bgColor: string;
-}
+// interface CategoriesItemColored extends CategoriesItem {
+//   bgColor: string;
+// }
 
 export default function SearchMain(): JSX.Element {
   const bgColors: string[] = [

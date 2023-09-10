@@ -2,8 +2,8 @@
 import "./style.scss";
 
 // components
-import NavBar from "../../organisms/NavBar";
-import Header from "../../organisms/Header";
+import NavBar from "@components/organisms/NavBar";
+import Header from "@components/organisms/Header";
 import Player from "@components/organisms/Player";
 
 // router

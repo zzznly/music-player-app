@@ -2,8 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 // service
-import CategoryService from "./CategoryService";
-import { AxiosResponse } from "axios";
+import CategoryService from "@service/category/CategoryService";
 
 // GET - Categories
 export const useCategories = ({ onSuccess }: UseQueryProps = {}) => {

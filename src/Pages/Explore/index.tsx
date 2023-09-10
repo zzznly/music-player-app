@@ -5,13 +5,11 @@ import "./style.scss";
 import {
   useCategories,
   useCategoryPlaylists,
-} from "../../service/Category/useCategory";
+} from "@service/category/useCategory";
 
 // components
 import ListSection from "../../components/organisms/ListSection";
 import { useNewReleases } from "@service/Playlist/usePlaylist";
-import { useEffect } from "react";
-import PlaylistService from "@service/Playlist/PlaylistService";
 import { useAtom } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";
 
