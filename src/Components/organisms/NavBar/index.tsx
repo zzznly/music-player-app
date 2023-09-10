@@ -10,7 +10,7 @@ import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 import { NavLink, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAtom, useAtomValue } from "jotai";
-import { activeMenu, navMenu } from "@service/Common/CommonAtom";
+import { navMenu } from "@service/Common/CommonAtom";
 
 // 1. type, interface
 // 2. utility type
@@ -19,7 +19,6 @@ import { activeMenu, navMenu } from "@service/Common/CommonAtom";
 export default function NavBar() {
   const location = useLocation();
   const nav_menu = useAtomValue(navMenu);
-  const [active_menu, setActiveMenu] = useAtom(activeMenu);
 
   return (
     <div className="layout__nav-bar">
@@ -44,6 +43,7 @@ export default function NavBar() {
                     className="layout__nav-bar__link"
                     to={item.path}
                     onClick={e => {
+                      // TODO: MY 메뉴 추후개발
                       if (nav_menu.MY.map(v => v.menu).includes(item.menu)) {
                         e.preventDefault();
                         alert("Comming Soon");

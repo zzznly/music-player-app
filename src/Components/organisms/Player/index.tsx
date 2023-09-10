@@ -30,6 +30,12 @@ import repeatOffIcon from "@assets/images/icon/player/ico-repeat-track.svg";
 import repeatContextIcon from "@assets/images/icon/player/ico-repeat-context.svg";
 import repeatTrackIcon from "@assets/images/icon/player/ico-repeat-off.svg";
 import { isSpinnerLoading } from "@service/Common/CommonAtom";
+import likeIcon from "@assets/images/icon/ico-like-default.png";
+import likeIconActive from "@assets/images/icon/ico-like-active.png";
+
+// rc-slider
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 export default function Player({
   current_track,
@@ -56,7 +62,7 @@ export default function Player({
   // mutations - player controller
   const {
     isLoading: onPlayLoading,
-    isSuccess,
+    isSuccess: onPlaySuccess,
     mutate: onPlayMutate,
   } = useMutationPlayerStart(device_id, item_uri, currentProgress, {});
   const onPause = useMutationPlayerPause(device_id, {
@@ -84,9 +90,9 @@ export default function Player({
     enabled: isSeeking,
   });
 
-  useEffect(() => {
-    setLoading(onPlayLoading);
-  }, [onPlayLoading]);
+  // useEffect(() => {
+  //   setLoading(onPlayLoading);
+  // }, [onPlayLoading]);
 
   /* TODO: 커스텀훅 만들까 말까... */
   // const usePlayerController = (
@@ -142,6 +148,9 @@ export default function Player({
       skipPrev.mutate();
     }
   };
+
+  const toggleLike = () => {};
+
   return (
     <>
       <div className="player">
@@ -201,9 +210,7 @@ export default function Player({
                     idx: number
                   ) => (
                     <li
-                      className={`player__track ${
-                        id === current_track.id && "player__track--active"
-                      }`}
+                      className="player__track"
                       onClick={() => setUri(uri)}
                       key={`track-${idx}`}
                     >
@@ -235,91 +242,115 @@ export default function Player({
           </ul>
         </div>
         <div className="player__container">
-          <h2 className="player__title">NOW PLAYING</h2>
-          <div className="player__album">
-            <img
-              src={
-                current_track?.album?.images?.[0]?.url ??
-                "https://dummyimage.com/200x200/ccc/fff.png"
-              }
-              alt="track album"
-            />
-          </div>
-          <div className="player__song-info">
-            <p className="player__song-name">
-              {current_track?.name || "No track"}
-            </p>
-            <p className="player__song-artist">
-              {current_track?.artists?.[0]?.name || "No Track"}
-            </p>
-          </div>
-          <div className="player__bar">
-            <input
-              className="player__progress"
-              name="progress"
-              type="range"
+          <h2 className="player__header">NOW PLAYING</h2>
+          <div className="player__body">
+            <div className="player__album">
+              <img
+                src={
+                  current_track?.album?.images?.[0]?.url ??
+                  "https://dummyimage.com/200x200/ccc/fff.png"
+                }
+                alt="track album"
+              />
+            </div>
+            <div className="player__track-info">
+              <p className="player__track-name">
+                {current_track?.name || "No track"}
+              </p>
+              <p className="player__track-artist">
+                {current_track?.artists?.[0]?.name || "No Track"}
+              </p>
+            </div>
+            <div className="player__bar">
+              <input
+                className="player__progress"
+                name="progress"
+                type="range"
+                min={0}
+                max={duration_ms}
+                value={current_position}
+                onChange={seekToPosition}
+                step={1000}
+              />
+              {/* <Slider
+              railStyle={{ backgroundColor: "#b4b4f8", height: 3 }}
+              trackStyle={{ backgroundColor: "#4343ef", height: 3 }}
+              handleStyle={{
+                borderColor: "#4343ef",
+                width: 12,
+                height: 12,
+                marginLeft: 0,
+                marginTop: -5,
+                backgroundColor: "#4343ef",
+              }}
               min={0}
               max={duration_ms}
-              value={current_position}
-              onChange={seekToPosition}
               step={1000}
-            />
-            <div className="player__time">
-              <div className="player__current-time">
-                {convertDurationTime(current_position)}
+              onChange={seekToPosition}
+              value={current_position}
+            /> */}
+              <div className="player__time">
+                <div className="player__current-time">
+                  {convertDurationTime(current_position)}
+                </div>
+                <div className="player__duration">
+                  {convertDurationTime(duration_ms)}
+                </div>
               </div>
-              <div className="player__duration">
-                {convertDurationTime(duration_ms)}
+            </div>
+            <div className="player__controller">
+              <div className="player__controller-left">
+                <button
+                  className="player__shuffle"
+                  onClick={() => setShuffle(!isShuffle)}
+                >
+                  <img
+                    src={isShuffle ? shuffleActiveIcon : shuffleIcon}
+                    alt="shuffle"
+                  />
+                </button>
+                <button className="player__skip-prev" onClick={clickPrev}>
+                  <img src={prevIcon} alt="skip prev" />
+                </button>
+              </div>
+              <button
+                className="player__playpause"
+                onClick={() => (is_paused ? onPlayMutate() : onPause.mutate())}
+              >
+                <img
+                  className={`icon ${is_paused ? "icon--play" : "icon--pause"}`}
+                  src={is_paused ? playIcon : pauseIcon}
+                  alt="play or pause"
+                />
+              </button>
+              <div className="player__controller-right">
+                <button
+                  className="player__skip-next"
+                  onClick={() => skipNext.mutate()}
+                >
+                  <img src={nextIcon} alt="skip next" />
+                </button>
+                <button
+                  className="player__repeat"
+                  onClick={() => setRepeatIdx(prev => prev + 1)}
+                >
+                  <img
+                    src={
+                      {
+                        0: repeatOffIcon,
+                        1: repeatContextIcon,
+                        2: repeatTrackIcon,
+                      }[repeatStateIdx]
+                    }
+                    alt="repeat"
+                  />
+                </button>
               </div>
             </div>
           </div>
-          <div className="player__controller">
-            <div className="player__controller-left">
-              <button
-                className="player__shuffle"
-                onClick={() => setShuffle(!isShuffle)}
-              >
-                <img
-                  src={isShuffle ? shuffleActiveIcon : shuffleIcon}
-                  alt="shuffle"
-                />
-              </button>
-              <button className="player__skip-prev" onClick={clickPrev}>
-                <img src={prevIcon} alt="skip prev" />
-              </button>
-            </div>
-            <button
-              className="player__playpause"
-              onClick={() => (is_paused ? onPlayMutate() : onPause.mutate())}
-            >
-              <img
-                className={`icon ${is_paused ? "icon--play" : "icon--pause"}`}
-                src={is_paused ? playIcon : pauseIcon}
-                alt="play or pause"
-              />
-            </button>
-            <div className="player__controller-right">
-              <button
-                className="player__skip-next"
-                onClick={() => skipNext.mutate()}
-              >
-                <img src={nextIcon} alt="skip next" />
-              </button>
-              <button
-                className="player__repeat"
-                onClick={() => setRepeatIdx(prev => prev + 1)}
-              >
-                <img
-                  src={
-                    {
-                      0: repeatOffIcon,
-                      1: repeatContextIcon,
-                      2: repeatTrackIcon,
-                    }[repeatStateIdx]
-                  }
-                  alt="repeat"
-                />
-              </button>
+          <div className="player__footer">
+            <div className="player__volume">
+              <input className="player__volume-input" type="range" />
             </div>
           </div>
         </div>
