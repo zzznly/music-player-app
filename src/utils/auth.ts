@@ -17,8 +17,8 @@ export const removeAuthToken = () => {
 export const getSpotifyAuthUrl = () => {
   const params = {
     response_type: "token",
-    client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
-    redirect_uri: "http://localhost:5005",
+    client_id: process.env.REACT_APP_CLIENT_ID,
+    redirect_uri: process.env.REACT_APP_REDIRECT_URL,
     scope: [
       "user-read-currently-playing",
       "user-read-recently-played",
@@ -32,13 +32,13 @@ export const getSpotifyAuthUrl = () => {
     show_dialog: "true",
   };
 
-  return `https://accounts.spotify.com/authorize?${new URLSearchParams(
+  return `${process.env.REACT_APP_AUTHORIZE_URL}?${new URLSearchParams(
     params
   ).toString()}`;
 };
 
 export const redirectToLogin = ({
-  redirect_uri = "http://localhost:5005",
+  redirect_uri = process.env.REACT_APP_REDIRECT_URL,
   // redirect_uri = "http://zzznlyawsbucket.s3-website.ap-northeast-2.amazonaws.com",
   scope = [
     "user-read-currently-playing",
@@ -57,9 +57,9 @@ export const redirectToLogin = ({
   show_dialog?: boolean;
 } = {}) => {
   window.location.replace(
-    `https://accounts.spotify.com/authorize?${new URLSearchParams({
+    `${process.env.REACT_APP_AUTHORIZE_URL}?${new URLSearchParams({
       response_type: "token",
-      client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
+      client_id: process.env.REACT_APP_CLIENT_ID,
       redirect_uri,
       scope: scope.join("%20"),
       show_dialog: String(show_dialog),
