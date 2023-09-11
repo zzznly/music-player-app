@@ -17,7 +17,7 @@ export const removeAuthToken = () => {
 export const getSpotifyAuthUrl = () => {
   const params = {
     response_type: "token",
-    client_id: "9b8af0c052d94854acf5ccdbcf39b2d2",
+    client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
     redirect_uri: "http://localhost:5005",
     scope: [
       "user-read-currently-playing",
@@ -59,7 +59,7 @@ export const redirectToLogin = ({
   window.location.replace(
     `https://accounts.spotify.com/authorize?${new URLSearchParams({
       response_type: "token",
-      client_id: "9b8af0c052d94854acf5ccdbcf39b2d2",
+      client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
       redirect_uri,
       scope: scope.join("%20"),
       show_dialog: String(show_dialog),
