@@ -15,9 +15,11 @@ import { getToken } from "@utils/auth";
 import { isSpinnerLoading } from "@service/Common/CommonAtom";
 import Loading from "@components/atoms/Loading";
 import { useAtom } from "jotai";
-import useSDK from "@store/sdk/useSDK";
-
-export default function MainLayout(): JSX.Element {
+// import useSDK from "@store/sdk/useSDK";
+interface Props {
+  token: string;
+}
+export default function MainLayout({ token }: Props): JSX.Element {
   // loading
   const [isLoading, setLoading] = useAtom(isSpinnerLoading);
 
@@ -28,8 +30,7 @@ export default function MainLayout(): JSX.Element {
   const [current_position, setPosition] = useState(0);
   const [is_paused, setPaused] = useState(true);
 
-  const token = getToken();
-  const { setDeviceID } = useSDK();
+  // const token = getToken();
   // 플레이어 생성
   useEffect(() => {
     console.log("useEffect PlayerInstance");
@@ -52,7 +53,7 @@ export default function MainLayout(): JSX.Element {
 
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         setDeviceId(event.device_id);
-        setDeviceID(event.device_id);
+        // setDeviceID(event.device_id);
         console.log("Ready with Device ID", event.device_id);
       });
 
@@ -83,7 +84,7 @@ export default function MainLayout(): JSX.Element {
         setLoading(false);
       });
     };
-  }, [token]);
+  }, []);
 
   return (
     <div className="layout layout--row">
@@ -103,7 +104,7 @@ export default function MainLayout(): JSX.Element {
           duration_ms,
         }}
       />
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
     </div>
   );
 }

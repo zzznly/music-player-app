@@ -4,9 +4,9 @@ import AuthService from "@service/Auth/AuthService";
 // router
 import {
   getToken,
-  getSpotifyAuthUrl,
-  removeAuthToken,
-  redirectToLogin,
+  // getSpotifyAuthUrl,
+  // removeAuthToken,
+  // redirectToLogin,
 } from "../utils/auth";
 
 export default class Service {
@@ -51,12 +51,12 @@ export default class Service {
       case 404:
         window.location.replace("/404");
         break;
-      case 401: // 리소스 접근 자격 없음 (Unauthorized)
-        redirectToLogin();
-        break;
-      case 403: // 클라이언트에서 유효한 URL에 액세스하는 것이 금지됨 -> 계정이 Developer에 등록되지 않음
-        redirectToLogin();
-        break;
+      // case 401: // 리소스 접근 자격 없음 (Unauthorized)
+      //   redirectToLogin();
+      //   break;
+      // case 403: // 클라이언트에서 유효한 URL에 액세스하는 것이 금지됨 -> 계정이 Developer에 등록되지 않음
+      //   redirectToLogin();
+      //   break;
       default:
         return Promise.reject(error);
     }

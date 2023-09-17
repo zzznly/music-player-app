@@ -1,28 +1,49 @@
 // styles
 import "./app.scss";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 // router
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 // layouts
-import MainLayout from "@components/templates/MainLayout";
+import WebPlayback from "@components/templates/WebPlaybackLayout";
 
 // components
 import Explore from "@pages/Explore";
 import Search from "@pages/Search";
 // import DetailPage from "@pages/DetailPage";
-import useSpotifyAuth from "@hooks/useSpotifyAuth";
 import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";
 import SearchCategory from "@pages/SearchCategory";
+import Login from "@pages/Login";
 
 export default function App(): React.ReactElement {
-  useSpotifyAuth();
+  const [token, setToken] = useState<string>("");
+
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        const urlHashString = new URLSearchParams(
+          window.location.hash.substring(1)
+        );
+        const accessToken = urlHashString.get("access_token");
+        setToken(accessToken ?? "");
+      } catch (error) {
+        console.error("get access token error:", error);
+        throw error;
+      }
+    };
+
+    getAccessToken();
+  }, []);
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route
+          path="/"
+          element={token === "" ? <Login /> : <WebPlayback token={token} />}
+        >
           <Route index element={<Explore />} />
           <Route path="/search" element={<Search />}>
             <Route index element={<SearchMain />} />
