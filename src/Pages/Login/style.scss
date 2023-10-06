@@ -54,17 +54,17 @@
     [class^="account-info"] {
       display: flex;
       justify-content: space-between;
-    }
 
-    .copy {
-      color: var(--primary);
-      font-size: 12px;
+      .copy {
+        color: var(--primary);
+        font-size: 12px;
+      }
     }
   }
 
   .button-spotify {
     display: block;
-    margin-top: 48px;
+    // margin-top: 48px;
     padding: 14px 32px;
     background: var(--primary);
     color: #fff;
