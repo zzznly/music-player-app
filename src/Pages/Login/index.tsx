@@ -13,9 +13,10 @@ function Login(): JSX.Element {
         <p className="login__description">React.js - Web Music Player</p>
       </div>
       <div className="login__content">
-        <Link className="button-spotify" to={authUrl}>
+        <a className="button-spotify" href="http://localhost:4000/auth/login">
+          {/* Q: 앞에 localhost:4000을 빼버리면 리다이렉트가 안됨 */}
           Login with Spotify 🎧
-        </Link>
+        </a>
       </div>
     </div>
   );

@@ -16,26 +16,30 @@ import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";
 import SearchCategory from "@pages/SearchCategory";
 import Login from "@pages/Login";
+import axios from "axios";
 
 export default function App(): React.ReactElement {
   const [token, setToken] = useState<string>("");
 
-  useEffect(() => {
-    const getAccessToken = async () => {
-      try {
-        const urlHashString = new URLSearchParams(
-          window.location.hash.substring(1)
-        );
-        const accessToken = urlHashString.get("access_token");
-        setToken(accessToken ?? "");
-      } catch (error) {
-        console.error("get access token error:", error);
-        throw error;
-      }
-    };
+  const getAccessToken = async () => {
+    const response = await fetch("/auth/token");
+    console.log(222, response);
 
-    getAccessToken();
-  }, []);
+    // try {
+    //   const urlHashString = new URLSearchParams(
+    //     window.location.hash.substring(1)
+    //   );
+    //   const accessToken = urlHashString.get("access_token");
+    //   setToken(accessToken ?? "");
+    // } catch (error) {
+    //   console.error("get access token error:", error);
+    //   throw error;
+    // }
+  };
+
+  // useEffect(() => {
+  //   getAccessToken();
+  // }, []);
 
   return (
     <div className="App">
