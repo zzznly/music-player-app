@@ -11,7 +11,7 @@ dotenv.config();
 let spotify_client_id = process.env.REACT_APP_CLIENT_ID;
 let spotify_client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
-let spotify_redirect_uri = "http://localhost:3000/auth/callback";
+let spotify_redirect_uri = "http://localhost:5005/auth/callback";
 
 let generateRandomString = function (length) {
   let text = "";
@@ -46,6 +46,7 @@ app.get("/auth/login", (req, res) => {
 
 app.get("/auth/callback", (req, res) => {
   let code = req.query.code;
+  console.log(123, code, req);
 
   let authOptions = {
     url: "https://accounts.spotify.com/api/token",
