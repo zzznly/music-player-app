@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { debounce } from "@utils/index";
 
 // styles
@@ -10,6 +10,7 @@ import { redirectToLogin } from "@utils/auth";
 import { useEffect, useState } from "react";
 
 export default function Header(): JSX.Element {
+  const location = useLocation();
   const navigate = useNavigate();
 
   const { data: { display_name } = {} } = useUserInfo();
@@ -18,17 +19,30 @@ export default function Header(): JSX.Element {
   const [keyword, setKeyword] = useState<string | undefined>("");
 
   useEffect(() => {
-    setKeyword(params?.keyword ?? "");
+    if (params?.keyword?.length) setKeyword(params?.keyword);
   }, [params.keyword]);
 
+  // useEffect(() => {
+  //   if (keyword?.length)
+  //     navigate(`/search/${keyword}`, {
+  //       replace: true,
+  //     });
+  // }, [keyword]);
+
   useEffect(() => {
-    debounce(() => {
-      navigate(`/search/${keyword}`, {
-        replace: true,
-      });
-    }, 200);
-    console.log("keyword", keyword);
+    if (keyword?.length) navigate(`/search/${keyword}`, { replace: true });
+    // debounce(() => {
+    //   navigate(`/search/${keyword}`, { replace: true });
+    // }, 200);
   }, [keyword]);
+
+  useEffect(() => {
+    if (!location.pathname.includes("search")) {
+      setKeyword("");
+    }
+  }, [location]);
+
+  console.log(222, params, location);
 
   return (
     <div className="layout__header">
@@ -40,6 +54,9 @@ export default function Header(): JSX.Element {
               type="search"
               placeholder="Search..."
               value={keyword}
+              // onChange={debounce(e => {
+              //   setKeyword(e.target.value);
+              // }, 200)}
               onChange={e => {
                 setKeyword(e.target.value);
               }}
