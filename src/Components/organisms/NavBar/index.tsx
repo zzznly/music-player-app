@@ -8,11 +8,14 @@ import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 
 // router
 import { NavLink, useLocation } from "react-router-dom";
-import { useCommon } from "@store/common/useCommon";
+// import { useCommon } from "@store/common/useCommon";
+import { navMenuAtom } from "@store/common/atom";
+import { useAtom } from "jotai";
 
 export default function NavBar() {
   const location = useLocation();
-  const { navMenu } = useCommon();
+  // const { navMenu } = useCommon(); // Q: error: navMenu[menu].map is not a function
+  const [navMenu] = useAtom(navMenuAtom); // 임시
 
   return (
     <div className="layout__nav-bar">
