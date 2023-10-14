@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import PlayerService from "./PlayerService";
 import usePlaying from "@store/playing/usePlaying";
+import useSDK from "@store/sdk/useSDK";
 // import useSDK from "@store/playing/useSDK";
 
 export const usePlaybackState = ({
@@ -43,21 +44,14 @@ export const useCurrentPlaylist = ({
 };
 
 export const useMutationAddCurrentPlaylist = () => {
-  const queryClient = useQueryClient();
+  const { deviceId } = useSDK();
 
   return useMutation({
-    mutationFn: ({
-      device_id,
-      uri,
-    }: {
-      device_id: string;
-      uri: string | undefined;
-    }) => {
+    mutationFn: (uri: string | undefined) => {
       console.log("addToPlaybackList", uri);
-      return PlayerService.addToPlaybackList(device_id, uri);
+      return PlayerService.addToPlaybackList(deviceId, uri);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
       console.log("added to current playlist");
     },
     onError: () => {},
@@ -65,42 +59,39 @@ export const useMutationAddCurrentPlaylist = () => {
 };
 
 export const useMutationPlayerStart = (
-  device_id: string,
-  uri: string | undefined,
   position: number,
   { onSuccess, onError }: UseMutationProps = {}
 ) => {
-  // const queryClient = useQueryClient();
+  const { deviceId } = useSDK();
+  const { playingURL } = usePlaying();
 
   return useMutation({
     mutationFn: () => {
-      return PlayerService.startPlayback(device_id, uri, position);
-    },
-    onSuccess,
-    onError,
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
-    // }
-  });
-};
-
-export const useMutationPlayerPause = (
-  device_id: string,
-  { onSuccess, onError }: any = {}
-) => {
-  return useMutation({
-    mutationFn: () => {
-      return PlayerService.pausePlayback(device_id);
+      return PlayerService.startPlayback(deviceId, playingURL, position);
     },
     onSuccess,
     onError,
   });
 };
 
-export const useMutationSkipNext = (device_id: string) => {
+export const useMutationPlayerPause = ({ onSuccess, onError }: any = {}) => {
+  const { deviceId } = useSDK();
+
   return useMutation({
     mutationFn: () => {
-      return PlayerService.skipNextTrack(device_id);
+      return PlayerService.pausePlayback(deviceId);
+    },
+    onSuccess,
+    onError,
+  });
+};
+
+export const useMutationSkipNext = () => {
+  const { deviceId } = useSDK();
+
+  return useMutation({
+    mutationFn: () => {
+      return PlayerService.skipNextTrack(deviceId);
     },
     onSuccess: () => {
       console.log("skip next");
@@ -111,10 +102,12 @@ export const useMutationSkipNext = (device_id: string) => {
   });
 };
 
-export const useMutationSkipPrev = (device_id: string) => {
+export const useMutationSkipPrev = () => {
+  const { deviceId } = useSDK();
+
   return useMutation({
     mutationFn: () => {
-      return PlayerService.skipPreviousTrack(device_id);
+      return PlayerService.skipPreviousTrack(deviceId);
     },
     onSuccess: () => {
       console.log("skip previous");
@@ -125,9 +118,11 @@ export const useMutationSkipPrev = (device_id: string) => {
   });
 };
 
-export const useMutationSetRepeat = (state: string, device_id: string) => {
+export const useMutationSetRepeat = (state: string) => {
+  const { deviceId } = useSDK();
+
   return useMutation({
-    mutationFn: () => PlayerService.setRepeat(state, device_id),
+    mutationFn: () => PlayerService.setRepeat(state, deviceId),
     onSuccess: data => {
       console.log("set repeat success", data);
     },
@@ -137,9 +132,11 @@ export const useMutationSetRepeat = (state: string, device_id: string) => {
   });
 };
 
-export const useMutationToggleShuffle = (state: boolean, device_id: string) => {
+export const useMutationToggleShuffle = (state: boolean) => {
+  const { deviceId } = useSDK();
+
   return useMutation({
-    mutationFn: () => PlayerService.toggleShuffle(state, device_id),
+    mutationFn: () => PlayerService.toggleShuffle(state, deviceId),
     onSuccess: data => {
       console.log("toggle shuffle success", data);
     },
@@ -151,12 +148,13 @@ export const useMutationToggleShuffle = (state: boolean, device_id: string) => {
 
 export const useMutationSeekPosition = (
   position_ms: number,
-  device_id: string,
   { onSuccess, onError, enabled }: UseMutationProps = {}
 ) => {
+  const { deviceId } = useSDK();
+
   return useMutation({
     // @ts-ignore // Q: 이거 왜 타입에러?
-    mutationFn: () => PlayerService.seekPosition(position_ms, device_id),
+    mutationFn: () => PlayerService.seekPosition(position_ms, deviceId),
     onSuccess,
     onError,
     enabled,
