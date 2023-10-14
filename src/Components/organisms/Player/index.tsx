@@ -15,7 +15,7 @@ import {
   usePlaybackState,
 } from "@service/Player/usePlayer";
 import { useAtom, useAtomValue } from "jotai";
-import { spotifyUri } from "@service/Player/PlayerAtom";
+// import { spotifyUri } from "@store/playing/PlayerAtom_";
 import { convertDurationTime } from "@utils/convert";
 import { UseMutationResult, useQueryClient } from "@tanstack/react-query";
 import usePlaying from "@store/playing/usePlaying";
@@ -45,15 +45,13 @@ export default function Player({
   duration_ms,
   current_position,
 }: any): JSX.Element {
-  const { playingURL, category } = usePlaying();
-
   // queries
   const { data: { progress_ms } = {} } = usePlaybackState();
   const { data: { currently_playing = {}, queue = [] } = {} } =
     useCurrentPlaylist();
 
   // states
-  const [item_uri, setUri] = useAtom(spotifyUri); // 재생할 item의 uri (spotify:type:id)
+  const { playingURL, setPlayingURL, category } = usePlaying();
   const repeatStateList = ["off", "context", "track"];
   const [repeatStateIdx, setRepeatIdx] = useState<number>(0);
   const [isShuffle, setShuffle] = useState<boolean>(false);
@@ -67,7 +65,7 @@ export default function Player({
     isLoading: onPlayLoading,
     isSuccess: onPlaySuccess,
     mutate: onPlayMutate,
-  } = useMutationPlayerStart(device_id, item_uri, currentProgress, {});
+  } = useMutationPlayerStart(device_id, playingURL, currentProgress, {});
   const onPause = useMutationPlayerPause(device_id, {
     onSuccess: () => {
       setCurrentProgress(current_position);
@@ -122,7 +120,7 @@ export default function Player({
     if (device_id?.length) {
       onPlayMutate();
     }
-  }, [item_uri]);
+  }, [playingURL]);
 
   useEffect(() => {
     if (device_id?.length) {
@@ -173,7 +171,7 @@ export default function Player({
                 <li
                   className={`player__track`}
                   onClick={() =>
-                    setUri(prevUri => {
+                    setPlayingURL(prevUri => {
                       if (prevUri !== currently_playing?.uri) {
                         return currently_playing?.uri;
                       } else {
@@ -222,7 +220,7 @@ export default function Player({
                   ) => (
                     <li
                       className="player__track"
-                      onClick={() => setUri(uri)}
+                      onClick={() => setPlayingURL(uri)}
                       key={`track-${idx}`}
                     >
                       <div className="player__track-index">

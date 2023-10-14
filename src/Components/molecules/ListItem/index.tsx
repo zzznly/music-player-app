@@ -1,7 +1,6 @@
 import "./style.scss";
 import { useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
-import { spotifyUri } from "@service/Player/PlayerAtom";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
 import usePlaying from "@store/playing/usePlaying";
 
@@ -21,9 +20,8 @@ export default function ListItem({
   description,
   uri,
 }: ListItemProps): JSX.Element {
-  const [, setUri] = useAtom(spotifyUri);
+  const { playingURL, setPlayingURL } = usePlaying();
   const [, setKeyword] = useAtom(searchKeywordAtom);
-  const { setPlayingURL } = usePlaying();
   const location = useLocation();
 
   const clickUriItem = (uri: string = "") => {
@@ -32,7 +30,6 @@ export default function ListItem({
       return;
     }
     console.log(uri);
-    setUri(uri);
     setPlayingURL(uri);
   };
 

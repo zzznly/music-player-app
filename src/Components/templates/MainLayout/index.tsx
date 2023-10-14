@@ -15,7 +15,7 @@ import { getToken } from "@utils/auth";
 import { isSpinnerLoading } from "@service/Common/CommonAtom";
 import Loading from "@components/atoms/Loading";
 import { useAtom } from "jotai";
-// import useSDK from "@store/sdk/useSDK";
+import useSDK from "@store/sdk/useSDK";
 
 export default function MainLayout(): JSX.Element {
   // loading
@@ -29,7 +29,7 @@ export default function MainLayout(): JSX.Element {
   const [is_paused, setPaused] = useState(true);
 
   const token = getToken();
-  // const { setDeviceID } = useSDK();
+  const { setDeviceID } = useSDK();
   // 플레이어 생성
   useEffect(() => {
     console.log("useEffect PlayerInstance");
@@ -52,7 +52,8 @@ export default function MainLayout(): JSX.Element {
 
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         setDeviceId(event.device_id);
-        // setDeviceID(event.device_id);
+        // @ts-ignore // TODO: 타입에러 해결
+        setDeviceID(event.device_id);
         console.log("Ready with Device ID", event.device_id);
       });
 

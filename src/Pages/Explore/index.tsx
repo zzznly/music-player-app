@@ -11,7 +11,8 @@ import {
 import ListSection from "../../components/organisms/ListSection";
 import { useNewReleases } from "@service/Playlist/usePlaylist";
 import { useAtom } from "jotai";
-import { spotifyUri } from "@service/Player/PlayerAtom";
+import usePlaying from "@store/playing/usePlaying";
+// import { spotifyUri } from "@store/playing/PlayerAtom_";
 
 const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
   const { data: { playlists: { items = [] } = {} } = {} } =
@@ -42,7 +43,7 @@ const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
 };
 
 export default function Home(): JSX.Element {
-  const [, setUri] = useAtom(spotifyUri);
+  const { playingURL, setPlayingURL } = usePlaying();
 
   const { data: { categories: { items: categoryItems = [] } = {} } = {} } =
     useCategories();
@@ -77,7 +78,7 @@ export default function Home(): JSX.Element {
                     backgroundSize: "cover",
                     backgroundBlendMode: "multiply",
                   }}
-                  onClick={() => setUri(item.uri)}
+                  onClick={() => setPlayingURL(item.uri)}
                 >
                   <p className="section__item-name">{item?.name}</p>
                   <p className="section__item-artist">
