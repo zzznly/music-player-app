@@ -37,11 +37,11 @@ import likeIconActive from "@assets/images/icon/ico-like-active.png";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useCommon } from "@store/common/useCommon";
+import useSDK from "@store/sdk/useSDK";
 
 export default function Player({
   current_track,
   is_paused,
-  device_id,
   duration_ms,
   current_position,
 }: any): JSX.Element {
@@ -60,30 +60,25 @@ export default function Player({
 
   const { isLoading } = useCommon();
 
+  const { deviceId } = useSDK();
+
   // mutations - player controller
-  const {
-    isLoading: onPlayLoading,
-    isSuccess: onPlaySuccess,
-    mutate: onPlayMutate,
-  } = useMutationPlayerStart(device_id, playingURL, currentProgress, {});
-  const onPause = useMutationPlayerPause(device_id, {
+  const { mutate: onPlayMutate } = useMutationPlayerStart(currentProgress, {});
+  const onPause = useMutationPlayerPause({
     onSuccess: () => {
       setCurrentProgress(current_position);
     },
   });
-  const skipNext = useMutationSkipNext(device_id);
-  const skipPrev = useMutationSkipPrev(device_id);
-  const setRepeat = useMutationSetRepeat(
-    repeatStateList[repeatStateIdx],
-    device_id
-  );
-  const toggleShuffle = useMutationToggleShuffle(isShuffle, device_id);
+  const skipNext = useMutationSkipNext();
+  const skipPrev = useMutationSkipPrev();
+  const setRepeat = useMutationSetRepeat(repeatStateList[repeatStateIdx]);
+  const toggleShuffle = useMutationToggleShuffle(isShuffle);
   const {
     // isIdle: isSeekPositionIdle,
     // isLoading: isSeekPositionLoading,
     // isSuccess: isSeekPositionSuccess,
     mutate: seekPositionMutate,
-  } = useMutationSeekPosition(currentProgress, device_id, {
+  } = useMutationSeekPosition(currentProgress, {
     onSuccess: () => {
       setIsSeeking(false);
       !is_paused && setCurrentProgress(0);
@@ -91,7 +86,7 @@ export default function Player({
     enabled: isSeeking,
   });
 
-  const { mutate: addCurrentMutatate } = useMutationAddCurrentPlaylist();
+  const { mutate: addCurrentMutate } = useMutationAddCurrentPlaylist();
   // useEffect(() => {
   //   setLoading(onPlayLoading);
   // }, [onPlayLoading]);
@@ -111,32 +106,36 @@ export default function Player({
   // };
 
   useEffect(() => {
-    if (!device_id) return;
+    if (!deviceId) return;
     onPlayMutate();
-    category === "track" && addCurrentMutatate({ device_id, uri: playingURL });
+    category === "track" && addCurrentMutate();
   }, [playingURL]);
 
   useEffect(() => {
-    if (device_id?.length) {
+    if (deviceId?.length) {
       onPlayMutate();
     }
   }, [playingURL]);
 
   useEffect(() => {
-    if (device_id?.length) {
+    if (deviceId?.length) console.log(123, deviceId);
+  }, [deviceId]);
+
+  useEffect(() => {
+    if (deviceId?.length) {
       setRepeat.mutate();
     }
     setRepeatIdx(repeatStateIdx % 3);
   }, [repeatStateIdx]);
 
   useEffect(() => {
-    if (device_id?.length) {
+    if (deviceId?.length) {
       toggleShuffle.mutate();
     }
   }, [isShuffle]);
 
   useEffect(() => {
-    if (device_id?.length) {
+    if (deviceId?.length) {
       if (currentProgress > 0 && isSeeking) seekPositionMutate();
     }
   }, [currentProgress, isSeeking]);
