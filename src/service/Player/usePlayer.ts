@@ -45,11 +45,12 @@ export const useCurrentPlaylist = ({
 
 export const useMutationAddCurrentPlaylist = () => {
   const { deviceId } = useSDK();
+  const { playingURL } = usePlaying();
 
   return useMutation({
-    mutationFn: (uri: string | undefined) => {
-      console.log("addToPlaybackList", uri);
-      return PlayerService.addToPlaybackList(deviceId, uri);
+    mutationFn: () => {
+      console.log("play", playingURL);
+      return PlayerService.addToPlaybackList(deviceId, playingURL);
     },
     onSuccess: () => {
       console.log("added to current playlist");

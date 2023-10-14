@@ -49,19 +49,24 @@ export default function MainLayout(): JSX.Element {
 
       // console.log("player instance", playerInstance);
 
-      playerInstance.addListener("ready", (event: { deviceId: string }) => {
+      playerInstance.addListener("ready", (event: { device_id: string }) => {
+        console.log("Ready with Device ID", event.device_id);
         // @ts-ignore // TODO: 타입에러 해결
-        setDeviceId(event.deviceId);
-        console.log("Ready with Device ID", event.deviceId);
+        setDeviceId(event.device_id);
       });
 
       playerInstance.addListener("progress", (state: any) => {
         setPosition(state.position);
       });
 
-      playerInstance.addListener("not_ready", (event: { deviceId: string }) => {
-        console.log("Device ID has gone offline", event.deviceId);
-      });
+      playerInstance.addListener(
+        "not_ready",
+        (event: { device_id: string }) => {
+          console.log("Device ID has gone offline", event.device_id);
+          // @ts-ignore // TODO: 타입에러 해결
+          setDeviceId("");
+        }
+      );
 
       playerInstance.addListener("player_state_changed", (state: any) => {
         if (!state) {
