@@ -1,8 +1,7 @@
-import { useAtom } from "jotai";
-import { searchKeywordAtom } from "@service/Search/SearchAtom";
+import { useState } from "react";
 
 export const useSearch = () => {
-  const [keyword, setKeyword] = useAtom(searchKeywordAtom);
+  const [keyword, setKeyword] = useState("");
   return {
     keyword,
     setKeyword,

@@ -10,9 +10,7 @@ import {
 // components
 import ListSection from "../../components/organisms/ListSection";
 import { useNewReleases } from "@service/Playlist/usePlaylist";
-import { useAtom } from "jotai";
 import usePlaying from "@store/playing/usePlaying";
-// import { spotifyUri } from "@store/playing/PlayerAtom_";
 
 const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
   const { data: { playlists: { items = [] } = {} } = {} } =

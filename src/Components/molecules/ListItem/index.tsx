@@ -1,7 +1,5 @@
 import "./style.scss";
-import { useLocation } from "react-router-dom";
-import { useAtom } from "jotai";
-import { searchKeywordAtom } from "@service/Search/SearchAtom";
+import { useLocation, useNavigate } from "react-router-dom";
 import usePlaying from "@store/playing/usePlaying";
 
 export interface ListItemProps {
@@ -20,16 +18,17 @@ export default function ListItem({
   description,
   uri,
 }: ListItemProps): JSX.Element {
-  const { playingURL, setPlayingURL } = usePlaying();
-  const [, setKeyword] = useAtom(searchKeywordAtom);
+  const { setPlayingURL } = usePlaying();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const clickUriItem = (uri: string = "") => {
     if (location.pathname === "/search") {
-      setKeyword(name || title);
+      navigate(`/search/${name || title}`, {
+        replace: true,
+      });
       return;
     }
-    console.log(uri);
     setPlayingURL(uri);
   };
 

@@ -12,7 +12,7 @@ import MyArtistIcon from "@assets/images/icon/navbar/ico-menu-my-artists.svg";
 import MyArtistIconActive from "@assets/images/icon/navbar/ico-menu-my-artists-active.svg";
 import LogoutIcon from "@assets/images/icon/navbar/ico-menu-logout.svg";
 
-export const navMenu = atom<NavMenu>({
+export const navMenuAtom = atom<NavMenu>({
   MENU: [
     {
       menu: "Explore",
@@ -57,4 +57,4 @@ export const navMenu = atom<NavMenu>({
   ],
 });
 
-export const isSpinnerLoading = atom<boolean>(true);
+export const isLoadingAtom = atom(true);

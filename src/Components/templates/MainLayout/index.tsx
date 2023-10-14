@@ -5,6 +5,7 @@ import "./style.scss";
 import NavBar from "@components/organisms/NavBar";
 import Header from "@components/organisms/Header";
 import Player from "@components/organisms/Player";
+import LoadingSpinner from "@components/atoms/Loading";
 
 // router
 import { Outlet } from "react-router-dom";
@@ -12,14 +13,11 @@ import { useEffect, useState } from "react";
 
 // utils
 import { getToken } from "@utils/auth";
-import { isSpinnerLoading } from "@service/Common/CommonAtom";
-import Loading from "@components/atoms/Loading";
-import { useAtom } from "jotai";
 import useSDK from "@store/sdk/useSDK";
+import { useCommon } from "@store/common/useCommon";
 
 export default function MainLayout(): JSX.Element {
-  // loading
-  const [isLoading, setLoading] = useAtom(isSpinnerLoading);
+  const { isLoading, setIsLoading } = useCommon();
 
   // player states
   const { deviceId, setDeviceId } = useSDK();
@@ -77,7 +75,7 @@ export default function MainLayout(): JSX.Element {
 
       playerInstance.connect().then((res: boolean) => {
         console.log("player connected", res);
-        setLoading(false);
+        setIsLoading(false);
       });
     };
   }, [token]);
@@ -100,7 +98,7 @@ export default function MainLayout(): JSX.Element {
           duration_ms,
         }}
       />
-      {isLoading && <Loading />}
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 }

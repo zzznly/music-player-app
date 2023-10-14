@@ -1,22 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // styles
 import "./style.scss";
 
 // react-query
 import { useCategories, useGenreSeeds } from "@service/category/useCategory";
-// types
-import { CategoriesItem } from "../../../types/categories";
 
 // router
 import ListSection from "../ListSection";
 import { useUserTopItems } from "@service/User/useUser";
-import { useAtom } from "jotai";
-import { searchKeywordAtom } from "@service/Search/SearchAtom";
-
-// interface CategoriesItemColored extends CategoriesItem {
-//   bgColor: string;
-// }
+import { useNavigate } from "react-router-dom";
 
 export default function SearchMain(): JSX.Element {
   const bgColors: string[] = [
@@ -79,7 +72,7 @@ export default function SearchMain(): JSX.Element {
     return genres.sort(() => 0.5 - Math.random()).slice(0, 9);
   };
 
-  const [, setKeyword] = useAtom(searchKeywordAtom);
+  const navigate = useNavigate();
 
   return (
     <div className="search-main">
@@ -123,7 +116,11 @@ export default function SearchMain(): JSX.Element {
                     <button
                       className="label"
                       style={{ backgroundColor: bgColors[idx] }}
-                      onClick={() => setKeyword(genre)}
+                      onClick={() =>
+                        navigate(`/search/${genre}`, {
+                          replace: true,
+                        })
+                      }
                     >
                       {genre}
                     </button>

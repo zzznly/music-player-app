@@ -7,18 +7,12 @@ import logo from "@assets/img-logo-spotify.png";
 import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 
 // router
-import { NavLink, Route, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
-import { navMenu } from "@service/Common/CommonAtom";
-
-// 1. type, interface
-// 2. utility type
-// 3. Generic type
+import { NavLink, useLocation } from "react-router-dom";
+import { useCommon } from "@store/common/useCommon";
 
 export default function NavBar() {
   const location = useLocation();
-  const nav_menu = useAtomValue(navMenu);
+  const { navMenu } = useCommon();
 
   return (
     <div className="layout__nav-bar">
@@ -26,11 +20,11 @@ export default function NavBar() {
         <img src={NavLogo} alt="" />
       </div>
       <div className="layout__nav-bar__menu">
-        {Object.keys(nav_menu).map(menu => (
+        {Object.keys(navMenu).map(menu => (
           <div className="layout__nav-bar__wrap">
             <p className="layout__nav-bar__title">{menu}</p>
             <ul className="layout__nav-bar__list">
-              {nav_menu[menu].map((item: NavSubMenu, idx: number) => (
+              {navMenu[menu].map((item: NavSubMenu, idx: number) => (
                 <li
                   className={`layout__nav-bar__item ${
                     location.pathname.split("/")[1] === item.path.split("/")[1]
@@ -44,7 +38,9 @@ export default function NavBar() {
                     to={item.path}
                     onClick={e => {
                       // TODO: MY 메뉴 추후개발
-                      if (nav_menu.MY.map(v => v.menu).includes(item.menu)) {
+                      if (
+                        navMenu.MY.map((v: any) => v.menu).includes(item.menu)
+                      ) {
                         e.preventDefault();
                         alert("Comming Soon");
                       }

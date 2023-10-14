@@ -30,13 +30,13 @@ import shuffleActiveIcon from "@assets/images/icon/player/ico-shuffle-active.svg
 import repeatOffIcon from "@assets/images/icon/player/ico-repeat-track.svg";
 import repeatContextIcon from "@assets/images/icon/player/ico-repeat-context.svg";
 import repeatTrackIcon from "@assets/images/icon/player/ico-repeat-off.svg";
-import { isSpinnerLoading } from "@service/Common/CommonAtom";
 import likeIcon from "@assets/images/icon/ico-like-default.png";
 import likeIconActive from "@assets/images/icon/ico-like-active.png";
 
 // rc-slider
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { useCommon } from "@store/common/useCommon";
 
 export default function Player({
   current_track,
@@ -58,7 +58,7 @@ export default function Player({
   const [currentProgress, setCurrentProgress] = useState<number>(0);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
 
-  const [isLoadingSpinner, setLoading] = useAtom(isSpinnerLoading);
+  const { isLoading } = useCommon();
 
   // mutations - player controller
   const {
