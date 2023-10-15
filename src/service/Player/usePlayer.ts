@@ -28,12 +28,13 @@ export const useCurrentPlayingTrack = ({
   });
 };
 
+// get user's queue
 export const useCurrentPlaylist = ({
   onSuccess,
   onError,
 }: UseQueryProps = {}) => {
   // const { deviceID } = useSDK();
-  const { playingURL, category } = usePlaying();
+  const { playingURL } = usePlaying();
 
   return useQuery({
     queryKey: ["player.currentPlaylist", playingURL],
@@ -43,13 +44,16 @@ export const useCurrentPlaylist = ({
   });
 };
 
+// add to users queue
 export const useMutationAddCurrentPlaylist = () => {
   const { deviceId } = useSDK();
   const { playingURL } = usePlaying();
 
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
+
   return useMutation({
     mutationFn: () => {
-      console.log("play", playingURL);
       return PlayerService.addToPlaybackList(deviceId, playingURL);
     },
     onSuccess: () => {
@@ -59,15 +63,15 @@ export const useMutationAddCurrentPlaylist = () => {
   });
 };
 
-export const useMutationPlayerStart = (
-  position: number,
-  { onSuccess, onError }: UseMutationProps = {}
-) => {
+export const useMutationPlayerStart = ({
+  onSuccess,
+  onError,
+}: UseMutationProps = {}) => {
   const { deviceId } = useSDK();
   const { playingURL } = usePlaying();
 
   return useMutation({
-    mutationFn: () => {
+    mutationFn: (position: number) => {
       return PlayerService.startPlayback(deviceId, playingURL, position);
     },
     onSuccess,

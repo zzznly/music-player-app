@@ -5,12 +5,12 @@ import { playingURLAtom, playingCategoryAtom } from "@store/playing/atom";
 const usePlaying = () => {
   const [playingURL, setPlayingURL] = useAtom(playingURLAtom);
   const [playingCategory, setPlayingCategory] = useAtom(playingCategoryAtom);
-  const category: string = playingURL.split(":")[1]; // todo: typing
+  const urlCategory: string = playingURL.split(":")[1]; // todo: typing
 
-  if (category !== "track") setPlayingCategory(category);
+  if (urlCategory !== "track") setPlayingCategory(urlCategory);
 
   return {
-    category,
+    urlCategory,
     playingURL,
     setPlayingURL,
     playingCategory,
