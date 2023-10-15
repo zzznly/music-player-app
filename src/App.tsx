@@ -16,37 +16,41 @@ import SearchMain from "@components/organisms/SearchMain";
 import SearchResult from "@components/organisms/SearchResult";
 import SearchCategory from "@pages/SearchCategory";
 import Login from "@pages/Login";
-import axios from "axios";
 
 export default function App(): React.ReactElement {
   const [token, setToken] = useState<string>("");
-
-  const getAccessToken = async () => {
-    const response = await fetch("/auth/token");
-    console.log(222, response);
-
-    // try {
-    //   const urlHashString = new URLSearchParams(
-    //     window.location.hash.substring(1)
-    //   );
-    //   const accessToken = urlHashString.get("access_token");
-    //   setToken(accessToken ?? "");
-    // } catch (error) {
-    //   console.error("get access token error:", error);
-    //   throw error;
-    // }
-  };
-
+  // const getAccessToken = async () => {
+  // const response = await fetch("/auth/token");
+  // try {
+  //   const urlHashString = new URLSearchParams(
+  //     window.location.hash.substring(1)
+  //   );
+  //   const accessToken = urlHashString.get("access_token");
+  //   setToken(accessToken ?? "");
+  // } catch (error) {
+  //   console.error("get access token error:", error);
+  //   throw error;
+  // }
+  // };
   // useEffect(() => {
   //   getAccessToken();
   // }, []);
+
+  // const [code, setCode] = useState<string | null>("");
+  // useEffect(() => {
+  //   setCode(new URLSearchParams(window.location.search).get("code"));
+  //   console.log(333, code);
+  // }, [code]);
+
+  // const code = new URLSearchParams(window.location.search).get("code");
+  // console.log(333, code);
 
   return (
     <div className="App">
       <Routes>
         <Route
           path="/"
-          element={token === "" ? <Login /> : <WebPlayback token={token} />}
+          element={token ? <WebPlayback token={token} /> : <Login />}
         >
           <Route index element={<Explore />} />
           <Route path="/search" element={<Search />}>

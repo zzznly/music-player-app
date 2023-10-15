@@ -23,6 +23,7 @@ module.exports = function (app: any) {
     "/auth/**",
     createProxyMiddleware({
       target: "http://localhost:4000",
+      changeOrigin: true,
     })
   );
 };

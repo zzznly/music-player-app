@@ -44,10 +44,9 @@ app.get("/auth/login", (req, res) => {
   );
 });
 
+// Q: 이거 타게하는방법? (포트 4000번 찔러야됨)
 app.get("/auth/callback", (req, res) => {
   let code = req.query.code;
-  console.log(123, code, req);
-
   let authOptions = {
     url: "https://accounts.spotify.com/api/token",
     form: {
@@ -65,7 +64,6 @@ app.get("/auth/callback", (req, res) => {
     },
     json: true,
   };
-
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       global.access_token = body.access_token;

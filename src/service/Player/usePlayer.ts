@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import PlayerService from "./PlayerService";
 import usePlaying from "@store/playing/usePlaying";
-import useSDK from "@store/playing/useSDK";
+// import useSDK from "@store/playing/useSDK";
 
 export const usePlaybackState = ({
   onSuccess,
@@ -31,7 +31,7 @@ export const useCurrentPlaylist = ({
   onSuccess,
   onError,
 }: UseQueryProps = {}) => {
-  const { deviceID } = useSDK();
+  // const { deviceID } = useSDK();
   const { playingURL, category } = usePlaying();
 
   return useQuery({

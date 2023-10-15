@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atom, useAtom } from "jotai";
 
 import ExploreIcon from "@assets/images/icon/navbar/ico-menu-explore.svg";
 import ExploreIconActive from "@assets/images/icon/navbar/ico-menu-explore-active.svg";
