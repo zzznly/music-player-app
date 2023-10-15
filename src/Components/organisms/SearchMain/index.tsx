@@ -68,6 +68,15 @@ export default function SearchMain(): JSX.Element {
     }
   );
 
+  const { data: { items: artistsItems } = {} } = useUserTopItems({
+    type: "artists",
+  });
+  const { data: { items: tracksItems } = {} } = useUserTopItems({
+    type: "tracks",
+  });
+  console.log("hihihihih artistsItems", artistsItems);
+  console.log("hihihihih tracksItems", tracksItems);
+
   const getRandomGenres = (genres: string[]) => {
     return genres.sort(() => 0.5 - Math.random()).slice(0, 9);
   };

@@ -3,14 +3,19 @@ import "./style.scss";
 
 import { useCommon } from "@store/common/useCommon";
 import { BeatLoader } from "react-spinners";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function LoadingSpinner(): JSX.Element {
+export default function LoadingSpinner() {
+  const queryClient = useQueryClient();
   const { isLoading } = useCommon();
+
+  if (!isLoading && !queryClient.isFetching() && !queryClient.isMutating())
+    return null;
+
   return (
-    <div className={`loading ${isLoading ? "loading--active" : ""}`}>
+    <div className={`loading loading--active`}>
       <div className="loading__spinner">
-        {/* Q: loading 타입 에러 */}
-        {/* <BeatLoader color="#4343EF" size={20} loading={isLoading} /> */}
+        <BeatLoader color="#4343EF" size={20} loading={true} />
       </div>
     </div>
   );

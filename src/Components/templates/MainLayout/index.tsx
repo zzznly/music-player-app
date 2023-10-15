@@ -10,18 +10,8 @@ import usePlayer from "@hooks/usePlayer";
 
 // router
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
-
-// utils
-import useSDK from "@store/sdk/useSDK";
-import { useCommon } from "@store/common/useCommon";
 
 export default function MainLayout(): JSX.Element {
-  const { isLoading } = useCommon();
-
-  // player states
-  const { deviceId } = useSDK();
-
   usePlayer();
 
   return (
@@ -34,7 +24,7 @@ export default function MainLayout(): JSX.Element {
         </div>
       </div>
       <Player />
-      {isLoading && <LoadingSpinner />}
+      <LoadingSpinner />
     </div>
   );
 }

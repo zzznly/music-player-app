@@ -56,11 +56,7 @@ export default function SearchResult(): JSX.Element {
   };
 
   // 검색결과 fetch
-  const {
-    // @ts-ignore
-    // **Question: AxiosResponse 타입 에러가 남
-    data,
-  } = useSearchResult(searchParams, {
+  const { data } = useSearchResult(searchParams, {
     enabled: !!params.keyword,
   });
 
