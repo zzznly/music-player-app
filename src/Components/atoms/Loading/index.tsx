@@ -6,7 +6,6 @@ import { BeatLoader } from "react-spinners";
 
 export default function LoadingSpinner(): JSX.Element {
   const { isLoading } = useCommon();
-
   return (
     <div className={`loading ${isLoading ? "loading--active" : ""}`}>
       <div className="loading__spinner">

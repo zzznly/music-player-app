@@ -39,19 +39,21 @@ import "rc-slider/assets/index.css";
 import { useCommon } from "@store/common/useCommon";
 import useSDK from "@store/sdk/useSDK";
 
-export default function Player({
-  current_track,
-  is_paused,
-  duration_ms,
-  current_position,
-}: any): JSX.Element {
+export default function Player() {
+  const {
+    currentTrack: current_track,
+    isPaused: is_paused,
+    deviceId,
+    currentPosition: current_position,
+    durationMs: duration_ms,
+  } = useSDK();
   // queries
   const { data: { progress_ms } = {} } = usePlaybackState();
   const { data: { currently_playing = {}, queue = [] } = {} } =
     useCurrentPlaylist();
 
   // states
-  const { playingURL, setPlayingURL, category } = usePlaying();
+  const { playingURL, setPlayingURL, urlCategory } = usePlaying();
   const repeatStateList = ["off", "context", "track"];
   const [repeatStateIdx, setRepeatIdx] = useState<number>(0);
   const [isShuffle, setShuffle] = useState<boolean>(false);
@@ -60,10 +62,8 @@ export default function Player({
 
   const { isLoading } = useCommon();
 
-  const { deviceId } = useSDK();
-
   // mutations - player controller
-  const { mutate: onPlayMutate } = useMutationPlayerStart(currentProgress, {});
+  const onPlay = useMutationPlayerStart();
   const onPause = useMutationPlayerPause({
     onSuccess: () => {
       setCurrentProgress(current_position);
@@ -86,7 +86,7 @@ export default function Player({
     enabled: isSeeking,
   });
 
-  const { mutate: addCurrentMutate } = useMutationAddCurrentPlaylist();
+  const addCurrentQueue = useMutationAddCurrentPlaylist();
   // useEffect(() => {
   //   setLoading(onPlayLoading);
   // }, [onPlayLoading]);
@@ -107,13 +107,13 @@ export default function Player({
 
   useEffect(() => {
     if (!deviceId) return;
-    onPlayMutate();
-    category === "track" && addCurrentMutate();
+    onPlay.mutate(currentProgress);
+    urlCategory === "track" && addCurrentQueue.mutate();
   }, [playingURL]);
 
   useEffect(() => {
     if (deviceId?.length) {
-      onPlayMutate();
+      onPlay.mutate(currentProgress);
     }
   }, [playingURL]);
 
@@ -214,7 +214,7 @@ export default function Player({
                 .filter((item: any) => item !== null)
                 .map(
                   (
-                    { id, uri, album, artists, name, duration_ms }: any,
+                    { uri, album, artists, name, duration_ms }: any,
                     idx: number
                   ) => (
                     <li
@@ -323,7 +323,9 @@ export default function Player({
               </div>
               <button
                 className="player__playpause"
-                onClick={() => (is_paused ? onPlayMutate() : onPause.mutate())}
+                onClick={() =>
+                  is_paused ? onPlay.mutate(currentProgress) : onPause.mutate()
+                }
               >
                 <img
                   className={`icon ${is_paused ? "icon--play" : "icon--pause"}`}

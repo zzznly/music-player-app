@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useAtom } from "jotai";
 
 import { isLoadingAtom, navMenuAtom } from "./atom";
 
 export const useCommon = () => {
-  const [navMenu, setNavMenu] = useState<any>(navMenuAtom);
-  const [isLoading, setIsLoading] = useState<any>(isLoadingAtom);
+  const [navMenu, setNavMenu] = useAtom(navMenuAtom);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
   return {
     navMenu,

@@ -49,8 +49,8 @@ export const useMutationAddCurrentPlaylist = () => {
   const { deviceId } = useSDK();
   const { playingURL } = usePlaying();
 
-  const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
+  // const queryClient = useQueryClient();
+  // queryClient.invalidateQueries({ queryKey: ["player.currentPlaylist"] });
 
   return useMutation({
     mutationFn: () => {

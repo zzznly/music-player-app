@@ -34,7 +34,7 @@ export default function Header(): JSX.Element {
     // debounce(() => {
     //   navigate(`/search/${keyword}`, { replace: true });
     // }, 200);
-  }, [keyword]);
+  }, [keyword, navigate]);
 
   useEffect(() => {
     if (!location.pathname.includes("search")) {

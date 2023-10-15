@@ -57,4 +57,4 @@ export const navMenuAtom = atom<NavMenu>({
   ],
 });
 
-export const isLoadingAtom = atom(true);
+export const isLoadingAtom = atom(false);
