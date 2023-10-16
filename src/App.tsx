@@ -9,7 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import MainLayout from "@components/templates/MainLayout";
 
 // components
-import Explore from "@pages/Explore";
+import Home from "@pages/Home";
 import Search from "@pages/Search";
 // import DetailPage from "@pages/DetailPage";
 import useSpotifyAuth from "@hooks/useSpotifyAuth";
@@ -23,7 +23,7 @@ export default function App(): React.ReactElement {
     <div className="App">
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Explore />} />
+          <Route index element={<Home />} />
           <Route path="/search" element={<Search />}>
             <Route index element={<SearchMain />} />
             <Route path="/search/:keyword" element={<SearchResult />}>

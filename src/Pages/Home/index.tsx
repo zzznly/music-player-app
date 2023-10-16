@@ -1,47 +1,20 @@
 // styles
 import "./style.scss";
 
-// react-query
-import {
-  useCategories,
-  useCategoryPlaylists,
-} from "@service/category/useCategory";
+// query
+import { useCategories } from "@service/category/useCategory";
 
-// components
-import ListSection from "../../components/organisms/ListSection";
+// service
 import { useNewReleases } from "@service/Playlist/usePlaylist";
+
+// store
 import usePlaying from "@store/playing/usePlaying";
 
-const Section = ({ id, name = "" }: CategoriesItem): JSX.Element => {
-  const { data: { playlists: { items = [] } = {} } = {} } =
-    useCategoryPlaylists(
-      {
-        category_id: id,
-      },
-      {
-        enabled: !!id,
-      }
-    );
+// components
+import { HomeSection } from "@components/organisms/HomeSection";
 
-  return (
-    <ListSection
-      title={name}
-      data={items.map(
-        ({ id, name, description, uri, images }: CategoryPlaylistItem) => ({
-          id,
-          name,
-          description,
-          uri,
-          imageUrl: images[0].url,
-        })
-      )}
-      hasShowMore={false}
-    />
-  );
-};
-
-export default function Home(): JSX.Element {
-  const { playingURL, setPlayingURL } = usePlaying();
+export default function Home() {
+  const { setPlayingURL } = usePlaying();
 
   const { data: { categories: { items: categoryItems = [] } = {} } = {} } =
     useCategories();
@@ -63,9 +36,6 @@ export default function Home(): JSX.Element {
           <div className="section section--new-release">
             <div className="section__title">
               <h2>New Release</h2>
-              {/* <a className={"list__link--more"} href="/">
-                See All
-              </a> */}
             </div>
             <div className="section__content">
               {getRandomContents(newReleaseItems)?.map((item: any) => (
@@ -88,10 +58,9 @@ export default function Home(): JSX.Element {
           </div>
 
           {categoryItems.map((item: CategoriesItem) => (
-            <Section key={item.id} {...item} />
+            <HomeSection key={item.id} {...item} />
           ))}
         </div>
-        {/* <div className="playlist__container"></div> */}
       </div>
     </div>
   );

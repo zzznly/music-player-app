@@ -13,7 +13,7 @@ import LogoutIcon from "@assets/images/icon/navbar/ico-menu-logout.svg";
 export const NAVIGATION = {
   MENU: [
     {
-      menu: "Explore",
+      menu: "Home",
       path: "/",
       icon: ExploreIcon,
       iconActive: ExploreIconActive,
