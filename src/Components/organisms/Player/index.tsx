@@ -36,7 +36,7 @@ import likeIconActive from "@assets/images/icon/ico-like-active.png";
 // rc-slider
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { useCommon } from "@store/common/useCommon";
+import { useLoading } from "@store/common/useLoading";
 import useSDK from "@store/sdk/useSDK";
 
 export default function Player() {
@@ -60,7 +60,7 @@ export default function Player() {
   const [currentProgress, setCurrentProgress] = useState<number>(0);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
 
-  const { isLoading } = useCommon();
+  const { isLoading } = useLoading();
 
   // mutations - player controller
   const onPlay = useMutationPlayerStart();

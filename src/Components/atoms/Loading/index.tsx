@@ -1,13 +1,13 @@
 // styles
 import "./style.scss";
 
-import { useCommon } from "@store/common/useCommon";
+import { useLoading } from "@store/common/useLoading";
 import { BeatLoader } from "react-spinners";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function LoadingSpinner() {
   const queryClient = useQueryClient();
-  const { isLoading } = useCommon();
+  const { isLoading } = useLoading();
 
   if (!isLoading && !queryClient.isFetching() && !queryClient.isMutating())
     return null;

@@ -2,11 +2,11 @@
 import { useEffect } from "react";
 import { getToken } from "@utils/auth";
 import useSDK from "@store/sdk/useSDK";
-import { useCommon } from "@store/common/useCommon";
+import { useLoading } from "@store/common/useLoading";
 import useAuth from "@store/auth/useAuth";
 
 export default function usePlayer() {
-  const { setIsLoading } = useCommon();
+  const { setIsLoading } = useLoading();
   const { token, setToken } = useAuth();
   const { setDeviceId, setDurationMs, setTrack, setPosition, setPaused } =
     useSDK();
