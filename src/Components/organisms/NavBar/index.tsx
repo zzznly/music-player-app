@@ -2,19 +2,20 @@
 import "./style.scss";
 
 // images
-import logo from "@assets/img-logo-spotify.png";
-
 import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 
 // router
 import { NavLink, useLocation } from "react-router-dom";
+
+// constants
 import { NAVIGATION } from "@constants/navigation";
+
+// components
+import NavListItem from "@components/molecules/NavListItem";
 
 type T = keyof typeof NAVIGATION;
 
 export default function NavBar() {
-  const location = useLocation();
-
   return (
     <div className="layout__nav-bar">
       <div className="layout__nav-bar__logo">
@@ -26,45 +27,10 @@ export default function NavBar() {
             <p className="layout__nav-bar__title">{menu}</p>
             <ul className="layout__nav-bar__list">
               {NAVIGATION[menu as keyof typeof NAVIGATION].map(
-                (item: NavSubMenu, idx: number) => (
-                  <li
-                    className={`layout__nav-bar__item ${
-                      location.pathname.split("/")[1] ===
-                      item.path.split("/")[1]
-                        ? "active"
-                        : ""
-                    }`}
-                    key={`item-${idx}`}
-                  >
-                    <NavLink
-                      className="layout__nav-bar__link"
-                      to={item.path}
-                      onClick={e => {
-                        // TODO: MY 메뉴 추후개발
-                        if (
-                          NAVIGATION.MY.map((v: any) => v.menu).includes(
-                            item.menu
-                          )
-                        ) {
-                          e.preventDefault();
-                          alert("Comming Soon");
-                        }
-                      }}
-                    >
-                      <img
-                        src={
-                          location.pathname.split("/")[1] ===
-                          item.path.split("/")[1]
-                            ? item.iconActive
-                            : item.icon
-                        }
-                        className="layout__nav-bar__menu-icon"
-                        alt="nav icon"
-                      />
-                      <p className="layout__nav-bar__menu-text">{item.menu}</p>
-                    </NavLink>
-                  </li>
-                )
+                (item: NavSubMenu, idx: number) => {
+                  const props = { item, idx };
+                  return <NavListItem {...props} />;
+                }
               )}
             </ul>
           </div>

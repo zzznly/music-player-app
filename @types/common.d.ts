@@ -13,7 +13,7 @@ interface UseQueryProps {
   onError?: (err: any) => void;
   enabled?: boolean;
   queryKey?: string[];
-  // select?: ({ data }: any) => void;
+  select?: ({ data }: any) => void;
 }
 
 interface UseMutationProps {
