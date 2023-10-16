@@ -9,7 +9,7 @@ import {
 } from "./atom";
 
 const useSDK = () => {
-  const [deviceId, setDeviceId] = useAtom<string>(deviceIDAtom);
+  const [deviceId, setDeviceId] = useAtom(deviceIDAtom);
   const [currentTrack, setTrack] = useAtom(currentTrackAtom);
   const [currentPosition, setPosition] = useAtom(currentPositionAtom);
   const [isPaused, setPaused] = useAtom(isPausedAtom);
