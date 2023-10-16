@@ -1,52 +1,18 @@
 // styles
 import "./style.scss";
 
+// constants
+import { CATEGORY } from "@constants/searchCategory";
+
 // routes
 import { Link, Outlet, useParams } from "react-router-dom";
 
-import { useSearchResult } from "../../../service/Search/useSearchResult";
-
-type Category = "ALL" | "TRACK" | "PLAYLIST" | "ARTIST" | "ALBUM";
-type CategoryInfo = {
-  label: string;
-  params: string;
-  path: string;
-};
-
-const CATEGORY: Record<Category, CategoryInfo> = {
-  ALL: {
-    label: "모두",
-    params: "track,playlist,artist,album",
-    path: "",
-  },
-  TRACK: {
-    label: "곡",
-    params: "track",
-    path: "tracks",
-  },
-  PLAYLIST: {
-    label: "플레이리스트",
-    params: "playlist",
-    path: "playlists",
-  },
-  ARTIST: {
-    label: "아티스트",
-    params: "artist",
-    path: "artists",
-  },
-  ALBUM: {
-    label: "앨범",
-    params: "album",
-    path: "albums",
-  },
-};
+// components
+import { useSearchResult } from "@service/Search/useSearchResult";
 
 export default function SearchResult(): JSX.Element {
   const params = useParams();
 
-  // 검색 조건 - 검색어, 검색 타입
-
-  // 검색 파라미터
   const searchParams: SearchReq = {
     q: params.keyword ?? "",
     type: (
@@ -55,7 +21,6 @@ export default function SearchResult(): JSX.Element {
     ).params,
   };
 
-  // 검색결과 fetch
   const { data } = useSearchResult(searchParams, {
     enabled: !!params.keyword,
   });

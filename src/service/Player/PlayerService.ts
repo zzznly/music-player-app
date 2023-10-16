@@ -27,12 +27,7 @@ class PlayerService extends Service {
 
   // pause
   pausePlayback(device_id: string) {
-    return this.service
-      .put(`/me/player/pause?device_id=${device_id}`)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(err));
+    return this.service.put(`/me/player/pause?device_id=${device_id}`);
   }
 
   // skip next

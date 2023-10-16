@@ -11,33 +11,10 @@ import ListSection from "../ListSection";
 import { useUserTopItems } from "@service/User/useUser";
 import { useNavigate } from "react-router-dom";
 
+import { GENRE_BUTTON_BG_COLORS } from "@constants/genreButtonBgColors";
+
 export default function SearchMain(): JSX.Element {
-  const bgColors: string[] = [
-    "#E67588",
-    "#68CDE4",
-    "#C275E6",
-    "#E2A65F",
-    "#C8E25F",
-    "#8C75E6",
-    "#E67575",
-    "#999999",
-    "#81E468",
-  ];
-
   const { data: { categories: { items = [] } = {} } = {} } = useCategories();
-
-  // **Question: select가 안먹어요!
-  // {
-  // onSuccess: () => {
-  // items = items.map((v: CategoriesItemColored, idx: number) => {
-  //   return { ...v, bgColor: bgColors[idx] };
-  // });
-  // },
-  // select: data =>
-  //   data.categories.items.map((v: CategoriesItemColored, idx: number) => {
-  //     return { ...v, bgColor: bgColors[idx] };
-  //   }),
-  // }
 
   const { data: { genres = [] } = {} } = useGenreSeeds();
 
@@ -124,7 +101,7 @@ export default function SearchMain(): JSX.Element {
                   {getRandomGenres(genres).map((genre: string, idx: number) => (
                     <button
                       className="label"
-                      style={{ backgroundColor: bgColors[idx] }}
+                      style={{ backgroundColor: GENRE_BUTTON_BG_COLORS[idx] }}
                       onClick={() =>
                         navigate(`/search/${genre}`, {
                           replace: true,

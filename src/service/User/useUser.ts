@@ -3,12 +3,13 @@ import UserService from "./UserService";
 
 export const useUserTopItems = (
   params: UserTopItemsReq,
-  { onSuccess }: UseQueryProps = {}
+  { onSuccess, onError }: UseQueryProps = {}
 ) => {
   return useQuery({
     queryFn: () => UserService.getUsersTopItems(params),
     queryKey: ["user.topItems", params.type],
     onSuccess,
+    onError,
   });
 };
 

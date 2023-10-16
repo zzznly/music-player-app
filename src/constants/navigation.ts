@@ -10,7 +10,7 @@ import MyArtistIcon from "@assets/images/icon/navbar/ico-menu-my-artists.svg";
 import MyArtistIconActive from "@assets/images/icon/navbar/ico-menu-my-artists-active.svg";
 import LogoutIcon from "@assets/images/icon/navbar/ico-menu-logout.svg";
 
-export const navigation = {
+export const NAVIGATION = {
   MENU: [
     {
       menu: "Explore",

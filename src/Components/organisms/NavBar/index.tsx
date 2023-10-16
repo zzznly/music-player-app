@@ -8,9 +8,10 @@ import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 
 // router
 import { NavLink, useLocation } from "react-router-dom";
-// import { useCommon } from "@store/common/useCommon";
-import { navigation } from "@constants/navigation";
-type T = keyof typeof navigation;
+import { NAVIGATION } from "@constants/navigation";
+
+type T = keyof typeof NAVIGATION;
+
 export default function NavBar() {
   const location = useLocation();
 
@@ -20,11 +21,11 @@ export default function NavBar() {
         <img src={NavLogo} alt="" />
       </div>
       <div className="layout__nav-bar__menu">
-        {Object.keys(navigation).map(menu => (
+        {Object.keys(NAVIGATION).map(menu => (
           <div className="layout__nav-bar__wrap">
             <p className="layout__nav-bar__title">{menu}</p>
             <ul className="layout__nav-bar__list">
-              {navigation[menu as keyof typeof navigation].map(
+              {NAVIGATION[menu as keyof typeof NAVIGATION].map(
                 (item: NavSubMenu, idx: number) => (
                   <li
                     className={`layout__nav-bar__item ${
@@ -41,7 +42,7 @@ export default function NavBar() {
                       onClick={e => {
                         // TODO: MY 메뉴 추후개발
                         if (
-                          navigation.MY.map((v: any) => v.menu).includes(
+                          NAVIGATION.MY.map((v: any) => v.menu).includes(
                             item.menu
                           )
                         ) {
