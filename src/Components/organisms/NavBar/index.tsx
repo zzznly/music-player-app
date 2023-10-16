@@ -12,6 +12,7 @@ import { NAVIGATION } from "@constants/navigation";
 
 // components
 import NavListItem from "@components/molecules/NavListItem";
+import NavList from "@components/molecules/NavList";
 
 type T = keyof typeof NAVIGATION;
 
@@ -22,19 +23,20 @@ export default function NavBar() {
         <img src={NavLogo} alt="" />
       </div>
       <div className="layout__nav-bar__menu">
-        {Object.keys(NAVIGATION).map(menu => (
-          <div className="layout__nav-bar__wrap">
-            <p className="layout__nav-bar__title">{menu}</p>
-            <ul className="layout__nav-bar__list">
-              {NAVIGATION[menu as keyof typeof NAVIGATION].map(
-                (item: NavSubMenu, idx: number) => {
-                  const props = { item, idx };
-                  return <NavListItem {...props} />;
-                }
-              )}
-            </ul>
-          </div>
-        ))}
+        {Object.keys(NAVIGATION).map(menu => {
+          return (
+            <div className="layout__nav-bar__wrap">
+              <p className="layout__nav-bar__title">{menu}</p>
+              <NavList>
+                {NAVIGATION[menu as keyof typeof NAVIGATION].map(
+                  (item: NavSubMenu, idx: number) => {
+                    return <NavListItem {...{ item }} key={idx} />;
+                  }
+                )}
+              </NavList>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

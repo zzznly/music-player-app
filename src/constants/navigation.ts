@@ -29,19 +29,19 @@ export const NAVIGATION = {
     // comming soon
     {
       menu: "Playlists",
-      path: "/playlists",
+      path: "/my/playlists",
       icon: MyPlaylistIcon,
       iconActive: MyPlaylistIconActive,
     },
     {
       menu: "Favorites",
-      path: "/favorites",
+      path: "/my/favorites",
       icon: MyFavoriteIcon,
       iconActive: MyFavoriteIconActive,
     },
     {
       menu: "Artists",
-      path: "/artists",
+      path: "/my/artists",
       icon: MyArtistIcon,
       iconActive: MyArtistIconActive,
     },
