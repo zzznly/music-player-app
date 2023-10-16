@@ -4,9 +4,6 @@ import "./style.scss";
 // images
 import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 
-// router
-import { NavLink, useLocation } from "react-router-dom";
-
 // constants
 import { NAVIGATION } from "@constants/navigation";
 
