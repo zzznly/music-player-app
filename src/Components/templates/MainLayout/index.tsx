@@ -5,7 +5,7 @@ import "./style.scss";
 import NavBar from "@components/organisms/NavBar";
 import Header from "@components/organisms/Header";
 import Player from "@components/organisms/Player";
-import LoadingSpinner from "@components/atoms/Loading";
+import Loading from "@components/atoms/Loading";
 import usePlayer from "@hooks/usePlayer";
 
 // router
@@ -24,7 +24,7 @@ export default function MainLayout(): JSX.Element {
         </div>
       </div>
       <Player />
-      <LoadingSpinner />
+      <Loading />
     </div>
   );
 }

@@ -87,7 +87,6 @@ export default function SearchCategory(): JSX.Element {
         key={idx}
       />
     )),
-    // TODO: 여기서부터만 반복문을 돌릴까?
     playlists: (
       <ListSection
         title={`${data?.playlists?.items?.length} playlists`}

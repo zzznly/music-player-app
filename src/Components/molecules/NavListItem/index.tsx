@@ -6,7 +6,6 @@ import { NavLink, useLocation } from "react-router-dom";
 
 export default function NavListItem({ item }: { item: NavSubMenu }) {
   const location = useLocation();
-  console.log("location", location);
 
   return (
     <li

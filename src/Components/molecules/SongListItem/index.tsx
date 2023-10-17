@@ -22,7 +22,6 @@ export default function SongListItem({
   uri,
 }: Props): JSX.Element {
   const { setPlayingURL } = usePlaying();
-  console.log("render");
   return (
     <li className={"songlist-item"} onClick={() => setPlayingURL(uri)}>
       <div className={"songlist-item__title"}>
