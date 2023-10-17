@@ -1,10 +1,8 @@
-import { useMemo, useState } from "react";
-
 // styles
 import "./style.scss";
 
 // react-query
-import { useCategories, useGenreSeeds } from "@service/category/useCategory";
+import { useGenreSeeds } from "@service/category/useCategory";
 
 // router
 import ListSection from "../ListSection";
@@ -14,51 +12,19 @@ import { useNavigate } from "react-router-dom";
 import { GENRE_BUTTON_BG_COLORS } from "@constants/genreButtonBgColors";
 
 export default function SearchMain(): JSX.Element {
-  const { data: { categories: { items = [] } = {} } = {} } = useCategories();
+  const navigate = useNavigate();
 
   const { data: { genres = [] } = {} } = useGenreSeeds();
-
-  const [topArtists, setTopArtists] = useState([]);
-  const [topTracks, setTopTracks] = useState([]);
-
-  const typeArr = ["artists", "tracks"];
-  const [topItemsType, setType] = useState("artists");
-
-  // TODO: useMemo 에 대해 정리하기
-  const obj: any = useMemo(
-    () => ({
-      artists: [],
-      tracks: [],
-    }),
-    []
-  );
-
-  useUserTopItems(
-    {
-      type: topItemsType,
-    },
-    {
-      onSuccess: data => {
-        obj[topItemsType] = data?.items || [];
-        setType("tracks");
-      },
-    }
-  );
-
-  const { data: { items: artistsItems } = {} } = useUserTopItems({
+  const { data: { items: artistsItems = [] } = {} } = useUserTopItems({
     type: "artists",
   });
-  const { data: { items: tracksItems } = {} } = useUserTopItems({
+  const { data: { items: tracksItems = [] } = {} } = useUserTopItems({
     type: "tracks",
   });
-  console.log("hihihihih artistsItems", artistsItems);
-  console.log("hihihihih tracksItems", tracksItems);
 
   const getRandomGenres = (genres: string[]) => {
     return genres.sort(() => 0.5 - Math.random()).slice(0, 9);
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="search-main">
@@ -69,20 +35,18 @@ export default function SearchMain(): JSX.Element {
         <ListSection
           className="section--top-artists"
           title={`TOP ARTISTS`}
-          data={obj["artists"].map(
-            ({ images, name, popularity, uri }: any) => ({
-              uri,
-              name,
-              description: `${popularity} Plays`,
-              imageUrl: images?.[0]?.url,
-            })
-          )}
+          data={artistsItems?.map(({ images, name, popularity, uri }: any) => ({
+            uri,
+            name,
+            description: `${popularity} Plays`,
+            imageUrl: images?.[0]?.url,
+          }))}
         />
         <div className="search-main__content-row">
           <ListSection
             className="section--top-tracks"
             title={"TOP TRACKS"}
-            data={obj["tracks"]
+            data={tracksItems
               ?.map(({ id, name, album: { images = [] } = {}, uri }: any) => ({
                 id,
                 name,
