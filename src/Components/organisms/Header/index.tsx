@@ -7,7 +7,8 @@ import "./style.scss";
 import searchIcon from "@assets/images/icon/ico-input-search.svg";
 import { useUserInfo } from "@service/User/useUser";
 import { redirectToLogin } from "@utils/auth";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { search } from "spotify-web-sdk";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
@@ -16,33 +17,24 @@ export default function Header(): JSX.Element {
   const { data: { display_name } = {} } = useUserInfo();
 
   const params = useParams();
-  const [keyword, setKeyword] = useState<string | undefined>("");
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    if (params?.keyword?.length) setKeyword(params?.keyword);
+    if (!params?.keyword) return;
+    setKeyword(params?.keyword);
   }, [params.keyword]);
 
-  // useEffect(() => {
-  //   if (keyword?.length)
-  //     navigate(`/search/${keyword}`, {
-  //       replace: true,
-  //     });
-  // }, [keyword]);
-
   useEffect(() => {
-    if (keyword?.length) navigate(`/search/${keyword}`, { replace: true });
-    // debounce(() => {
-    //   navigate(`/search/${keyword}`, { replace: true });
-    // }, 200);
-  }, [keyword, navigate]);
+    navigate(!keyword ? "/search" : `/search/${keyword}`, {
+      replace: true,
+    });
+  }, [keyword]);
 
   useEffect(() => {
     if (!location.pathname.includes("search")) {
       setKeyword("");
     }
   }, [location]);
-
-  console.log(222, params, location);
 
   return (
     <div className="layout__header">
@@ -54,16 +46,14 @@ export default function Header(): JSX.Element {
               type="search"
               placeholder="Search..."
               value={keyword}
-              // onChange={debounce(e => {
-              //   setKeyword(e.target.value);
-              // }, 200)}
               onChange={e => {
                 setKeyword(e.target.value);
               }}
               onFocus={() => {
-                navigate(`/search`, {
-                  replace: true,
-                });
+                if (!location.pathname.includes("search"))
+                  navigate(`/search`, {
+                    replace: true,
+                  });
               }}
             />
             <button className="layout__header__button layout__header__button--search">
