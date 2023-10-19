@@ -5,7 +5,7 @@ import useSDK from "@store/sdk/useSDK";
 import { useLoading } from "@store/common/useLoading";
 import useAuth from "@store/auth/useAuth";
 
-export default function usePlayer() {
+export default function useWebSDKPlayer() {
   const { setIsLoading } = useLoading();
   const { token, setToken } = useAuth();
   const { setDeviceId, setDurationMs, setTrack, setPosition, setPaused } =
