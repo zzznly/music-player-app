@@ -3,14 +3,14 @@ import { useCurrentPlaylist } from "@service/Player/usePlayer";
 import usePlaying from "@store/playing/usePlaying";
 import { convertDurationTime } from "@utils/convert";
 import { useState } from "react";
-import playlistPlayIcon from "@assets/images/icon/ico-playlist-play.svg";
 import useSDK from "@store/sdk/useSDK";
+import Icon from "@components/atoms/Icon";
 
 export default function PlayerList() {
-  const { playingURL, setPlayingURL, urlCategory } = usePlaying();
+  const { setPlayingURL } = usePlaying();
   const { currentTrack } = useSDK();
 
-  const [currentProgress, setCurrentProgress] = useState<number>(0);
+  const [, setCurrentProgress] = useState(0);
 
   const { data: { currently_playing = {}, queue = [] } = {} } =
     useCurrentPlaylist();
@@ -34,7 +34,7 @@ export default function PlayerList() {
               }
             >
               <div className="player__track-index">
-                <img src={playlistPlayIcon} />
+                <Icon name="playlist-play" />
               </div>
               <div className="player__track-album">
                 <img
@@ -43,6 +43,7 @@ export default function PlayerList() {
                     currentTrack?.album?.images?.[0]?.url ??
                     "https://dummyimage.com/200x200/ccc/fff.png"
                   }
+                  alt=""
                 />
               </div>
               <div className="player__track-info">

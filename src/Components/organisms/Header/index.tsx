@@ -1,14 +1,15 @@
+// react
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { debounce } from "@utils/index";
 
 // styles
 import "./style.scss";
 
-import searchIcon from "@assets/images/icon/ico-input-search.svg";
+// service
 import { useUserInfo } from "@service/User/useUser";
-import { redirectToLogin } from "@utils/auth";
-import { useCallback, useEffect, useState } from "react";
-import { search } from "spotify-web-sdk";
+
+// components
+import Icon from "@components/atoms/Icon";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
@@ -25,9 +26,10 @@ export default function Header(): JSX.Element {
   }, [params.keyword]);
 
   useEffect(() => {
-    navigate(!keyword ? "/search" : `/search/${keyword}`, {
-      replace: true,
-    });
+    if (location.pathname.includes("search"))
+      navigate(!keyword ? "/search" : `/search/${keyword}`, {
+        replace: true,
+      });
   }, [keyword]);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function Header(): JSX.Element {
               }}
             />
             <button className="layout__header__button layout__header__button--search">
-              <img src={searchIcon} />
+              <Icon name="input-search" />
             </button>
           </div>
         </div>
@@ -67,12 +69,6 @@ export default function Header(): JSX.Element {
             <img src="" />
           </div>
           <p className="layout__header__user-name">{display_name}</p>
-          {/* <button
-            className="layout__header__"
-            onClick={() => redirectToLogin()}
-          >
-            Login
-          </button> */}
         </div>
       </div>
     </div>

@@ -1,21 +1,3 @@
-// controller icons
-import playIcon from "@assets/images/icon/player/ico-play.png";
-import playlistPlayIcon from "@assets/images/icon/ico-playlist-play.svg";
-import pauseIcon from "@assets/images/icon/player/ico-pause.svg";
-import prevIcon from "@assets/images/icon/player/ico-prev.svg";
-import nextIcon from "@assets/images/icon/player/ico-next.svg";
-import shuffleIcon from "@assets/images/icon/player/ico-shuffle.svg";
-import shuffleActiveIcon from "@assets/images/icon/player/ico-shuffle-active.svg";
-import repeatOffIcon from "@assets/images/icon/player/ico-repeat-track.svg";
-import repeatContextIcon from "@assets/images/icon/player/ico-repeat-context.svg";
-import repeatTrackIcon from "@assets/images/icon/player/ico-repeat-off.svg";
-import likeIcon from "@assets/images/icon/ico-like-default.png";
-import likeIconActive from "@assets/images/icon/ico-like-active.png";
-
-// rc-slider
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
-
 import {
   useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
@@ -31,6 +13,7 @@ import usePlaying from "@store/playing/usePlaying";
 import useSDK from "@store/sdk/useSDK";
 import { convertDurationTime } from "@utils/convert";
 import { useEffect, useState } from "react";
+import Icon from "@components/atoms/Icon";
 
 export default function PlayerDevice() {
   const { deviceId, currentTrack, isPaused, currentPosition, durationMs } =
@@ -155,23 +138,6 @@ export default function PlayerDevice() {
             onChange={seekToPosition}
             step={1000}
           />
-          {/* <Slider
-              railStyle={{ backgroundColor: "#b4b4f8", height: 3 }}
-              trackStyle={{ backgroundColor: "#4343ef", height: 3 }}
-              handleStyle={{
-                borderColor: "#4343ef",
-                width: 12,
-                height: 12,
-                marginLeft: 0,
-                marginTop: -5,
-                backgroundColor: "#4343ef",
-              }}
-              min={0}
-              max={durationMs}
-              step={1000}
-              onChange={seekToPosition}
-              value={currentPosition}
-            /> */}
           <div className="player__time">
             <div className="player__current-time">
               {convertDurationTime(currentPosition)}
@@ -187,13 +153,13 @@ export default function PlayerDevice() {
               className="player__shuffle"
               onClick={() => setShuffle(!isShuffle)}
             >
-              <img
-                src={isShuffle ? shuffleActiveIcon : shuffleIcon}
-                alt="shuffle"
+              <Icon
+                category="player"
+                name={isShuffle ? "shuffle-active" : "shuffle"}
               />
             </button>
             <button className="player__skip-prev" onClick={clickPrev}>
-              <img src={prevIcon} alt="skip prev" />
+              <Icon category="player" name="prev" />
             </button>
           </div>
           <button
@@ -202,42 +168,38 @@ export default function PlayerDevice() {
               isPaused ? onPlay.mutate(currentProgress) : onPause.mutate()
             }
           >
-            <img
-              className={`icon ${isPaused ? "icon--play" : "icon--pause"}`}
-              src={isPaused ? playIcon : pauseIcon}
-              alt="play or pause"
-            />
+            <Icon category="player" name={isPaused ? "play" : "pause"} />
           </button>
           <div className="player__controller-right">
             <button
               className="player__skip-next"
               onClick={() => skipNext.mutate()}
             >
-              <img src={nextIcon} alt="skip next" />
+              <Icon category="player" name="next" />
             </button>
             <button
               className="player__repeat"
               onClick={() => setRepeatIdx(prev => prev + 1)}
             >
-              <img
-                src={
+              <Icon
+                category="player"
+                name={`repeat-${
                   {
-                    0: repeatOffIcon,
-                    1: repeatContextIcon,
-                    2: repeatTrackIcon,
-                  }[repeatStateIdx]
-                }
-                alt="repeat"
+                    0: "off",
+                    1: "context",
+                    2: "track",
+                  }[repeatStateIdx] || "off"
+                }`}
               />
             </button>
           </div>
         </div>
       </div>
-      <div className="player__footer">
+      {/* <div className="player__footer">
         <div className="player__volume">
           <input className="player__volume-input" type="range" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

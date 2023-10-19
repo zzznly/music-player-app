@@ -2,19 +2,21 @@
 import "./style.scss";
 
 interface IconProps {
-  name: string;
-  isActive?: boolean;
+  name: string | undefined;
+  category?: string;
+  width?: number;
+  height?: number;
 }
 
-export default function Icon({ name, isActive }: IconProps) {
-  // name, active
-  const icon = require(`./src/assets/images/icon/player/ico-${name}${
-    isActive ? "active" : ""
-  }`);
-
+export default function Icon({ name, category }: IconProps) {
   return (
     <div className="icon">
-      <img src={icon} alt={`Icon`} />
+      <img
+        src={require(`../../../assets/images/icon${
+          category ? `/${category}` : ""
+        }/ico-${name}.svg`)}
+        alt={`icon-${name}`}
+      />
     </div>
   );
 }
