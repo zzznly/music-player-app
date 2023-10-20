@@ -1,5 +1,6 @@
+import { useState } from "react";
+
 import {
-  useMutationAddCurrentPlaylist,
   useMutationPlayerPause,
   useMutationPlayerStart,
   useMutationSeekPosition,
@@ -7,28 +8,27 @@ import {
   useMutationSkipNext,
   useMutationSkipPrev,
   useMutationToggleShuffle,
-  usePlaybackState,
 } from "@service/Player/usePlayer";
+
 import usePlaying from "@store/playing/usePlaying";
 import useSDK from "@store/sdk/useSDK";
+
 import { convertDurationTime } from "@utils/convert";
-import { useEffect, useState } from "react";
+
+import usePlayerController from "@hooks/usePlayerController";
+
 import Icon from "@components/atoms/Icon";
 
 export default function PlayerDevice() {
-  const { deviceId, currentTrack, isPaused, currentPosition, durationMs } =
-    useSDK();
-
-  // queries
-  const { data: { progress_ms } = {} } = usePlaybackState();
+  const { currentTrack, isPaused, currentPosition, durationMs } = useSDK();
 
   // states
-  const { playingURL, setPlayingURL, urlCategory } = usePlaying();
+  const { playingURL } = usePlaying();
   const repeatStateList = ["off", "context", "track"];
-  const [repeatStateIdx, setRepeatIdx] = useState<number>(0);
-  const [isShuffle, setShuffle] = useState<boolean>(false);
-  const [currentProgress, setCurrentProgress] = useState<number>(0);
-  const [isSeeking, setIsSeeking] = useState<boolean>(false);
+  const [repeatStateIdx, setRepeatIdx] = useState(0);
+  const [isShuffle, setShuffle] = useState(false);
+  const [currentProgress, setCurrentProgress] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
 
   // mutations - player controller
   const onPlay = useMutationPlayerStart();
@@ -52,46 +52,26 @@ export default function PlayerDevice() {
     }
   );
 
-  const addCurrentQueue = useMutationAddCurrentPlaylist();
+  usePlayerController([playingURL], () => {
+    onPlay.mutate(0);
+  });
 
-  useEffect(() => {
-    if (!deviceId) return;
-    onPlay.mutate(currentProgress);
-    urlCategory === "track" && addCurrentQueue.mutate();
-  }, [playingURL]);
-
-  useEffect(() => {
-    if (deviceId?.length) {
-      onPlay.mutate(currentProgress);
-    }
-  }, [playingURL]);
-
-  useEffect(() => {
-    if (deviceId?.length) console.log(123, deviceId);
-  }, [deviceId]);
-
-  useEffect(() => {
-    if (deviceId?.length) {
-      setRepeat.mutate();
-    }
+  usePlayerController([repeatStateIdx], () => {
+    setRepeat.mutate();
     setRepeatIdx(repeatStateIdx % 3);
-  }, [repeatStateIdx]);
+  });
 
-  useEffect(() => {
-    if (deviceId?.length) {
-      toggleShuffle.mutate();
-    }
-  }, [isShuffle]);
+  usePlayerController([isShuffle], () => {
+    toggleShuffle.mutate();
+  });
 
-  useEffect(() => {
-    if (deviceId?.length) {
-      if (currentProgress > 0 && isSeeking) seekPositionMutate();
-    }
-  }, [currentProgress, isSeeking]);
+  usePlayerController([currentProgress, isSeeking], () => {
+    if (currentProgress && isSeeking) seekPositionMutate();
+  });
 
   const seekToPosition = (e: any) => {
     setCurrentProgress(Number(e.target.value));
-    setIsSeeking(true); // TODO: local state 대신 server state 활용할수 없을까? (react-query)
+    setIsSeeking(true);
   };
 
   const clickPrev = () => {

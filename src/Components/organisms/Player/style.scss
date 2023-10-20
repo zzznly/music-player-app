@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 98px;
-  padding: 32px 0 26px 0;
+  padding: 26px 0;
   width: 392px;
   border-radius: 24px 0px 0px 0px;
   background: #fff;
@@ -21,24 +21,25 @@
   overflow: hidden;
   border-bottom: 1px solid #e8e8fd;
 
-  &-title {
+  &-wrap {
+    margin-top: 16px;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .player__title {
+    margin-bottom: 8px;
     padding: 0 42px 0 24px;
     color: #24242e;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 22px;
   }
-  &-tracks {
-    margin-top: 16px;
-    height: calc(100% - 38px);
-    overflow-y: auto;
 
-    .player__current {
-      .player__track {
-      }
-    }
-    .player__queue {
-    }
+  .player__current {
+  }
+  .player__queue {
+    margin-top: 16px;
   }
 }
 
@@ -47,7 +48,7 @@
   align-items: center;
   width: 100%;
   height: 74px;
-  padding: 12px 42px 12px 24px;
+  padding: 12px 26px;
 
   &.layout__player__track--active {
     background: #f0f0f5;
@@ -65,7 +66,6 @@
   &-album {
     width: 50px;
     height: 50px;
-    margin-left: 15px;
     border-radius: 10px;
     overflow: hidden;
 

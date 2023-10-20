@@ -2,14 +2,12 @@ import usePlaying from "@store/playing/usePlaying";
 import { convertDurationTime } from "@utils/convert";
 
 export default function PlayerListItem({
-  idx,
   uri,
   album,
   name,
   artists,
   duration_ms,
 }: {
-  idx: number;
   uri: string;
   album: any;
   name: string;
@@ -19,10 +17,7 @@ export default function PlayerListItem({
   const { setPlayingURL } = usePlaying();
 
   return (
-    <li className="player__track" onClick={() => setPlayingURL(uri)}>
-      <div className="player__track-index">
-        {String(idx + 1).padStart(2, "0")}
-      </div>
+    <div className="player__track" onClick={() => setPlayingURL(uri)}>
       <div className="player__track-album">
         <img
           className="player__track-album-image"
@@ -40,6 +35,6 @@ export default function PlayerListItem({
       <div className="player__track-runtime">
         {convertDurationTime(duration_ms)}
       </div>
-    </li>
+    </div>
   );
 }
