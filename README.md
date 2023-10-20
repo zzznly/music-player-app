@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# 🎧 Mytones Music Player
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Spotify Web API를 사용하여 개발한 음악 플레이어 사이트입니다.
+<br/>
+<br/>
 
-## Available Scripts
+## 🔑 로그인 테스트 계정
 
-In the project directory, you can run:
+클론하여 실행해보기를 원하신다면 로그인시 아래의 테스트 계정을 사용해주세요.
 
-### `npm start`
+> ID : testzzznly@gmail.com <br/>
+> PW : test1234!!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🛠️ 기술 스택
 
-### `npm test`
+- React.js
+- Typescript
+- React Query
+- Jotai
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br/>
 
-### `npm run build`
+## 🖥️ 미리보기
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![미리보기](/public/img-screenshot-mytones.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📂 폴더 구조
 
-### `npm run eject`
+```
+.
+├─ @types // 전역으로 쓰이는 type을 정리한 폴더
+├─ node_modules
+├─ public
+└─ src
+   ├─ assets
+   ├─ components // 컴포넌트를 atomic하게 정리한 폴더
+   │  ├─ atoms
+   │  ├─ molecules
+   │  ├─ organisms
+   │  └─ templates
+   ├─ constants // 상수가 저장된 폴더
+   ├─ hooks // 커스텀된 hook들이 저장된 폴더
+   ├─ pages // page 들이 저장된 폴더
+   ├─ service // 서비스 api가 정의된 폴더
+   ├─ store // global state가 정의된 폴더
+   ├─ styles // 스타일시트들이 저장된 폴더
+   └─ utils // util 함수들이 저장된 폴더
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<br/>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## ✅ 추가하면 좋을 것들 (아직 작업중인 것들)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 로그인 로직 개선 (Node.js 미들웨어 서버 구축) 👉🏻 feature/auth 브랜치
+- 공통 모달, 토스트 추가
+- 검색결과 무한 스크롤 로딩 기능
+- and more...
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br/>
