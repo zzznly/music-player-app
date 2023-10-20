@@ -4,37 +4,44 @@ import "./style.scss";
 // router
 import { NavLink, useLocation } from "react-router-dom";
 
-export default function NavListItem({ item }: { item: NavSubMenu }) {
+import Icon from "@components/atoms/Icon";
+
+export default function NavListItem({
+  item: { menu, path, icon, iconActive },
+}: {
+  item: NavSubMenu;
+}) {
   const location = useLocation();
 
   return (
     <li
       className={`layout__nav-bar__item ${
-        location.pathname.split("/")[1] === item.path.split("/")[1]
-          ? "active"
-          : ""
+        location.pathname.split("/")[1] === path.split("/")[1] ? "active" : ""
       }`}
     >
       <NavLink
         className="layout__nav-bar__link"
-        to={item.path}
+        to={path}
         onClick={e => {
-          if (item.path.includes("my")) {
+          if (path.includes("my")) {
             e.preventDefault();
             alert("Comming Soon"); // MY 메뉴 추후 개발
           }
         }}
       >
-        <img
-          src={
-            location.pathname.split("/")[1] === item.path.split("/")[1]
-              ? item.iconActive
-              : item.icon
+        <Icon
+          category={
+            location.pathname.split("/")[1] === path.split("/")[1]
+              ? iconActive?.category
+              : icon?.category
           }
-          className="layout__nav-bar__menu-icon"
-          alt="nav icon"
+          name={
+            location.pathname.split("/")[1] === path.split("/")[1]
+              ? iconActive?.name
+              : icon?.name
+          }
         />
-        <p className="layout__nav-bar__menu-text">{item.menu}</p>
+        <p className="layout__nav-bar__menu-text">{menu}</p>
       </NavLink>
     </li>
   );
