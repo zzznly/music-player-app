@@ -1,13 +1,8 @@
 // axios
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import AuthService from "@service/Auth/AuthService";
+
 // router
-import {
-  getToken,
-  getSpotifyAuthUrl,
-  removeAuthToken,
-  redirectToLogin,
-} from "../utils/auth";
+import { getToken, redirectToLogin } from "../utils/auth";
 
 export default class Service {
   service: AxiosInstance;
