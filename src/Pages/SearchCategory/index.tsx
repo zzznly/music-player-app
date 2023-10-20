@@ -9,16 +9,11 @@ import ListSection from "@components/organisms/ListSection";
 
 export default function SearchCategory(): JSX.Element {
   const data: any = useOutletContext();
-  console.log(
-    "data",
-    Object.keys(data).filter(v => v !== "tracks")
-  );
   const list: Record<string, React.ReactNode> = {
     all: (
       <div className="search-result__content--all">
         <div className="search-result__section-box">
           <div className="search-result__section topResult">
-            {/* <h2 className="search-result__title">상위 결과</h2> */}
             <div
               className={`search-result__card ${
                 data?.artists?.items[0]?.type === "artist" &&
@@ -37,7 +32,6 @@ export default function SearchCategory(): JSX.Element {
             </div>
           </div>
           <div className="search-result__section tracks">
-            {/* <h2 className="search-result__title">곡</h2> */}
             <div className="search-result__list">
               {data?.tracks?.items
                 ?.slice(0, 4)
@@ -57,12 +51,12 @@ export default function SearchCategory(): JSX.Element {
         </div>
         {Object.keys(data)
           .filter(v => v !== "tracks")
-          .map((key: string, idx: number) => (
+          .map((key: string) => (
             <div className={`search-result__section ${key}`}>
               <ListSection
                 title={key}
                 data={data?.[key]?.items?.map(
-                  ({ name, images, type, uri }: any, idx: number) => ({
+                  ({ name, images, type, uri }: any) => ({
                     name,
                     imageUrl: images[0]?.url,
                     description: type,
