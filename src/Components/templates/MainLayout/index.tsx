@@ -2,11 +2,11 @@
 import "./style.scss";
 
 // components
-import NavBar from "@components/organisms/NavBar";
 import Header from "@components/organisms/Header";
+import NavBar from "@components/organisms/NavBar";
 import Player from "@components/organisms/Player";
 import Loading from "@components/atoms/Loading";
-import useWebSDKPlayer from "@hooks/useWebSDKPlayer";
+import useWebSDKPlayer from "hooks/useWebSDKPlayer";
 
 // router
 import { Outlet } from "react-router-dom";

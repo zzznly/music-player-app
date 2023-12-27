@@ -26,7 +26,7 @@ export default function NavBar() {
               <p className="layout__nav-bar__title">{menu}</p>
               <NavList>
                 {NAVIGATION[menu as keyof typeof NAVIGATION].map(
-                  (item: NavSubMenu, idx: number) => {
+                  (item: any, idx: number) => {
                     return <NavListItem {...{ item }} key={idx} />;
                   }
                 )}
