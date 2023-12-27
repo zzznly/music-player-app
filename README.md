@@ -1,6 +1,6 @@
 # 🎧 Mytones Music Player
 
-Spotify Web API를 사용하여 개발한 음악 플레이어 사이트입니다.
+Spotify Web API를 사용하여 개발한 음악 플레이어 사이트
 <br/>
 <br/>
 
@@ -12,12 +12,6 @@ Spotify Web API를 사용하여 개발한 음악 플레이어 사이트입니다
 - react-query@4
 - jotai@2
 - styled-components@5
-
-<br/>
-
-## Preview
-
-![미리보기](/public/img-screenshot-mytones.png)
 
 <br/>
 
@@ -49,5 +43,7 @@ Spotify Web API를 사용하여 개발한 음악 플레이어 사이트입니다
 ## Nice to haves (in process)
 - 로그인 로직 개선 (Node.js 미들웨어 서버 구축) 👉🏻 feature/auth 브랜치
 - styled-components 적용 👉🏻 refactor/styled-components 브랜치
+- type 보완
+- ...
 
 <br/>
