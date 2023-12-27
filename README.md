@@ -42,8 +42,8 @@ Spotify Web API를 사용하여 개발한 음악 플레이어 사이트
 
 ## Nice to haves (in process)
 - 로그인 로직 개선 (Node.js 미들웨어 서버 구축) 👉🏻 feature/auth 브랜치
-- styled-components 적용 👉🏻 refactor/styled-components 브랜치
-- type 보완
+- styled-components 적용 👉🏻 feature/styled-components 브랜치
+- typescript any 타입 보완
 - ...
 
 <br/>
