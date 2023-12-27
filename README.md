@@ -4,31 +4,24 @@ Spotify Web API를 사용하여 개발한 음악 플레이어 사이트입니다
 <br/>
 <br/>
 
-## 🔑 로그인 테스트 계정
+## Dependencies
 
-클론하여 실행해보기를 원하신다면 로그인시 아래의 테스트 계정을 사용해주세요.
-
-> ID : testzzznly@gmail.com <br/>
-> PW : test1234!!
-
-<br/>
-
-## 🛠️ 기술 스택
-
-- React.js
-- Typescript
-- React Query
-- Jotai
+- react@18
+- react-router-dom@6
+- typescript@4
+- react-query@4
+- jotai@2
+- styled-components@5
 
 <br/>
 
-## 🖥️ 미리보기
+## Preview
 
 ![미리보기](/public/img-screenshot-mytones.png)
 
 <br/>
 
-## 📂 폴더 구조
+## Directory
 
 ```
 .
@@ -53,9 +46,8 @@ Spotify Web API를 사용하여 개발한 음악 플레이어 사이트입니다
 
 <br/>
 
-## ✅ 추가하면 좋을 것들 (작업중인 것들)
-
+## Nice to haves (in process)
 - 로그인 로직 개선 (Node.js 미들웨어 서버 구축) 👉🏻 feature/auth 브랜치
-- styled-components 적용
+- styled-components 적용 👉🏻 refactor/styled-components 브랜치
 
 <br/>
