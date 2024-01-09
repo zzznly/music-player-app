@@ -4,6 +4,11 @@ Spotify Web API를 사용하여 개발한 음악 플레이어 사이트
 <br/>
 <br/>
 
+## Preview
+![미리보기](/public/img-screenshot-mytones.png)
+
+<br/>
+
 ## Dependencies
 
 - react@18
