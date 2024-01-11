@@ -8,7 +8,7 @@ import {
 } from "@service/category/useCategory";
 
 // components
-import ListSection from "../../components/organisms/ListSection";
+import ListSection from "../../_components/organisms/ListSection";
 import { useNewReleases } from "@service/Playlist/usePlaylist";
 import { useAtom } from "jotai";
 import { spotifyUri } from "@service/Player/PlayerAtom";

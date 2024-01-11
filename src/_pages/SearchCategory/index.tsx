@@ -5,8 +5,8 @@ import { useOutletContext, useParams, useLocation } from "react-router-dom";
 import { searchKeywordAtom } from "@service/Search/SearchAtom";
 import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
 
-import SongListItem from "@components/molecules/SongListItem";
-import ListSection from "@components/organisms/ListSection";
+import SongListItem from "_components/molecules/SongListItem";
+import ListSection from "_components/organisms/ListSection";
 
 export default function SearchCategory(): JSX.Element {
   const data: any = useOutletContext();

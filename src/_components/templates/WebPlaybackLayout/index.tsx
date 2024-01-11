@@ -2,9 +2,9 @@
 import "./style.scss";
 
 // components
-import NavBar from "@components/organisms/NavBar";
-import Header from "@components/organisms/Header";
-import Player from "@components/organisms/Player";
+import NavBar from "_components/organisms/NavBar";
+import Header from "_components/organisms/Header";
+import Player from "_components/organisms/Player";
 
 // router
 import { Outlet } from "react-router-dom";
@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 // utils
 import { getToken } from "@utils/auth";
 import { isSpinnerLoading } from "@service/Common/CommonAtom";
-import Loading from "@components/atoms/Loading";
+import Loading from "_components/atoms/Loading";
 import { useAtom } from "jotai";
 // import useSDK from "@store/sdk/useSDK";
 interface Props {
