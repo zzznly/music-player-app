@@ -8,12 +8,12 @@ import { Route, Routes } from "react-router-dom";
 import MainLayout from "./componenets/templates/MainLayout";
 
 // components
-import Home from "./temp_pages/Home";
-import Search from "./temp_pages/Search";
+import Home from "./pages/Home";
+import Search from "./pages/Search";
 import useSpotifyAuth from "./hooks/useSpotifyAuth";
 import SearchMain from "./componenets/organisms/SearchMain";
 import SearchResult from "./componenets/organisms/SearchResult";
-import SearchCategory from "./temp_pages/SearchCategory";
+import SearchCategory from "./pages/SearchCategory";
 
 export default function App(): React.ReactElement {
   useSpotifyAuth();
