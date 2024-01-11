@@ -6,16 +6,16 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 // layouts
-import WebPlayback from "_components/templates/WebPlaybackLayout";
+import WebPlayback from "@components/templates/WebPlaybackLayout";
 
 // components
-import Explore from "_pages/Explore";
-import Search from "_pages/Search";
+import Explore from "@pages/Explore";
+import Search from "@pages/Search";
 // import DetailPage from "@pages/DetailPage";
-import SearchMain from "_components/organisms/SearchMain";
-import SearchResult from "_components/organisms/SearchResult";
-import SearchCategory from "_pages/SearchCategory";
-import Login from "_pages/Login";
+import SearchMain from "@components/organisms/SearchMain";
+import SearchResult from "@components/organisms/SearchResult";
+import SearchCategory from "@pages/SearchCategory";
+import Login from "@pages/Login";
 
 export default function App(): React.ReactElement {
   const [token, setToken] = useState<string>("");
