@@ -17,7 +17,7 @@ import { convertDurationTime } from "@utils/convert";
 
 import usePlayerController from "@hooks/usePlayerController";
 
-import Icon from "@components/atoms/Icon";
+import Icon from "temp_componenets/atoms/Icon";
 
 export default function PlayerDevice() {
   const { currentTrack, isPaused, currentPosition, durationMs } = useSDK();
