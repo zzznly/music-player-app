@@ -2,10 +2,10 @@
 import "./style.scss";
 
 // components
-import Header from "temp_componenets/organisms/Header";
-import NavBar from "temp_componenets/organisms/NavBar";
-import Player from "temp_componenets/organisms/Player";
-import Loading from "temp_componenets/atoms/Loading";
+import Header from "componenets/organisms/Header";
+import NavBar from "componenets/organisms/NavBar";
+import Player from "componenets/organisms/Player";
+import Loading from "componenets/atoms/Loading";
 import useWebSDKPlayer from "hooks/useWebSDKPlayer";
 
 // router

@@ -1,4 +1,4 @@
-import SongListItem from "temp_componenets/molecules/SongListItem";
+import SongListItem from "componenets/molecules/SongListItem";
 import "./style.scss";
 
 export default function SongList({ items }: any): JSX.Element {

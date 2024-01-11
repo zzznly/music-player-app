@@ -1,6 +1,6 @@
 import { useCurrentPlaylist } from "@service/Player/usePlayer";
 import useSDK from "@store/sdk/useSDK";
-import PlayerListItem from "temp_componenets/molecules/PlayerListItem";
+import PlayerListItem from "componenets/molecules/PlayerListItem";
 
 export default function PlayerList() {
   const { currentTrack } = useSDK();

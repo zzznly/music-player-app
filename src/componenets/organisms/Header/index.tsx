@@ -9,7 +9,7 @@ import "./style.scss";
 import { useUserInfo } from "@service/User/useUser";
 
 // components
-import Icon from "temp_componenets/atoms/Icon";
+import Icon from "componenets/atoms/Icon";
 
 export default function Header(): JSX.Element {
   const location = useLocation();

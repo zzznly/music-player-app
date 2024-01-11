@@ -8,8 +8,8 @@ import NavLogo from "@assets/images/icon/ico-logo-mytones.svg";
 import { NAVIGATION } from "@constants/navigation";
 
 // components
-import NavListItem from "temp_componenets/molecules/NavListItem";
-import NavList from "temp_componenets/molecules/NavList";
+import NavListItem from "componenets/molecules/NavListItem";
+import NavList from "componenets/molecules/NavList";
 
 type T = keyof typeof NAVIGATION;
 

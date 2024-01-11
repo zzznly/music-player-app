@@ -5,15 +5,15 @@ import "./app.scss";
 import { Route, Routes } from "react-router-dom";
 
 // layouts
-import MainLayout from "./temp_componenets/templates/MainLayout";
+import MainLayout from "./componenets/templates/MainLayout";
 
 // components
-import Home from "./pages/Home";
-import Search from "./pages/Search";
+import Home from "./temp_pages/Home";
+import Search from "./temp_pages/Search";
 import useSpotifyAuth from "./hooks/useSpotifyAuth";
-import SearchMain from "./temp_componenets/organisms/SearchMain";
-import SearchResult from "./temp_componenets/organisms/SearchResult";
-import SearchCategory from "./pages/SearchCategory";
+import SearchMain from "./componenets/organisms/SearchMain";
+import SearchResult from "./componenets/organisms/SearchResult";
+import SearchCategory from "./temp_pages/SearchCategory";
 
 export default function App(): React.ReactElement {
   useSpotifyAuth();
