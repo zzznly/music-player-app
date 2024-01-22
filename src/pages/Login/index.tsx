@@ -1,12 +1,9 @@
 import "./style.scss";
 import MyTonesLogo from "@assets/images/icon/ico-logo-mytones.svg";
-import useSpotifyAuth from "@hooks/useSpotifyAuth";
-import { getSpotifyAuthUrl, saveTokenParams } from "@utils/auth";
-import { useEffect, useLayoutEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { getSpotifyAuthUrl } from "@utils/auth";
 
 function Login() {
-  const handleLogin = () => {
+  const handleClickLogin = () => {
     const authUrl = getSpotifyAuthUrl();
     window.location.href = authUrl;
   };
@@ -18,7 +15,7 @@ function Login() {
         <p className="login__description">Web Music Player with React.js</p>
       </div>
       <div className="login__content">
-        <button className="login__button" onClick={handleLogin}>
+        <button className="login__button" onClick={handleClickLogin}>
           Login with Spotify 🎧
         </button>
       </div>

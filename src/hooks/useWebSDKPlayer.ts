@@ -18,7 +18,7 @@ export default function useWebSDKPlayer() {
 
   // 플레이어 생성
   useEffect(() => {
-    console.log("useEffect PlayerInstance");
+    if (!token) return;
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
@@ -33,8 +33,6 @@ export default function useWebSDKPlayer() {
         },
         volume: 0.5,
       });
-
-      // console.log("player instance", playerInstance);
 
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         console.log("Ready with Device ID", event.device_id);
