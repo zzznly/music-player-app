@@ -1,9 +1,5 @@
-// styles
 import "./style.scss";
-
-// router
-import { NavLink, useLocation } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 import Icon from "componenets/atoms/Icon";
 
 export default function NavListItem({
@@ -19,9 +15,9 @@ export default function NavListItem({
         location.pathname.split("/")[1] === path.split("/")[1] ? "active" : ""
       }`}
     >
-      <NavLink
+      <Link
         className="layout__nav-bar__link"
-        to={menu !== 'Logout' ? path : ''}
+        to={path}
       >
         <Icon
           category={
@@ -36,7 +32,7 @@ export default function NavListItem({
           }
         />
         <p className="layout__nav-bar__menu-text">{menu}</p>
-      </NavLink>
+      </Link>
     </li>
   );
 }

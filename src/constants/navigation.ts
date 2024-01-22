@@ -37,8 +37,7 @@ export const NAVIGATION = {
   OTHERS: [
     {
       menu: "Logout",
-      // path: "https://accounts.spotify.com/logout",
-      path: '/logout',
+      path: "/logout",
       icon: { name: "menu-logout", category: "navbar" },
     },
   ],
