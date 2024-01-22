@@ -56,13 +56,14 @@ export const redirectToLogin = ({
   scope?: string[];
   show_dialog?: boolean;
 } = {}) => {
-  window.location.replace(
-    `${process.env.REACT_APP_AUTHORIZE_URL}?${new URLSearchParams({
-      response_type: "token",
-      client_id: process.env.REACT_APP_CLIENT_ID,
-      redirect_uri,
-      scope: scope.join("%20"),
-      show_dialog: String(show_dialog),
-    }).toString()}`
-  );
+  window.location.replace('/login')
+  // window.location.replace(
+  //   `${process.env.REACT_APP_AUTHORIZE_URL}?${new URLSearchParams({
+  //     response_type: "token",
+  //     client_id: process.env.REACT_APP_CLIENT_ID,
+  //     redirect_uri,
+  //     scope: scope.join("%20"),
+  //     show_dialog: String(show_dialog),
+  //   }).toString()}`
+  // );
 };

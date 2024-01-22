@@ -14,6 +14,7 @@ import useSpotifyAuth from "./hooks/useSpotifyAuth";
 import SearchMain from "./componenets/organisms/SearchMain";
 import SearchResult from "./componenets/organisms/SearchResult";
 import SearchCategory from "./pages/SearchCategory";
+import Login from "@pages/Login";
 
 export default function App(): React.ReactElement {
   useSpotifyAuth();
@@ -30,6 +31,7 @@ export default function App(): React.ReactElement {
             </Route>
           </Route>
         </Route>
+        <Route path="/login" element={<Login/>}/>
       </Routes>
     </div>
   );
