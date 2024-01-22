@@ -1,7 +1,7 @@
 import axios from "../../utils/axios";
 
 // components
-import SearchResultSongList from "../../components/Player/PlayerBody/Search/SearchResultSongList";
+import SearchResultSongList from "../../_Components/Player/PlayerBody/Search/SearchResultSongList";
 
 // styles
 import "./style.scss";

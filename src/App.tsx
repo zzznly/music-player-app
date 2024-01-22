@@ -1,5 +1,5 @@
 // components
-import Player from "./components/Player";
+import Player from "./_Components/Player";
 
 // styles
 import "./app.scss";
