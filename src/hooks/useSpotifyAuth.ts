@@ -5,13 +5,14 @@ import { saveTokenParams } from "@utils/auth";
 
 export default function useSpotifyAuth() {
   const navigate = useNavigate();
+
   useLayoutEffect(() => {
     const tokenString = window.location.hash.substring(1);
     if (!tokenString) return;
 
-    saveTokenParams(new URLSearchParams(tokenString));
+    const params = new URLSearchParams(tokenString);
+    saveTokenParams(params);
+
     navigate("/");
   }, []);
-
-  return {};
 }
