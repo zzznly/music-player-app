@@ -2,7 +2,7 @@
 import "./style.scss";
 
 // query
-import { useCategories } from "@service/_category/useCategory";
+import { useCategories } from "@service/Category/useCategory";
 
 // service
 import { useNewReleases } from "@service/Playlist/usePlaylist";

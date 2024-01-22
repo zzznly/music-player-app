@@ -2,7 +2,7 @@
 import "./style.scss";
 
 // react-query
-import { useGenreSeeds } from "@service/_category/useCategory";
+import { useGenreSeeds } from "@service/Category/useCategory";
 
 // router
 import ListSection from "../ListSection";
