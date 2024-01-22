@@ -1,8 +1,5 @@
-// axios
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-
-// router
-import { getToken, redirectToLogin } from "../utils/auth";
+import { getToken } from "../utils/auth";
 
 export default class Service {
   service: AxiosInstance;
@@ -24,10 +21,8 @@ export default class Service {
   }
 
   static async handleRequest(request: any) {
-    // const data = await AuthService.refreshToken();
     const accessToken = getToken();
     console.log(accessToken);
-    // accessToken 있으면 - 헤더에 토큰 실어서 보냄
     accessToken && (request.headers.Authorization = "Bearer " + accessToken);
     return request;
   }
@@ -46,11 +41,11 @@ export default class Service {
       case 404:
         window.location.replace("/404");
         break;
-      case 401: // 리소스 접근 자격 없음 (Unauthorized)
-        // redirectToLogin();
+      case 401:
+        window.location.replace("/login");
         break;
       case 403: // 클라이언트에서 유효한 URL에 액세스하는 것이 금지됨 -> 계정이 Developer에 등록되지 않음
-        // redirectToLogin();
+        window.location.replace("/login");
         break;
       default:
         return Promise.reject(error);
