@@ -5,17 +5,17 @@ import "./app.scss";
 import { Route, Routes } from "react-router-dom";
 
 // layouts
-import MainLayout from "./componenets/templates/MainLayout";
+import MainLayout from "./components/templates/MainLayout";
 
 // components
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import useSpotifyAuth from "./hooks/useSpotifyAuth";
-import SearchMain from "./componenets/organisms/SearchMain";
-import SearchResult from "./componenets/organisms/SearchResult";
+import SearchMain from "./components/organisms/SearchMain";
+import SearchResult from "./components/organisms/SearchResult";
 import SearchCategory from "./pages/SearchCategory";
 import Login from "@pages/Login";
-import AuthLayout from "componenets/templates/AuthLayout";
+import AuthLayout from "@components/templates/AuthLayout";
 import Logout from "@pages/Logout";
 
 export default function App(): React.ReactElement {

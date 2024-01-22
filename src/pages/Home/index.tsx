@@ -11,7 +11,7 @@ import { useNewReleases } from "@service/Playlist/usePlaylist";
 import usePlaying from "@store/playing/usePlaying";
 
 // components
-import { HomeSection } from "componenets/organisms/HomeSection";
+import { HomeSection } from "@components/organisms/HomeSection";
 
 export default function Home() {
   const { setPlayingURL } = usePlaying();

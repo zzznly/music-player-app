@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useOutletContext, useParams, useLocation } from "react-router-dom";
 import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
 
-import SongListItem from "componenets/molecules/SongListItem";
-import ListSection from "componenets/organisms/ListSection";
+import SongListItem from "@components/molecules/SongListItem";
+import ListSection from "@components/organisms/ListSection";
 
 export default function SearchCategory(): JSX.Element {
   const data: any = useOutletContext();

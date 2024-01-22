@@ -1,6 +1,6 @@
 import "./style.scss";
 import { Link, useLocation } from "react-router-dom";
-import Icon from "componenets/atoms/Icon";
+import Icon from "@components/atoms/Icon";
 
 export default function NavListItem({
   item: { menu, path, icon, iconActive },
