@@ -13,31 +13,32 @@ export const NAVIGATION = {
       iconActive: { name: "search-active" },
     },
   ],
-  MY: [
-    // comming soon
-    {
-      menu: "Playlists",
-      path: "/my/playlists",
-      icon: { name: "menu-my-playlist", category: "navbar" },
-      iconActive: { name: "menu-my-playlist-active", category: "navbar" },
-    },
-    {
-      menu: "Favorites",
-      path: "/my/favorites",
-      icon: { name: "menu-my-favorites", category: "navbar" },
-      iconActive: { name: "menu-my-favorites-active", category: "navbar" },
-    },
-    {
-      menu: "Artists",
-      path: "/my/artists",
-      icon: { name: "menu-my-artists", category: "navbar" },
-      iconActive: { name: "menu-my-artists-active", category: "navbar" },
-    },
-  ],
+  // MY: [
+  //   // comming soon
+  //   {
+  //     menu: "Playlists",
+  //     path: "/my/playlists",
+  //     icon: { name: "menu-my-playlist", category: "navbar" },
+  //     iconActive: { name: "menu-my-playlist-active", category: "navbar" },
+  //   },
+  //   {
+  //     menu: "Favorites",
+  //     path: "/my/favorites",
+  //     icon: { name: "menu-my-favorites", category: "navbar" },
+  //     iconActive: { name: "menu-my-favorites-active", category: "navbar" },
+  //   },
+  //   {
+  //     menu: "Artists",
+  //     path: "/my/artists",
+  //     icon: { name: "menu-my-artists", category: "navbar" },
+  //     iconActive: { name: "menu-my-artists-active", category: "navbar" },
+  //   },
+  // ],
   OTHERS: [
     {
       menu: "Logout",
-      path: "/logout",
+      // path: "https://accounts.spotify.com/logout",
+      path: '/logout',
       icon: { name: "menu-logout", category: "navbar" },
     },
   ],

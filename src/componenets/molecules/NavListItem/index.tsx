@@ -21,13 +21,7 @@ export default function NavListItem({
     >
       <NavLink
         className="layout__nav-bar__link"
-        to={path}
-        onClick={e => {
-          if (path.includes("my")) {
-            e.preventDefault();
-            alert("Comming Soon"); // MY 메뉴 추후 개발
-          }
-        }}
+        to={menu !== 'Logout' ? path : ''}
       >
         <Icon
           category={
