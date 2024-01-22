@@ -36,29 +36,3 @@ export const getSpotifyAuthUrl = () => {
     params
   ).toString()}`;
 };
-
-export const generateRandomString = (num: number) => {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  let result = "";
-  const charactersLength = characters.length;
-  for (let i = 0; i < num; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-
-  return result;
-};
-
-export const handleAuth = () => {
-  const state = generateRandomString(16);
-  const scope =
-    "user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming";
-  const params = new URLSearchParams({
-    response_type: "code",
-    client_id: "72ce168f7a5940c6a71cdb3a00784b5e",
-    scope: scope,
-    redirect_uri: "http://localhost:5005/auth/callback",
-    state: state,
-  });
-  const authUrl = `https://accounts.spotify.com/authorize?${params.toString()}`;
-  window.location.href = authUrl;
-};

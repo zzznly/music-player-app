@@ -24,7 +24,7 @@ export default function MainLayout(): JSX.Element {
         </div>
       </div>
       <Player />
-      <Loading />
+      {/* <Loading /> */}
     </div>
   );
 }
