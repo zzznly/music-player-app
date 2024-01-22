@@ -2,9 +2,9 @@
 import { Routes, Route } from "react-router-dom";
 
 // components
-import Home from "../../../pages/Home";
-import PlaylistDetail from "../../../pages/PlaylistDetail";
-import Search from "../../../pages/Search";
+import Home from "../../../_pages/Home";
+import PlaylistDetail from "../../../_pages/PlaylistDetail";
+import Search from "../../../_pages/Search";
 
 // styles
 import "./style.scss";

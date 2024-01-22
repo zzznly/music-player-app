@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useCategories } from "../../logics/queries/useQueries";
 
 // components
-import HomeSection from "../../_Components/Player/PlayerBody/Home/HomeSection";
+import HomeSection from "../../components/Player/PlayerBody/Home/HomeSection";
 
 // styles
 import "./style.scss";

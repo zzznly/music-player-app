@@ -2,8 +2,8 @@
 import "./styles.scss";
 
 // components
-import SearchMain from "../../_Components/Player/PlayerBody/Search/SearchMain";
-import SearchResult from "../../_Components/Player/PlayerBody/Search/SearchResult";
+import SearchMain from "../../components/Player/PlayerBody/Search/SearchMain";
+import SearchResult from "../../components/Player/PlayerBody/Search/SearchResult";
 
 // atoms
 import { useAtomValue } from "jotai";
