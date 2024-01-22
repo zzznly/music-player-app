@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 // service
-import CategoryService from "@service/category/CategoryService";
+import CategoryService from "@service/_category/CategoryService";
 
 // GET - Categories
 export const useCategories = ({ onSuccess }: UseQueryProps = {}) => {

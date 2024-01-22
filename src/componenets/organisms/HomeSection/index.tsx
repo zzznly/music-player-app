@@ -1,4 +1,4 @@
-import { useCategoryPlaylists } from "@service/category/useCategory";
+import { useCategoryPlaylists } from "@service/_category/useCategory";
 import ListSection from "../ListSection";
 
 export const HomeSection = ({ id, name = "" }: CategoriesItem) => {
