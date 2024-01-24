@@ -2,7 +2,6 @@ import "./style.scss";
 
 import { useEffect, useState } from "react";
 import { useOutletContext, useParams, useLocation } from "react-router-dom";
-import { convertDurationTime, setFirstLetterUpperCase } from "@utils/convert";
 
 import SongListItem from "@components/molecules/SongListItem";
 import ListSection from "@components/organisms/ListSection";

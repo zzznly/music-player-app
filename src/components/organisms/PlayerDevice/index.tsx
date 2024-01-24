@@ -19,12 +19,14 @@ import usePlayerController from "@hooks/usePlayerController";
 
 import Icon from "@components/atoms/Icon";
 
+const SKIP_PREV_THRESHOLD = 3000; // 상수로 추출
+const REPEAT_STATES = ["off", "context", "track"];
+
 export default function PlayerDevice() {
   const { currentTrack, isPaused, currentPosition, durationMs } = useSDK();
+  const { playingURL } = usePlaying();
 
   // states
-  const { playingURL } = usePlaying();
-  const repeatStateList = ["off", "context", "track"];
   const [repeatStateIdx, setRepeatIdx] = useState(0);
   const [isShuffle, setShuffle] = useState(false);
   const [currentProgress, setCurrentProgress] = useState(0);
@@ -33,13 +35,11 @@ export default function PlayerDevice() {
   // mutations - player controller
   const onPlay = useMutationPlayerStart();
   const onPause = useMutationPlayerPause({
-    onSuccess: () => {
-      setCurrentProgress(currentPosition);
-    },
+    onSuccess: () => setCurrentProgress(currentPosition),
   });
   const skipNext = useMutationSkipNext();
   const skipPrev = useMutationSkipPrev();
-  const setRepeat = useMutationSetRepeat(repeatStateList[repeatStateIdx]);
+  const setRepeat = useMutationSetRepeat(REPEAT_STATES[repeatStateIdx]);
   const toggleShuffle = useMutationToggleShuffle(isShuffle);
   const { mutate: seekPositionMutate } = useMutationSeekPosition(
     currentProgress,
@@ -52,38 +52,27 @@ export default function PlayerDevice() {
     }
   );
 
-  usePlayerController([playingURL], () => {
-    onPlay.mutate(0);
-  });
-
+  // Custom Hooks
+  usePlayerController([playingURL], () => onPlay.mutate(0));
   usePlayerController([repeatStateIdx], () => {
     setRepeat.mutate();
     setRepeatIdx(repeatStateIdx % 3);
   });
-
-  usePlayerController([isShuffle], () => {
-    toggleShuffle.mutate();
-  });
-
+  usePlayerController([isShuffle], () => toggleShuffle.mutate());
   usePlayerController([currentProgress, isSeeking], () => {
     if (currentProgress && isSeeking) seekPositionMutate();
   });
 
-  const seekToPosition = (e: any) => {
+  // Event Handlers
+  const seekToPosition = (e: { target: { value: any; }; }) => {
     setCurrentProgress(Number(e.target.value));
     setIsSeeking(true);
   };
 
   const clickPrev = () => {
-    /*
-      진행 시간 3초 이상 : 곡의 처음으로 이동
-      진행 시간 3초 이하 : 이전곡 이동
-    */
-    if (currentPosition > 3000) {
-      seekPositionMutate();
-    } else {
-      skipPrev.mutate();
-    }
+    currentPosition > SKIP_PREV_THRESHOLD
+      ? seekPositionMutate()
+      : skipPrev.mutate();
   };
 
   return (
@@ -159,7 +148,7 @@ export default function PlayerDevice() {
             </button>
             <button
               className="player__repeat"
-              onClick={() => setRepeatIdx(prev => prev + 1)}
+              onClick={() => setRepeatIdx((prev) => prev + 1)}
             >
               <Icon
                 category="player"

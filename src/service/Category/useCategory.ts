@@ -32,5 +32,7 @@ export const useGenreSeeds = ({ onSuccess }: UseQueryProps = {}) => {
     queryKey: ["category.genreSeeds"],
     queryFn: () => CategoryService.getGenreSeeds(),
     onSuccess,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 60, 
   });
 };

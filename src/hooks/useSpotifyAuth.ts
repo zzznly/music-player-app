@@ -9,7 +9,6 @@ export default function useSpotifyAuth() {
   useLayoutEffect(() => {
     const tokenString = window.location.hash.substring(1);
     if (!tokenString) return;
-
     const params = new URLSearchParams(tokenString);
     saveTokenParams(params);
 

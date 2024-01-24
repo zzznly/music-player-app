@@ -10,6 +10,8 @@ import { useUserInfo } from "@service/User/useUser";
 
 // components
 import Icon from "@components/atoms/Icon";
+import { debounce } from "@utils/index";
+import { useDebounce } from "@hooks/useDebounce";
 
 export default function Header(): JSX.Element {
   const location = useLocation();
@@ -20,6 +22,8 @@ export default function Header(): JSX.Element {
   const params = useParams();
   const [keyword, setKeyword] = useState("");
 
+  const debouncedKeyword = useDebounce(keyword, 500);
+
   useEffect(() => {
     if (!params?.keyword) return;
     setKeyword(params?.keyword);
@@ -27,10 +31,10 @@ export default function Header(): JSX.Element {
 
   useEffect(() => {
     if (location.pathname.includes("search"))
-      navigate(!keyword ? "/search" : `/search/${keyword}`, {
+      navigate(!debouncedKeyword ? "/search" : `/search/${debouncedKeyword}`, {
         replace: true,
       });
-  }, [keyword]);
+  }, [debouncedKeyword]);
 
   useEffect(() => {
     if (!location.pathname.includes("search")) {
@@ -48,7 +52,7 @@ export default function Header(): JSX.Element {
               type="search"
               placeholder="Search..."
               value={keyword}
-              onChange={e => {
+              onChange={(e) => {
                 setKeyword(e.target.value);
               }}
               onFocus={() => {

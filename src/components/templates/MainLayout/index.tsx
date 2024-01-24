@@ -5,15 +5,11 @@ import "./style.scss";
 import Header from "@components/organisms/Header";
 import NavBar from "@components/organisms/NavBar";
 import Player from "@components/organisms/Player";
-import Loading from "@components/atoms/Loading";
-import useWebSDKPlayer from "hooks/useWebSDKPlayer";
 
 // router
 import { Outlet } from "react-router-dom";
 
 export default function MainLayout(): JSX.Element {
-  useWebSDKPlayer();
-
   return (
     <div className="layout layout--row">
       <NavBar />
@@ -24,7 +20,6 @@ export default function MainLayout(): JSX.Element {
         </div>
       </div>
       <Player />
-      {/* <Loading /> */}
     </div>
   );
 }

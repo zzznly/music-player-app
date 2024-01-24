@@ -2,11 +2,9 @@
 import { useEffect } from "react";
 import { getToken } from "@utils/auth";
 import useSDK from "@store/sdk/useSDK";
-import { useLoading } from "@store/common/useLoading";
 import useAuth from "@store/auth/useAuth";
 
 export default function useWebSDKPlayer() {
-  const { setIsLoading } = useLoading();
   const { token, setToken } = useAuth();
   const { setDeviceId, setDurationMs, setTrack, setPosition, setPaused } =
     useSDK();
@@ -22,7 +20,6 @@ export default function useWebSDKPlayer() {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
-    setIsLoading(true);
     document.body.appendChild(script);
 
     (window as any).onSpotifyWebPlaybackSDKReady = () => {
@@ -36,7 +33,6 @@ export default function useWebSDKPlayer() {
 
       playerInstance.addListener("ready", (event: { device_id: string }) => {
         console.log("Ready with Device ID", event.device_id);
-        // @ts-ignore // TODO: 타입에러 해결
         setDeviceId(event.device_id);
       });
 
@@ -48,15 +44,12 @@ export default function useWebSDKPlayer() {
         "not_ready",
         (event: { device_id: string }) => {
           console.log("Device ID has gone offline", event.device_id);
-          // @ts-ignore // TODO: 타입에러 해결
           setDeviceId("");
         }
       );
 
       playerInstance.addListener("player_state_changed", (state: any) => {
-        if (!state) {
-          return;
-        }
+        if (!state) return;
         setTrack(state?.track_window.current_track);
         setPaused(state?.paused);
         setDurationMs(state?.duration);
@@ -65,7 +58,6 @@ export default function useWebSDKPlayer() {
 
       playerInstance.connect().then((res: boolean) => {
         console.log("player connected", res);
-        setIsLoading(false);
       });
     };
   }, [token]);

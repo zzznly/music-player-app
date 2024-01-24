@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { getToken } from "../utils/auth";
+import RefreshTokenService from "./refreshToken/RefreshTokenService";
 
 export default class Service {
   service: AxiosInstance;
